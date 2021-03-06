@@ -16,7 +16,7 @@ public class Vector {
     public Vector(double x, double y, double z) {
         _head = new Point3D(x, y, z);
     }
-    
+
     public Vector add(Vector other) {
         return new Vector(_head._x.coord + other._head._x.coord,
                           _head._y.coord + other._head._y.coord,
