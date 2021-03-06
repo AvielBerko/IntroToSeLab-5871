@@ -34,4 +34,12 @@ public class Plane implements Geometry {
     public Vector getNormal(Point3D point) {
         return null;
     }
+
+    @Override
+    public String toString() {
+        return "Plane{" +
+                "q0=" + _q0 +
+                ", normal=" + _normal +
+                '}';
+    }
 }

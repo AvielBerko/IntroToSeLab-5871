@@ -18,4 +18,13 @@ public class Cylinder extends Tube {
     public double getHeight() {
         return _height;
     }
+
+    @Override
+    public String toString() {
+        return "Cylinder{" +
+                "height=" + _height +
+                ", axisRay=" + _axisRay +
+                ", radius=" + _radius +
+                '}';
+    }
 }
