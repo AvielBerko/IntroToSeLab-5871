@@ -61,7 +61,7 @@ public class Vector {
 
     public Vector normalized() {
         double len = 1 / length();
-        return new Vector(new Point3D(_head._x.coord * len, _head._y.coord * len, _head._z.coord * len);)
+        return new Vector(new Point3D(_head._x.coord * len, _head._y.coord * len, _head._z.coord * len));
     }
 
     @Override
