@@ -15,6 +15,10 @@ public class Vector {
 
     public Vector(double x, double y, double z) {
         _head = new Point3D(x, y, z);
+
+        if (_head.equals(Point3D.ZERO)) {
+            throw new IllegalArgumentException("Vector cannot be a zero vector");
+        }
     }
 
     public Vector add(Vector other) {

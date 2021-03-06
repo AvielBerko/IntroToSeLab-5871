@@ -8,7 +8,7 @@ class RayTest {
 
     Ray _a = new Ray(new Point3D(3d, 5d, 2d), new Vector(2d, 1d, 3d));
     Ray _aSame = new Ray(new Point3D(3d, 5d, 2d), new Vector(2d, 1d, 3d));
-    Ray _b = new Ray(new Point3D(-1d, 5d, 36.5d), new Vector(Point3D.ZERO));
+    Ray _b = new Ray(new Point3D(-1d, 5d, 36.5d), new Vector(2d, -2d, 3d));
 
     @Test
     void testEqualsSameObject() { assertEquals(_a, _a); }
