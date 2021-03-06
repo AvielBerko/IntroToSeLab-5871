@@ -21,13 +21,21 @@ public class Point3D {
         _z = new Coordinate(z);
     }
 
-    /*
     public Point3D add(Vector vector) {
+        return new Point3D(
+                _x.coord + vector._head._x.coord,
+                _y.coord + vector._head._y.coord,
+                _z.coord + vector._head._z.coord
+        );
     }
 
     public Vector subtract(Point3D point) {
+        return new Vector(
+                point._x.coord - _x.coord,
+                point._y.coord - _y.coord,
+                point._z.coord - _z.coord
+        );
     }
-     */
 
     public double distanceSquared(Point3D point) {
         double x = _x.coord - point._x.coord;
