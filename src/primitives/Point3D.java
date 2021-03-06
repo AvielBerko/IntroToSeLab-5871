@@ -19,11 +19,13 @@ public class Point3D {
         _z = new Coordinate(z);
     }
 
+    /*
     public Point3D add(Vector vector) {
     }
 
     public Vector subtract(Point3D point) {
     }
+     */
 
     public double distanceSquared(Point3D point) {
         double x = _x.coord - point._x.coord;

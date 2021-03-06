@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class Point3DTest {
 
     Point3D _a = new Point3D(1.1d, 2d, 3d);
-    Point3D _aSame = new Point3D(1.1d, 2d, 3000000000000000000000000000000000000001d);
+    Point3D _aSame = new Point3D(1.1d, 2d, 3d);
     Point3D _b = new Point3D(17.123d, -2d, 0.5d);
 
     @Test
