@@ -76,9 +76,4 @@ public class Vector {
         Vector vector = (Vector) o;
         return Objects.equals(_head, vector._head);
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(_head);
-    }
 }

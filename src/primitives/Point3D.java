@@ -61,9 +61,4 @@ public class Point3D {
         Point3D point3D = (Point3D) o;
         return Objects.equals(_x, point3D._x) && Objects.equals(_y, point3D._y) && Objects.equals(_z, point3D._z);
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(_x, _y, _z);
-    }
 }
