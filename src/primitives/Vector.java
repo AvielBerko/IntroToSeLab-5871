@@ -18,18 +18,14 @@ public class Vector {
     }
 
     public Vector add(Vector other) {
-        return new Vector(_head._x.coord + other._head._x.coord,
-                          _head._y.coord + other._head._y.coord,
-                          _head._z.coord + other._head._z.coord);
+        return new Vector(_head.add(other));
     }
 
     public Vector subtract(Vector other) {
-        return new Vector(_head._x.coord - other._head._x.coord,
-                _head._y.coord - other._head._y.coord,
-                _head._z.coord - other._head._z.coord);
+        return _head.subtract(other._head);
     }
 
-    public Vector scale (double scalar) {
+    public Vector scale(double scalar) {
         return new Vector(_head._x.coord * scalar, _head._y.coord * scalar, _head._z.coord * scalar);
     }
 
@@ -41,8 +37,8 @@ public class Vector {
 
     public double dotProduct(Vector other) {
         return _head._x.coord * other._head._x.coord +
-                _head._y.coord * other._head._y.coord +
-                _head._z.coord * other._head._z.coord;
+               _head._y.coord * other._head._y.coord +
+               _head._z.coord * other._head._z.coord;
     }
 
     public double lengthSquared() {
