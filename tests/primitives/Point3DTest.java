@@ -21,7 +21,7 @@ class Point3DTest {
     @Test
     void subtract() {
         Vector subtraction = _a.subtract(_b);
-        Vector result = new Vector(16.023d, -4d, -2.5d);
+        Vector result = new Vector(-16.023d, 4d, 2.5d);
         assertEquals(subtraction, result);
     }
 
