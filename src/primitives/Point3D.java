@@ -5,6 +5,8 @@ import jdk.jshell.spi.ExecutionControl;
 import java.util.Objects;
 
 public class Point3D {
+    static final Point3D ZERO = new Point3D(0d, 0d, 0d);
+
     final Coordinate _x;
     final Coordinate _y;
     final Coordinate _z;
