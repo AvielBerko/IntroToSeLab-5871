@@ -10,12 +10,11 @@ class Point3DTest {
     Point3D _a = new Point3D(1.1d, 2d, 3d);
     Point3D _aSame = new Point3D(1.1d, 2d, 3d);
     Point3D _b = new Point3D(17.123d, -2d, 0.5d);
-    Vector _vec = new Vector(3d, 2.2d, 48d);
 
     @Test
     void add() {
-        Point3D addition = _a.add(_vec);
-        Point3D result = new Point3D(3.1d, 4.2d, 51d);
+        Point3D addition = _a.add(new Vector(3d, 2.2d, 48d));
+        Point3D result = new Point3D(4.1d, 4.2d, 51d);
         assertEquals(addition, result);
     }
 
@@ -23,6 +22,7 @@ class Point3DTest {
     void subtract() {
         Vector subtraction = _a.subtract(_b);
         Vector result = new Vector(16.023d, -4d, -2.5d);
+        assertEquals(subtraction, result);
     }
 
     @Test
@@ -34,7 +34,7 @@ class Point3DTest {
     @Test
     void distance() {
         double distance = _a.distance(_b);
-        Assertions.assertEquals(distance, 16.703, 0.01);
+        assertEquals(distance, 16.703, 0.01);
     }
 
     @Test
