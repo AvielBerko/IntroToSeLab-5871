@@ -21,6 +21,10 @@ public class Vector {
         }
     }
 
+    public Point3D getHead() {
+        return _head;
+    }
+
     public Vector add(Vector other) {
         return new Vector(_head.add(other));
     }
