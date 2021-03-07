@@ -12,43 +12,48 @@ class VectorTest {
 
     @Test
     void add() {
+        assertEquals(new Vector(0.25d, 4d, 2.7d), _a.add(_b));
     }
 
     @Test
     void subtract() {
+        assertEquals(new Vector(5.75d, -10d, 3.3d), _a.subtract(_b));
     }
 
     @Test
     void scale() {
+        assertEquals(new Vector(-1d, 1d, -1d), _a.scale(-1d / 3d));
     }
 
     @Test
     void crossProduct() {
+        assertEquals(new Vector(-20.1d, -7.35, 12.75), _a.crossProduct(_b));
     }
 
     @Test
     void dotProduct() {
+        assertEquals(-30.15d, _a.dotProduct(_b));
     }
 
     @Test
     void lengthSquared() {
+        assertEquals(27d, _a.lengthSquared());
     }
 
     @Test
     void length() {
+        assertEquals(5.196d, _a.length(), 0.01);
     }
 
     @Test
     void normalize() {
-        Vector unit = new Vector(-0.365d, -0.93d, 0.399d);
-        Vector b = new Vector(_b._head).normalize();
-        assertEquals(b, unit);
+        Vector b = new Vector(_b.getHead()).normalize();
+        assertEquals(1d, b.lengthSquared(), 0.01);
     }
 
     @Test
     void normalized() {
-        Vector unit = new Vector(0.802d, -0.535d, 0.267d);
-        assertEquals(_a.normalized(), unit);
+        assertEquals(1d, _a.normalized().lengthSquared(), 0.01);
     }
 
     @Test
@@ -58,17 +63,21 @@ class VectorTest {
 
     @Test
     void testEqualsNull() {
-        assertNotEquals(_a, null);
+        assertNotEquals(null, _a);
     }
 
     @Test
-    void testEqualsDifferentClass() { assertFalse(_a.equals(new Coordinate(5))); }
+    void testEqualsDifferentClass() {
+        assertFalse(_a.equals(new Coordinate(5)));
+    }
 
     @Test
     void testEqualsWhenNotEquals() {
-        assertNotEquals(_a, _b);
+        assertNotEquals(_b, _a);
     }
 
     @Test
-    void testEqualsWhenEquals() { assertEquals(_a, _aSame); }
+    void testEqualsWhenEquals() {
+        assertEquals(_aSame, _a);
+    }
 }

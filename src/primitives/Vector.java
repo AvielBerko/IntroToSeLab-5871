@@ -39,7 +39,7 @@ public class Vector {
 
     public Vector crossProduct(Vector other) {
         return new Vector(_head._y.coord * other._head._z.coord - _head._z.coord * other._head._y.coord,
-                          _head._x.coord * other._head._z.coord - _head._z.coord * other._head._x.coord,
+                          _head._z.coord * other._head._x.coord - _head._x.coord * other._head._z.coord ,
                           _head._x.coord * other._head._y.coord - _head._y.coord * other._head._x.coord);
     }
 
