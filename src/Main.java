@@ -2,6 +2,9 @@ import primitives.*;
 import static java.lang.System.out;
 import static primitives.Util.*;
 
+// Aviel Berkowitz 211981105
+// Meir  Klemfner  211954185
+
 /**
  * Test program for the 1st stage
  *
