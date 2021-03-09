@@ -4,31 +4,105 @@ import jdk.jshell.spi.ExecutionControl;
 
 import java.util.Objects;
 
+/**
+ * A 3D point in space. The represented point is using 3 coordinate.
+ */
 public class Point3D {
+    /**
+     * A point with the coordinates (0, 0, 0)
+     */
     public static final Point3D ZERO = new Point3D(0d, 0d, 0d);
 
-    final Coordinate _x;
-    final Coordinate _y;
-    final Coordinate _z;
+    private final Coordinate _x;
+    private final Coordinate _y;
+    private final Coordinate _z;
 
+    /**
+     * Creates a new point with a given coordinates.
+     *
+     * @param x the coordinate for the X axis.
+     * @param y the coordinate for the Y axis.
+     * @param z the coordinate for the Z axis.
+     */
     public Point3D(Coordinate x, Coordinate y, Coordinate z) {
-        this(x.coord, y.coord, z.coord);
+        // this(x.coord, y.coord, z.coord);
+
+        // For performance improvements.
+        _x = x;
+        _y = y;
+        _z = z;
     }
 
+    /**
+     * Returns the X axis coordinate.
+     *
+     * @return A shallow copy of the X axis coordinate.
+     */
+    public Coordinate getX() {
+        // return new Coordinate(_x);
+
+        // For performance improvements.
+        return _x;
+    }
+
+    /**
+     * Returns the Y axis coordinate.
+     *
+     * @return A shallow copy of the Y axis coordinate.
+     */
+    public Coordinate getY() {
+        // return new Coordinate(_y);
+
+        // For performance improvements.
+        return _y;
+    }
+
+    /**
+     * Returns the Z axis coordinate.
+     *
+     * @return A shallow copy of the Z axis coordinate.
+     */
+    public Coordinate getZ() {
+        // return new Coordinate(_z);
+
+        // For performance improvements.
+        return _z;
+    }
+
+    /**
+     * Main constructor.
+     * Creates a new point from a given coordinates.
+     *
+     * @param x the coordinate for the X axis.
+     * @param y the coordinate for the Y axis.
+     * @param z the coordinate for the Z axis.
+     */
     public Point3D(double x, double y, double z) {
         _x = new Coordinate(x);
         _y = new Coordinate(y);
         _z = new Coordinate(z);
     }
 
+    /**
+     * Adds a vector to the current point.
+     *
+     * @param vector The vector to add.
+     * @return The created point with the addition.
+     */
     public Point3D add(Vector vector) {
         return new Point3D(
-                _x.coord + vector._head._x.coord,
-                _y.coord + vector._head._y.coord,
-                _z.coord + vector._head._z.coord
+                _x.coord + vector.getHead()._x.coord,
+                _y.coord + vector.getHead()._y.coord,
+                _z.coord + vector.getHead()._z.coord
         );
     }
 
+    /**
+     * Vector subtraction - Creates a vector from the given point to the current point.
+     *
+     * @param point The origin point of the vector
+     * @return The created vector from the given point to the current point.
+     */
     public Vector subtract(Point3D point) {
         return new Vector(
                 _x.coord - point._x.coord,
@@ -37,6 +111,11 @@ public class Point3D {
         );
     }
 
+    /**
+     * Calculates the squared distance between the current point and the given point.
+     * @param point The point to calculate the distance to.
+     * @return The calculated squared distance.
+     */
     public double distanceSquared(Point3D point) {
         double x = _x.coord - point._x.coord;
         double y = _y.coord - point._y.coord;
@@ -45,6 +124,11 @@ public class Point3D {
         return x*x + y*y + z*z;
     }
 
+    /**
+     * Calculates the distance between the current point and the given point.
+     * @param point The point to calculate the distance to.
+     * @return The calculated distance.
+     */
     public double distance(Point3D point) {
         return Math.sqrt(distanceSquared(point));
     }

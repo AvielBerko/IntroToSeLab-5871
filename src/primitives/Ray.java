@@ -2,13 +2,49 @@ package primitives;
 
 import java.util.Objects;
 
+/**
+ * A ray - A fundamental object in geometry with initial point and direction.
+ */
 public class Ray {
-	Point3D _p0;
-	Vector _dir;
+	private final Point3D _p0;
+	private final Vector _dir;
 
-	public Ray(Point3D _p0, Vector _dir) {
-		this._p0 = new Point3D(_p0._x, _p0._y, _p0._z);
-		this._dir = _dir.normalized();
+	/**
+	 * Creates a new ray with a given point and vector.
+	 * The vector will be normalized.
+	 * @param p0 The initial point of the ray.
+	 * @param dir The direction of the ray. (Can be a non-normalized vector).
+	 */
+	public Ray(Point3D p0, Vector dir) {
+		_dir = dir.normalized();
+		//_p0 = new Point3D(_p0.getX(), _p0.getY(), _p0.getZ());
+
+		// For performance improvement.
+		_p0 = p0;
+	}
+
+	/**
+	 * Returns the initial point of the ray.
+     *
+	 * @return A shallow copy of the initial point.
+	 */
+	public Point3D getPoint() {
+		//return new Point3D(_p0.getX(), _p0.getY(), _p0.getZ());
+
+	    // For performance Improvement.
+		return _p0;
+	}
+
+	/**
+	 * Returns the direction vector of the ray.
+     *
+	 * @return A shallow copy of the direction vector.
+	 */
+	public Vector getDir() {
+	    // return new Vector(_dir.getHead());
+
+		// For performance Improvement.
+		return _dir;
 	}
 
 	@Override
