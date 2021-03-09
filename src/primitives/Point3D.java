@@ -1,7 +1,5 @@
 package primitives;
 
-import jdk.jshell.spi.ExecutionControl;
-
 import java.util.Objects;
 
 /**
@@ -27,7 +25,7 @@ public class Point3D {
     public Point3D(Coordinate x, Coordinate y, Coordinate z) {
         // this(x.coord, y.coord, z.coord);
 
-        // For performance improvements.
+        // For performance improvement.
         _x = x;
         _y = y;
         _z = z;
@@ -41,7 +39,7 @@ public class Point3D {
     public Coordinate getX() {
         // return new Coordinate(_x);
 
-        // For performance improvements.
+        // For performance improvement.
         return _x;
     }
 
@@ -53,7 +51,7 @@ public class Point3D {
     public Coordinate getY() {
         // return new Coordinate(_y);
 
-        // For performance improvements.
+        // For performance improvement.
         return _y;
     }
 
@@ -65,7 +63,7 @@ public class Point3D {
     public Coordinate getZ() {
         // return new Coordinate(_z);
 
-        // For performance improvements.
+        // For performance improvement.
         return _z;
     }
 

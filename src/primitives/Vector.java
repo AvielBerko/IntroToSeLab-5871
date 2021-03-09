@@ -12,6 +12,7 @@ public class Vector {
     /**
      * Creates a vector by a given head.
      * @param head The end point of the vector.
+     * @exception IllegalArgumentException When the given point is 0.
      */
     public Vector(Point3D head) {
         this(head.getX(), head.getY(), head.getZ());
@@ -22,6 +23,7 @@ public class Vector {
      * @param x The X axis of the end point.
      * @param y The Y axis of the end point.
      * @param z The Z axis of the end point.
+     * @exception IllegalArgumentException When the given coordinates are all 0.
      */
     public Vector(Coordinate x, Coordinate y, Coordinate z) {
         //this(x.coord, y.coord, z.coord);
@@ -39,6 +41,7 @@ public class Vector {
      * @param x The X axis of the end point.
      * @param y The Y axis of the end point.
      * @param z The Z axis of the end point.
+     * @exception IllegalArgumentException When the given coordinates are all 0.
      */
     public Vector(double x, double y, double z) {
         _head = new Point3D(x, y, z);

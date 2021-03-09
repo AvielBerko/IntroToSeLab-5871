@@ -1,7 +1,5 @@
 package primitives;
 
-import java.util.Objects;
-
 /**
  * A ray - A fundamental object in geometry with initial point and direction.
  */

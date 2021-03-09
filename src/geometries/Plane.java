@@ -3,20 +3,32 @@ package geometries;
 import primitives.Point3D;
 import primitives.Vector;
 
+/**
+ * Plane class represents two-dimensional plane in 3D Cartesian coordinate
+ * system
+ */
 public class Plane implements Geometry {
 
-    final Point3D _q0;
-    final Vector _normal;
+    protected final Point3D _q0;
+    protected final Vector _normal;
 
+    /**
+     * Creates a new plane by a point on the plane and the plane's normal.
+     * @param q0 A point on the plane.
+     * @param normal The plane's normal.
+     */
     public Plane(Point3D q0, Vector normal) {
-        if (normal.equals(new Vector(Point3D.ZERO))) {
-            throw new IllegalArgumentException("Normal cannot be a zero vector");
-        }
-
         _q0 = q0;
         _normal = normal;
     }
 
+    /**
+     * Creates a new plane by three different points on the plane.
+     * @param a A point on the plane.
+     * @param b A point on the plane.
+     * @param c A point on the plane.
+     * @exception IllegalArgumentException When two of the given points are equals.
+     */
     public Plane(Point3D a, Point3D b, Point3D c) {
         if (a.equals(b) || a.equals(c) || b.equals(c)) {
             throw new IllegalArgumentException("All points should be different");
@@ -26,7 +38,25 @@ public class Plane implements Geometry {
         _normal = null; /* TODO: the normal calculation should be implemented next assignment. */
     }
 
+    /**
+     * Returns a point on the plane.
+     * @return A shallow copy of the point.
+     */
+    public Point3D getPoint() {
+        // return new Point3D(_q0.getX(), _q0.getY(), _q0.getZ());
+
+        // For performance improvement.
+        return _q0;
+    }
+
+    /**
+     * Returns the plane's normal.
+     * @return A shallow copy of the normal.
+     */
     public Vector getNormal() {
+        // return new Vector(_normal.getHead());
+
+        // For performance improvement.
         return _normal;
     }
 
