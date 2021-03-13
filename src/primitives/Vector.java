@@ -15,7 +15,14 @@ public class Vector {
      * @exception IllegalArgumentException When the given point is 0.
      */
     public Vector(Point3D head) {
-        this(head.getX(), head.getY(), head.getZ());
+        // this(head.getX(), head.getY(), head.getZ());
+
+        // For performance improvement.
+        if (head.equals(Point3D.ZERO)) {
+            throw new IllegalArgumentException("Vector cannot be a zero vector");
+        }
+
+        _head = head;
     }
 
     /**
@@ -26,7 +33,7 @@ public class Vector {
      * @exception IllegalArgumentException When the given coordinates are all 0.
      */
     public Vector(Coordinate x, Coordinate y, Coordinate z) {
-        //this(x.coord, y.coord, z.coord);
+        // this(x.coord, y.coord, z.coord);
 
         // For performance improvement.
         _head = new Point3D(x, y, z);
