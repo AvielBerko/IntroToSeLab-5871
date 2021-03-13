@@ -32,6 +32,20 @@ public class Point3D {
     }
 
     /**
+     * Main constructor.
+     * Creates a new point from a given coordinates.
+     *
+     * @param x the coordinate for the X axis.
+     * @param y the coordinate for the Y axis.
+     * @param z the coordinate for the Z axis.
+     */
+    public Point3D(double x, double y, double z) {
+        _x = new Coordinate(x);
+        _y = new Coordinate(y);
+        _z = new Coordinate(z);
+    }
+
+    /**
      * Returns the X axis coordinate.
      *
      * @return A shallow copy of the X axis coordinate.
@@ -65,20 +79,6 @@ public class Point3D {
 
         // For performance improvement.
         return _z;
-    }
-
-    /**
-     * Main constructor.
-     * Creates a new point from a given coordinates.
-     *
-     * @param x the coordinate for the X axis.
-     * @param y the coordinate for the Y axis.
-     * @param z the coordinate for the Z axis.
-     */
-    public Point3D(double x, double y, double z) {
-        _x = new Coordinate(x);
-        _y = new Coordinate(y);
-        _z = new Coordinate(z);
     }
 
     /**
