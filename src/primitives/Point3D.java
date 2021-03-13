@@ -50,11 +50,11 @@ public class Point3D {
      *
      * @return A shallow copy of the X axis coordinate.
      */
-    public Coordinate getX() {
+    public double getX() {
         // return new Coordinate(_x);
 
         // For performance improvement.
-        return _x;
+        return _x.coord;
     }
 
     /**
@@ -62,11 +62,11 @@ public class Point3D {
      *
      * @return A shallow copy of the Y axis coordinate.
      */
-    public Coordinate getY() {
+    public double getY() {
         // return new Coordinate(_y);
 
         // For performance improvement.
-        return _y;
+        return _y.coord;
     }
 
     /**
@@ -74,11 +74,11 @@ public class Point3D {
      *
      * @return A shallow copy of the Z axis coordinate.
      */
-    public Coordinate getZ() {
+    public double getZ() {
         // return new Coordinate(_z);
 
         // For performance improvement.
-        return _z;
+        return _z.coord;
     }
 
     /**
@@ -88,10 +88,11 @@ public class Point3D {
      * @return The created point with the addition.
      */
     public Point3D add(Vector vector) {
+        Point3D vectorHead = vector.getHead();
         return new Point3D(
-                _x.coord + vector.getHead()._x.coord,
-                _y.coord + vector.getHead()._y.coord,
-                _z.coord + vector.getHead()._z.coord
+                _x.coord + vectorHead._x.coord,
+                _y.coord + vectorHead._y.coord,
+                _z.coord + vectorHead._z.coord
         );
     }
 

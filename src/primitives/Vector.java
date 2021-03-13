@@ -90,9 +90,9 @@ public class Vector {
      * @return A new vector of the result.
      */
     public Vector scale(double scalar) {
-        double x = _head.getX().coord;
-        double y = _head.getY().coord;
-        double z = _head.getZ().coord;
+        double x = _head.getX();
+        double y = _head.getY();
+        double z = _head.getZ();
 
         return new Vector(
                 x * scalar,
@@ -108,13 +108,13 @@ public class Vector {
      * @return A new vector of the result.
      */
     public Vector crossProduct(Vector other) {
-        double x1 = _head.getX().coord;
-        double y1 = _head.getY().coord;
-        double z1 = _head.getZ().coord;
+        double x1 = _head.getX();
+        double y1 = _head.getY();
+        double z1 = _head.getZ();
 
-        double x2 = other._head.getX().coord;
-        double y2 = other._head.getY().coord;
-        double z2 = other._head.getZ().coord;
+        double x2 = other._head.getX();
+        double y2 = other._head.getY();
+        double z2 = other._head.getZ();
 
         return new Vector(y1 * z2 - z1 * y2,
                           z1 * x2 - x1 * z2,
@@ -129,13 +129,13 @@ public class Vector {
      * @return The scalar of the result.
      */
     public double dotProduct(Vector other) {
-        double x1 = _head.getX().coord;
-        double y1 = _head.getY().coord;
-        double z1 = _head.getZ().coord;
+        double x1 = _head.getX();
+        double y1 = _head.getY();
+        double z1 = _head.getZ();
 
-        double x2 = other._head.getX().coord;
-        double y2 = other._head.getY().coord;
-        double z2 = other._head.getZ().coord;
+        double x2 = other._head.getX();
+        double y2 = other._head.getY();
+        double z2 = other._head.getZ();
 
         return x1 * x2 +
                y1 * y2 +
@@ -168,9 +168,9 @@ public class Vector {
     public Vector normalize() {
         double len = 1 / length();
 
-        double x = _head.getX().coord;
-        double y = _head.getY().coord;
-        double z = _head.getZ().coord;
+        double x = _head.getX();
+        double y = _head.getY();
+        double z = _head.getZ();
 
         _head = new Point3D(x * len, y * len, z * len);
         return this;
@@ -184,9 +184,9 @@ public class Vector {
     public Vector normalized() {
         double len = 1 / length();
 
-        double x = _head.getX().coord;
-        double y = _head.getY().coord;
-        double z = _head.getZ().coord;
+        double x = _head.getX();
+        double y = _head.getY();
+        double z = _head.getZ();
 
         return new Vector(x * len, y * len, z * len);
     }
