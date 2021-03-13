@@ -7,23 +7,23 @@ import static primitives.Util.*;
 /**
  * Polygon class represents two-dimensional polygon in 3D Cartesian coordinate
  * system
- * 
+ *
  * @author Dan
  */
 public class Polygon implements Geometry {
 	/**
 	 * List of polygon's vertices
 	 */
-	protected List<Point3D> _vertices;
+	protected List<Point3D> vertices;
 	/**
 	 * Associated plane in which the polygon lays
 	 */
-	protected Plane _plane;
+	protected Plane plane;
 
 	/**
 	 * Polygon constructor based on vertices list. The list must be ordered by edge
 	 * path. The polygon must be convex.
-	 * 
+	 *
 	 * @param vertices list of vertices according to their order by edge path
 	 * @throws IllegalArgumentException in any case of illegal combination of
 	 *                                  vertices:
@@ -44,15 +44,15 @@ public class Polygon implements Geometry {
 	public Polygon(Point3D... vertices) {
 		if (vertices.length < 3)
 			throw new IllegalArgumentException("A polygon can't have less than 3 vertices");
-		this._vertices = List.of(vertices);
+		this.vertices = List.of(vertices);
 		// Generate the plane according to the first three vertices and associate the
 		// polygon with this plane.
 		// The plane holds the invariant normal (orthogonal unit) vector to the polygon
-		_plane = new Plane(vertices[0], vertices[1], vertices[2]);
+		plane = new Plane(vertices[0], vertices[1], vertices[2]);
 		if (vertices.length == 3)
 			return; // no need for more tests for a Triangle
 
-		Vector n = _plane.getNormal();
+		Vector n = plane.getNormal();
 
 		// Subtracting any subsequent points will throw an IllegalArgumentException
 		// because of Zero Vector if they are in the same point
@@ -83,24 +83,6 @@ public class Polygon implements Geometry {
 
 	@Override
 	public Vector getNormal(Point3D point) {
-		return _plane.getNormal();
-	}
-
-	@Override
-	public String toString() {
-		// builds a string with all the vertices.
-		StringBuilder vertices = new StringBuilder();
-		for (int i = 0; i < _vertices.size(); i++) {
-			vertices.append("Vertex ")
-					.append(i)
-					.append(": ")
-					.append(_vertices.get(i))
-					.append(' ');
-		}
-
-		return "Polygon{" +
-				"vertices={ " + vertices +
-				"}, plane=" + _plane +
-				'}';
+		return plane.getNormal();
 	}
 }
