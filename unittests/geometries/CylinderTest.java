@@ -37,13 +37,13 @@ class CylinderTest {
         try {
             new Cylinder(new Ray(new Point3D(1, -1.5, 0), new Vector(0, 2, 1)), 0, 1);
             fail("Constructed a cylinder while the radius is 0");
-        } catch (IllegalArgumentException err) {}
+        } catch (IllegalArgumentException ignored) {}
 
         // TC04: Test when the radius is -0.1
         try {
             new Cylinder(new Ray(new Point3D(1, -1.5, 0), new Vector(0, 2, 1)), -0.1, 1);
             fail("Constructed a cylinder while the radius is -0.1");
-        } catch (IllegalArgumentException err) {}
+        } catch (IllegalArgumentException ignored) {}
 
         // TC02: Test when the height is 0.1
         try {
@@ -56,13 +56,13 @@ class CylinderTest {
         try {
             new Cylinder(new Ray(new Point3D(1, -1.5, 0), new Vector(0, 2, 1)), 1, 0);
             fail("Constructed a cylinder while the height is 0");
-        } catch (IllegalArgumentException err) {}
+        } catch (IllegalArgumentException ignored) {}
 
         // TC04: Test when the height is -0.1
         try {
             new Cylinder(new Ray(new Point3D(1, -1.5, 0), new Vector(0, 2, 1)), 1, -0.1);
             fail("Constructed a cylinder while the height is -0.1");
-        } catch (IllegalArgumentException err) {}
+        } catch (IllegalArgumentException ignored) {}
     }
 
     /**

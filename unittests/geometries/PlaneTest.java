@@ -37,7 +37,7 @@ class PlaneTest {
                     new Point3D(0, 1, 0)
             );
             fail("Constructed a plane while point a and b are equals");
-        } catch (IllegalArgumentException err) {}
+        } catch (IllegalArgumentException ignored) {}
 
         // TC03: Test when point a is equals to point c.
         try {
@@ -47,7 +47,7 @@ class PlaneTest {
                     new Point3D(0, 0, 1)
             );
             fail("Constructed a plane while point a and c are equals");
-        } catch (IllegalArgumentException err) {}
+        } catch (IllegalArgumentException ignored) {}
 
         // TC04: Test when point b is equals to point c.
         try {
@@ -57,7 +57,7 @@ class PlaneTest {
                     new Point3D(0, 1, 0)
             );
             fail("Constructed a plane while point b and c are equals");
-        } catch (IllegalArgumentException err) {}
+        } catch (IllegalArgumentException ignored) {}
     }
 
     /**

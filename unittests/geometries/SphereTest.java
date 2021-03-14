@@ -36,13 +36,13 @@ class SphereTest {
         try {
             new Sphere(new Point3D(1, 0, 1), 0);
             fail("Constructed a sphere while the radius is 0");
-        } catch (IllegalArgumentException err) {}
+        } catch (IllegalArgumentException ignored) {}
 
         // TC04: Test when the radius is -0.1
         try {
             new Sphere(new Point3D(1, 0, 1), -0.1);
             fail("Constructed a sphere while the radius is -0.1");
-        } catch (IllegalArgumentException err) {}
+        } catch (IllegalArgumentException ignored) {}
     }
 
     /**

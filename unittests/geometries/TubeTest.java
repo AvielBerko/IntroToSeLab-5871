@@ -37,13 +37,13 @@ class TubeTest {
         try {
             new Tube(new Ray(new Point3D(1, -1.5, 0), new Vector(0, 2, 1)), 0);
             fail("Constructed a tube while the radius is 0");
-        } catch (IllegalArgumentException err) {}
+        } catch (IllegalArgumentException ignored) {}
 
         // TC04: Test when the radius is -0.1
         try {
             new Tube(new Ray(new Point3D(1, -1.5, 0), new Vector(0, 2, 1)), -0.1);
             fail("Constructed a tube while the radius is -0.1");
-        } catch (IllegalArgumentException err) {}
+        } catch (IllegalArgumentException ignored) {}
     }
 
     /**
