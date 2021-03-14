@@ -35,7 +35,10 @@ public class Plane implements Geometry {
         }
 
         _q0 = a;
-        _normal = null; /* TODO: the normal calculation should be implemented next assignment. */
+
+        Vector v1 = b.subtract(a);
+        Vector v2 = c.subtract(a);
+        _normal = v1.crossProduct(v2).normalize();
     }
 
     /**
@@ -62,7 +65,7 @@ public class Plane implements Geometry {
 
     @Override
     public Vector getNormal(Point3D point) {
-        return null;
+        return _normal;
     }
 
     @Override
