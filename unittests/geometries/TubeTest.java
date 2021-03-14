@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class TubeTest {
 
     /**
-     * Test method for {@link geometries.Sphere#Sphere(primitives.Point3D, double)}.
+     * Test method for {@link geometries.Tube#Tube(primitives.Ray, double)}.
      */
     @Test
     void testConstructor() {
