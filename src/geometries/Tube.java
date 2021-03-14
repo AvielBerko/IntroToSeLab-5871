@@ -4,6 +4,8 @@ import primitives.Point3D;
 import primitives.Vector;
 import primitives.Ray;
 
+import static primitives.Util.isZero;
+
 /**
  * Tube class represents a tube in 3D Cartesian coordinate system.
  */
@@ -56,7 +58,13 @@ public class Tube implements Geometry {
         Point3D p0 = _axisRay.getPoint();
 
         double t = v.dotProduct(p.subtract(p0));
-        Point3D o = p0.add(v.scale(t));
+
+        // if t = 0, then o = p0 and t * v is the zero vector.
+        Point3D o = p0;
+
+        if (!isZero(t)) {
+            o = p0.add(v.scale(t));
+        }
 
         return p.subtract(o).normalize();
     }
