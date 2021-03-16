@@ -2,23 +2,27 @@ package primitives;
 
 import java.util.Objects;
 
+import static primitives.Point3D.ZERO;
+import static primitives.Util.alignZero;
+import static primitives.Util.isZero;
+
 /**
  * A vector - A fundamental object in geometry with direction and size,
  * defined by the end point (when the starting point is the axis's origin).
  */
 public class Vector {
-    private Point3D _head;
+     Point3D _head;
 
-    /**
+    /** primary constructor
      * Creates a vector by a given head.
      * @param head The end point of the vector.
      * @exception IllegalArgumentException When the given point is 0.
      */
     public Vector(Point3D head) {
-        // this(head.getX(), head.getY(), head.getZ());
+        // this(head._x, head._y._coord, head._z._coord);
 
         // For performance improvement.
-        if (head.equals(Point3D.ZERO)) {
+        if (head.equals(ZERO)) {
             throw new IllegalArgumentException("Vector cannot be a zero vector");
         }
 
@@ -33,14 +37,16 @@ public class Vector {
      * @exception IllegalArgumentException When the given coordinates are all 0.
      */
     public Vector(Coordinate x, Coordinate y, Coordinate z) {
-        // this(x.coord, y.coord, z.coord);
+        // this(new Point3D(x,y,x));
 
         // For performance improvement.
-        _head = new Point3D(x, y, z);
+        Point3D head = new Point3D(x, y, z);
 
-        if (_head.equals(Point3D.ZERO)) {
+        if (head.equals(ZERO)) {
             throw new IllegalArgumentException("Vector cannot be a zero vector");
         }
+        
+        _head=head;
     }
 
     /**
@@ -51,11 +57,15 @@ public class Vector {
      * @exception IllegalArgumentException When the given coordinates are all 0.
      */
     public Vector(double x, double y, double z) {
-        _head = new Point3D(x, y, z);
+        //this(new Point3D(x,y,z));
+        Point3D head = new Point3D(x, y, z);
 
-        if (_head.equals(Point3D.ZERO)) {
+        if (head.equals(ZERO)) {
             throw new IllegalArgumentException("Vector cannot be a zero vector");
         }
+
+        _head=head;
+
     }
 
     /**
@@ -64,7 +74,7 @@ public class Vector {
      * @return A shallow copy of the head vector.
      */
     public Point3D getHead() {
-        // return new Point3D(_head.getX(), _head.getY(), _head.getZ());
+        // return new Point3D(_head._x, _head._y._coord, _head._z._coord);
 
         // For performance improvement.
         return _head;
@@ -77,7 +87,11 @@ public class Vector {
      * @return A new vector of the result.
      */
     public Vector add(Vector other) {
-        return new Vector(_head.add(other));
+        Point3D point3D =_head.add(other);
+        if(ZERO.equals(point3D)){
+            throw new IllegalArgumentException("resulting ZERO Point");
+        }
+        return new Vector(point3D);
     }
 
     /**
@@ -97,9 +111,9 @@ public class Vector {
      * @return A new vector of the result.
      */
     public Vector scale(double scalar) {
-        double x = _head.getX();
-        double y = _head.getY();
-        double z = _head.getZ();
+        double x = _head._x._coord;
+        double y = _head._y._coord;
+        double z = _head._z._coord;
 
         return new Vector(
                 x * scalar,
@@ -115,13 +129,13 @@ public class Vector {
      * @return A new vector of the result.
      */
     public Vector crossProduct(Vector other) {
-        double x1 = _head.getX();
-        double y1 = _head.getY();
-        double z1 = _head.getZ();
+        double x1 = _head._x._coord;
+        double y1 = _head._y._coord;
+        double z1 = _head._z._coord;
 
-        double x2 = other._head.getX();
-        double y2 = other._head.getY();
-        double z2 = other._head.getZ();
+        double x2 = other._head._x._coord;
+        double y2 = other._head._y._coord;
+        double z2 = other._head._z._coord;
 
         return new Vector(y1 * z2 - z1 * y2,
                           z1 * x2 - x1 * z2,
@@ -136,13 +150,13 @@ public class Vector {
      * @return The scalar of the result.
      */
     public double dotProduct(Vector other) {
-        double x1 = _head.getX();
-        double y1 = _head.getY();
-        double z1 = _head.getZ();
+        double x1 = _head._x._coord;
+        double y1 = _head._y._coord;
+        double z1 = _head._z._coord;
 
-        double x2 = other._head.getX();
-        double y2 = other._head.getY();
-        double z2 = other._head.getZ();
+        double x2 = other._head._x._coord;
+        double y2 = other._head._y._coord;
+        double z2 = other._head._z._coord;
 
         return x1 * x2 +
                y1 * y2 +
@@ -155,7 +169,11 @@ public class Vector {
      * @return The squared length of the vector.
      */
     public double lengthSquared() {
-        return _head.distanceSquared(Point3D.ZERO);
+        double x = _head._x._coord;
+        double y = _head._y._coord;
+        double z = _head._z._coord;
+
+        return x*x +y*y +z*z;
     }
 
     /**
@@ -173,13 +191,26 @@ public class Vector {
      * @return The current vector.
      */
     public Vector normalize() {
-        double len = 1 / length();
+//        double len = alignZero(1 / length());
+//
+//        if(isZero(len)){
+//            throw new ArithmeticException("hyhuihuihuih");
+//        }
+//
+//        double x = _head._x._coord;
+//        double y = _head._y._coord;
+//        double z = _head._z._coord;
+//        _head = new Point3D(x * len, y * len, z * len);
 
-        double x = _head.getX();
-        double y = _head.getY();
-        double z = _head.getZ();
-
-        _head = new Point3D(x * len, y * len, z * len);
+        double len = length();
+        double x = _head._x._coord;
+        double y = _head._y._coord;
+        double z = _head._z._coord;
+        Point3D temp = new Point3D(x / len, y / len, z / len);
+        if (ZERO.equals(temp)) {
+            throw new ArithmeticException("");
+        }
+        _head = temp;
         return this;
     }
 
@@ -191,9 +222,9 @@ public class Vector {
     public Vector normalized() {
         double len = 1 / length();
 
-        double x = _head.getX();
-        double y = _head.getY();
-        double z = _head.getZ();
+        double x = _head._x._coord;
+        double y = _head._y._coord;
+        double z = _head._z._coord;
 
         return new Vector(x * len, y * len, z * len);
     }

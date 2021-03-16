@@ -53,9 +53,11 @@ public class Plane implements Geometry {
     }
 
     /**
+     * @deprecated  use {@link Plane#getNormal(Point3D)}   with null for parameter value.
      * Returns the plane's normal.
      * @return A shallow copy of the normal.
      */
+    @Deprecated
     public Vector getNormal() {
         // return new Vector(_normal.getHead());
 
