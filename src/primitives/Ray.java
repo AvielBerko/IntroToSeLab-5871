@@ -4,8 +4,8 @@ package primitives;
  * A ray - A fundamental object in geometry with initial point and direction.
  */
 public class Ray {
-	private final Point3D _p0;
-	private final Vector _dir;
+	final Point3D _p0;
+	final Vector _dir;
 
 	/**
 	 * Creates a new ray with a given point and vector.

@@ -3,7 +3,6 @@ package primitives;
 import java.util.Objects;
 
 import static primitives.Point3D.ZERO;
-import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
 /**
@@ -19,9 +18,6 @@ public class Vector {
      * @exception IllegalArgumentException When the given point is 0.
      */
     public Vector(Point3D head) {
-        // this(head._x, head._y._coord, head._z._coord);
-
-        // For performance improvement.
         if (head.equals(ZERO)) {
             throw new IllegalArgumentException("Vector cannot be a zero vector");
         }
@@ -37,7 +33,7 @@ public class Vector {
      * @exception IllegalArgumentException When the given coordinates are all 0.
      */
     public Vector(Coordinate x, Coordinate y, Coordinate z) {
-        // this(new Point3D(x,y,x));
+        // this(new Point3D(x, y, z));
 
         // For performance improvement.
         Point3D head = new Point3D(x, y, z);
@@ -45,8 +41,8 @@ public class Vector {
         if (head.equals(ZERO)) {
             throw new IllegalArgumentException("Vector cannot be a zero vector");
         }
-        
-        _head=head;
+
+        _head = head;
     }
 
     /**
@@ -57,15 +53,16 @@ public class Vector {
      * @exception IllegalArgumentException When the given coordinates are all 0.
      */
     public Vector(double x, double y, double z) {
-        //this(new Point3D(x,y,z));
+        //this(new Point3D(x, y, z));
+
+        // For performance improvement.
         Point3D head = new Point3D(x, y, z);
 
         if (head.equals(ZERO)) {
             throw new IllegalArgumentException("Vector cannot be a zero vector");
         }
 
-        _head=head;
-
+        _head = head;
     }
 
     /**
@@ -74,7 +71,7 @@ public class Vector {
      * @return A shallow copy of the head vector.
      */
     public Point3D getHead() {
-        // return new Point3D(_head._x, _head._y._coord, _head._z._coord);
+        // return new Point3D(_head._x._coord, _head._y._coord, _head._z._coord);
 
         // For performance improvement.
         return _head;
@@ -87,11 +84,12 @@ public class Vector {
      * @return A new vector of the result.
      */
     public Vector add(Vector other) {
-        Point3D point3D =_head.add(other);
-        if(ZERO.equals(point3D)){
-            throw new IllegalArgumentException("resulting ZERO Point");
+        Point3D result =_head.add(other);
+        if(ZERO.equals(result)){
+            throw new IllegalArgumentException("Resulting a ZERO Vector");
         }
-        return new Vector(point3D);
+
+        return new Vector(result);
     }
 
     /**
@@ -111,6 +109,10 @@ public class Vector {
      * @return A new vector of the result.
      */
     public Vector scale(double scalar) {
+        if (isZero(scalar)) {
+            throw new IllegalArgumentException("Resulting a ZERO Vector");
+        }
+
         double x = _head._x._coord;
         double y = _head._y._coord;
         double z = _head._z._coord;
@@ -173,7 +175,7 @@ public class Vector {
         double y = _head._y._coord;
         double z = _head._z._coord;
 
-        return x*x +y*y +z*z;
+        return x * x + y * y + z * z;
     }
 
     /**
@@ -191,25 +193,16 @@ public class Vector {
      * @return The current vector.
      */
     public Vector normalize() {
-//        double len = alignZero(1 / length());
-//
-//        if(isZero(len)){
-//            throw new ArithmeticException("hyhuihuihuih");
-//        }
-//
-//        double x = _head._x._coord;
-//        double y = _head._y._coord;
-//        double z = _head._z._coord;
-//        _head = new Point3D(x * len, y * len, z * len);
-
         double len = length();
         double x = _head._x._coord;
         double y = _head._y._coord;
         double z = _head._z._coord;
+
         Point3D temp = new Point3D(x / len, y / len, z / len);
         if (ZERO.equals(temp)) {
-            throw new ArithmeticException("");
+            throw new ArithmeticException("Resulting a ZERO Vector");
         }
+
         _head = temp;
         return this;
     }
@@ -220,13 +213,13 @@ public class Vector {
      * @return The copy of the vector.
      */
     public Vector normalized() {
-        double len = 1 / length();
+        double len = length();
 
         double x = _head._x._coord;
         double y = _head._y._coord;
         double z = _head._z._coord;
 
-        return new Vector(x * len, y * len, z * len);
+        return new Vector(x / len, y / len, z / len);
     }
 
     @Override
