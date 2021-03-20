@@ -43,6 +43,41 @@ public class Point3D {
         _z = new Coordinate(z);
     }
 
+    /**
+     * Returns the X axis coordinate.
+     *
+     * @return A shallow copy of the X axis coordinate.
+     */
+    public double getX() {
+        // return new Coordinate(_x);
+
+        // For performance improvement.
+        return _x._coord;
+    }
+
+    /**
+     * Returns the Y axis coordinate.
+     *
+     * @return A shallow copy of the Y axis coordinate.
+     */
+    public double getY() {
+        // return new Coordinate(_y);
+
+        // For performance improvement.
+        return _y._coord;
+    }
+
+    /**
+     * Returns the Z axis coordinate.
+     *
+     * @return A shallow copy of the Z axis coordinate.
+     */
+    public double getZ() {
+        // return new Coordinate(_z);
+
+        // For performance improvement.
+        return _z._coord;
+    }
 
     /**
      * Adds a vector to the current point.

@@ -19,13 +19,13 @@ public class Sphere implements Geometry {
      * @param radius The sphere's radius.
      * @exception IllegalArgumentException When the radius is equals or less than 0.
      */
-    public Sphere(Point3D center, double radius) {
+    public Sphere(double radius, Point3D center) {
         if (radius <= 0) {
             throw new IllegalArgumentException("The radius should be greater then 0");
         }
 
-        _center = center;
         _radius = radius;
+        _center = center;
     }
 
     /**
