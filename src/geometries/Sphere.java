@@ -6,6 +6,9 @@ import primitives.Vector;
 
 import java.util.List;
 
+import static primitives.Util.alignZero;
+import static primitives.Util.isZero;
+
 /**
  * Sphere class represents a sphere in 3D Cartesian coordinate system.
  */
@@ -54,15 +57,52 @@ public class Sphere implements Geometry {
     }
 
     @Override
+    public List<Point3D> findIntersections(Ray ray) {
+        Point3D p0 = ray.getPoint();
+        Vector v = ray.getDir();
+        if (p0.equals(_center)) {
+            Point3D p1 = p0.add(v.scale(_radius));
+            return List.of(p1);
+        }
+
+        Vector u = _center.subtract(p0);
+        double tm = u.dotProduct(v);
+        double dSquared = u.lengthSquared() - tm * tm;
+        double thSquared = alignZero(_radius * _radius - dSquared);
+
+        // d is greater or equals to r
+        if (thSquared <= 0) {
+            return null;
+        }
+
+        double th = Math.sqrt(thSquared);
+        double t1 = alignZero(tm + th);
+        double t2 = alignZero(tm - th);
+
+        if (t1 > 0) {
+            Point3D p1 = p0.add(v.scale(t1));
+
+            if (t2 > 0) {
+                Point3D p2 = p0.add(v.scale(t2));
+                return List.of(p1, p2);
+            }
+
+            return List.of(p1);
+        }
+
+        if (t2 > 0) {
+            Point3D p2 = p0.add(v.scale(t1));
+            return List.of(p2);
+        }
+
+        return null;
+    }
+
+    @Override
     public String toString() {
         return "Sphere{" +
                 "center=" + _center +
                 ", radius=" + _radius +
                 '}';
-    }
-
-    @Override
-    public List<Point3D> findIntersections(Ray ray) {
-        return null;
     }
 }
