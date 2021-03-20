@@ -4,28 +4,25 @@ import primitives.Point3D;
 import primitives.Vector;
 import primitives.Ray;
 
+import java.util.List;
+
 import static primitives.Util.isZero;
 
 /**
  * Tube class represents a tube in 3D Cartesian coordinate system.
  */
-public class Tube implements Geometry {
+public class Tube extends RadialGeometry implements Geometry {
     protected final Ray _axisRay;
-    protected final double _radius;
 
     /**
      * Creates a new tube by a given axis ray and radius.
      * @param axisRay The tube's axis ray.
-     * @param radius The tube's radius.
      * @exception IllegalArgumentException When the radius is equals or less than 0.
      */
-    public Tube(Ray axisRay, double radius) {
-        if (radius <= 0) {
-            throw new IllegalArgumentException("The radius should be greater then 0");
-        }
+    public Tube(double radius, Ray axisRay) {
+        super(radius);
 
         _axisRay = axisRay;
-        _radius = radius;
     }
 
     /**
@@ -37,14 +34,6 @@ public class Tube implements Geometry {
 
         // For performance improvement.
         return _axisRay;
-    }
-
-    /**
-     * Returns the tube's radius.
-     * @return The radius.
-     */
-    public double getRadius() {
-        return _radius;
     }
 
     @Override
@@ -75,5 +64,10 @@ public class Tube implements Geometry {
                 "axisRay=" + _axisRay +
                 ", radius=" + _radius +
                 '}';
+    }
+
+    @Override
+    public List<Point3D> findIntersections(Ray ray) {
+        return null;
     }
 }

@@ -4,6 +4,8 @@ import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
 
+import java.util.List;
+
 import static primitives.Util.isZero;
 
 /**
@@ -20,7 +22,7 @@ public class Cylinder extends Tube {
      * @exception IllegalArgumentException When the radius or the height are equals or less than 0.
      */
     public Cylinder(Ray axisRay, double radius, double height) {
-        super(axisRay, radius);
+        super(radius, axisRay);
 
         if (height <= 0) {
             throw new IllegalArgumentException("The height should be greater then 0");
@@ -75,5 +77,11 @@ public class Cylinder extends Tube {
                 ", axisRay=" + _axisRay +
                 ", radius=" + _radius +
                 '}';
+    }
+
+    @Override
+    public List<Point3D> findIntersections(Ray ray) {
+        //TODO implements modifications
+        return super.findIntersections(ray);
     }
 }
