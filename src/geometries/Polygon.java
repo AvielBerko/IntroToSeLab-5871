@@ -14,11 +14,11 @@ public class Polygon implements Geometry {
 	/**
 	 * List of polygon's vertices
 	 */
-	protected List<Point3D> vertices;
+	protected List<Point3D> _vertices;
 	/**
 	 * Associated plane in which the polygon lays
 	 */
-	protected Plane plane;
+	protected Plane _plane;
 
 	/**
 	 * Polygon constructor based on vertices list. The list must be ordered by edge
@@ -44,16 +44,16 @@ public class Polygon implements Geometry {
 	public Polygon(Point3D... vertices) {
 		if (vertices.length < 3)
 			throw new IllegalArgumentException("A polygon can't have less than 3 vertices");
-		this.vertices = List.of(vertices);
+		this._vertices = List.of(vertices);
 		// Generate the plane according to the first three vertices and associate the
 		// polygon with this plane.
 		// The plane holds the invariant normal (orthogonal unit) vector to the polygon
-		plane = new Plane(vertices[0], vertices[1], vertices[2]);
+		_plane = new Plane(vertices[0], vertices[1], vertices[2]);
 		if (vertices.length == 3)
 			return; // no need for more tests for a Triangle
 
 		//Vector n = plane.getNormal();
-		Vector n = plane.getNormal(null);
+		Vector n = _plane.getNormal(null);
 
 		// Subtracting any subsequent points will throw an IllegalArgumentException
 		// because of Zero Vector if they are in the same point
@@ -85,11 +85,44 @@ public class Polygon implements Geometry {
 	@Override
 	public Vector getNormal(Point3D point) {
 		//return plane.getNormal();
-		return plane.getNormal(null);
+		return _plane.getNormal(null);
 	}
 
 	@Override
 	public List<Point3D> findIntersections(Ray ray) {
-		return null;
+		List<Point3D> result = _plane.findIntersections(ray);
+		if (result == null) {
+			return null;
+		}
+
+		int numVertices = _vertices.size();
+		Point3D p0 = ray.getPoint();
+		Vector v = ray.getDir();
+
+		Vector v1 = _vertices.get(numVertices - 1).subtract(p0);
+		Vector v2 = _vertices.get(0).subtract(p0);
+		Vector n = v1.crossProduct(v2).normalize();
+		double vn = v.dotProduct(n);
+		if (isZero(vn)) {
+			return null;
+		}
+
+		boolean isPositive = vn > 0;
+		for (int i = 1; i < numVertices; ++i) {
+			v1 = v2;
+			v2 = _vertices.get(i).subtract(p0);
+			n = v1.crossProduct(v2).normalize();
+			vn = v.dotProduct(n);
+
+			if (isZero(vn)) {
+				return null;
+			}
+
+			if (vn > 0 != isPositive) {
+				return null;
+			}
+		}
+
+		return result;
 	}
 }

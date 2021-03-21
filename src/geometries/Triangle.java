@@ -21,9 +21,9 @@ public class Triangle extends Polygon {
     @Override
     public String toString() {
         return "Triangle{" +
-                "a=" + vertices.get(0) +
-                ", b=" + vertices.get(1) +
-                ", c=" + vertices.get(2) +
+                "a=" + _vertices.get(0) +
+                ", b=" + _vertices.get(1) +
+                ", c=" + _vertices.get(2) +
                '}';
     }
 }
