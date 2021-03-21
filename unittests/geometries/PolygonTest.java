@@ -2,10 +2,13 @@ package geometries;
 
 import org.junit.jupiter.api.Test;
 import primitives.Point3D;
+import primitives.Ray;
 import primitives.Vector;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
  * Testing Polygons
@@ -90,4 +93,27 @@ public class PolygonTest {
         assertEquals(new Vector(sqrt3, sqrt3, sqrt3), pl.getNormal(new Point3D(0, 0, 1)), "Bad normal to polygon");
     }
 
+    /**
+     * Test method for {@link geometries.Polygon#findIntersections(primitives.Ray)}.
+     */
+    @Test
+    void testFindIntersections() {
+        Polygon polygon = new Polygon(
+                new Point3D(1, 0, 0),
+                new Point3D(0, 1, 0),
+                new Point3D(0, 0, 1),
+                new Point3D(1, -1, 1)
+        );
+
+        // ============ Equivalence Partitions Tests ==============
+        // TC01: Ray intersects inside the polygon (1 points)
+        List<Point3D> result = polygon.findIntersections(new Ray(new Point3D(-1, -1, -2), new Vector(1, 1, 2)));
+        assertEquals(1, result.size(), "Wrong number of points");
+        assertEquals(new Point3D(0.25, 0.25, 0.5), result.get(0), "Ray intersects inside the polygon");
+
+        // TC02: Ray intersects outside the polygon against an edge (0 points)
+        assertNull(polygon.findIntersections(new Ray(new Point3D(-1, -2.5, -1), new Vector(1, 1, 2))), "Ray intersects outside the polygon against an edge");
+        // TC03: Ray intersects outside the polygon against a vertex (0 points)
+        assertNull(polygon.findIntersections(new Ray(new Point3D(-2, -1, 0), new Vector(1, 1, 2))), "Ray intersects outside the polygon against a vertex");
+    }
 }
