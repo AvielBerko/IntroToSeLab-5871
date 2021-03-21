@@ -45,7 +45,7 @@ public class Cylinder extends Tube {
         // o = p0 + t * v
 
         Vector v = _axisRay.getDir();
-        Point3D p0 = _axisRay.getPoint();
+        Point3D p0 = _axisRay.getP0();
 
         // if p == p0, it means (p - p0) is a zero vector.
         // should return the vector of the base as the normal.

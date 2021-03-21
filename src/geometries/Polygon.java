@@ -96,7 +96,7 @@ public class Polygon implements Geometry {
 		}
 
 		int numVertices = _vertices.size();
-		Point3D p0 = ray.getPoint();
+		Point3D p0 = ray.getP0();
 		Vector v = ray.getDir();
 
 		Vector v1 = _vertices.get(numVertices - 1).subtract(p0);

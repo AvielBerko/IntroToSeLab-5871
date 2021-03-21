@@ -7,7 +7,6 @@ import primitives.Vector;
 import java.util.List;
 
 import static primitives.Util.alignZero;
-import static primitives.Util.isZero;
 
 /**
  * Sphere class represents a sphere in 3D Cartesian coordinate system.
@@ -58,10 +57,10 @@ public class Sphere implements Geometry {
 
     @Override
     public List<Point3D> findIntersections(Ray ray) {
-        Point3D p0 = ray.getPoint();
+        Point3D p0 = ray.getP0();
         Vector v = ray.getDir();
         if (p0.equals(_center)) {
-            Point3D p1 = p0.add(v.scale(_radius));
+            Point3D p1 = ray.getPoint(_radius);
             return List.of(p1);
         }
 
@@ -80,7 +79,7 @@ public class Sphere implements Geometry {
         double t2 = alignZero(tm - th);
 
         if (t1 > 0) {
-            Point3D p1 = p0.add(v.scale(t1));
+            Point3D p1 = ray.getPoint(t1);
 
             if (t2 > 0) {
                 Point3D p2 = p0.add(v.scale(t2));
@@ -91,7 +90,7 @@ public class Sphere implements Geometry {
         }
 
         if (t2 > 0) {
-            Point3D p2 = p0.add(v.scale(t1));
+            Point3D p2 = ray.getPoint(t2);
             return List.of(p2);
         }
 

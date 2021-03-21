@@ -57,7 +57,7 @@ public class Tube implements Geometry {
         // o = p0 + t * v
 
         Vector v = _axisRay.getDir();
-        Point3D p0 = _axisRay.getPoint();
+        Point3D p0 = _axisRay.getP0();
 
         double t = v.dotProduct(p.subtract(p0));
 

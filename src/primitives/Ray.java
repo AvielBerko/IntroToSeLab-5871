@@ -26,11 +26,20 @@ public class Ray {
      *
 	 * @return A shallow copy of the initial point.
 	 */
-	public Point3D getPoint() {
+	public Point3D getP0() {
 		//return new Point3D(_p0.getX(), _p0.getY(), _p0.getZ());
 
 	    // For performance Improvement.
 		return _p0;
+	}
+
+	/**
+	 * Gets a point on the ray by calculating p0 + t*v.
+	 * @param t A scalar to calculate the point.
+	 * @return A point on the ray.
+	 */
+	public Point3D getPoint(double t) {
+		return _p0.add(_dir.scale(t));
 	}
 
 	/**
