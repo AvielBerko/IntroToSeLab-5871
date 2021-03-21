@@ -2,7 +2,10 @@ package geometries;
 
 import org.junit.jupiter.api.Test;
 import primitives.Point3D;
+import primitives.Ray;
 import primitives.Vector;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -75,5 +78,28 @@ class TriangleTest {
 
         double sqrt3 = Math.sqrt(1d / 3);
         assertEquals(new Vector(sqrt3, sqrt3, sqrt3), tr.getNormal(new Point3D(0, 0, 1)), "Bad normal to triangle");
+    }
+
+    /**
+     * Test method for {@link geometries.Triangle#findIntersections(primitives.Ray)}.
+     */
+    @Test
+    void testFindIntersections() {
+        Triangle triangle = new Triangle(
+                new Point3D(1, 0, 0),
+                new Point3D(0, 1, 0),
+                new Point3D(0, 0, 1)
+        );
+
+        // ============ Equivalence Partitions Tests ==============
+        // TC01: Ray intersects inside the triangle (1 points)
+        List<Point3D> result = triangle.findIntersections(new Ray(new Point3D(-1, -1, -2), new Vector(1, 1, 2)));
+        assertEquals(1, result.size(), "Wrong number of points");
+        assertEquals(new Point3D(0.25, 0.25, 0.5), result.get(0), "Ray intersects inside the triangle");
+
+        // TC02: Ray intersects outside the triangle against an edge (0 points)
+        assertNull(triangle.findIntersections(new Ray(new Point3D(-1, -1, -2), new Vector(1, 1, 2))), "Ray intersects outside the triangle against an edge");
+        // TC03: Ray intersects outside the triangle against a vertex (0 points)
+        assertNull(triangle.findIntersections(new Ray(new Point3D(-2, -2, -2), new Vector(1, 1, 2))), "Ray intersects outside the triangle against a vertex");
     }
 }
