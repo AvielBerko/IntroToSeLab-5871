@@ -145,7 +145,7 @@ class SphereTest {
         assertNull(sphere.findIntersections(new Ray(new Point3D(2, 1, 0), new Vector(1, 0, 0))), "Ray starts after the sphere's tangent point");
 
         // **** Group: Special cases
-        // TC19: Ray's line is outside the sphere. The ray is orthogonal to the ray that goes through the center line (0 points)
+        // TC22: Ray's line is outside the sphere. The ray is orthogonal to the ray that goes through the center line (0 points)
         assertNull(sphere.findIntersections(new Ray(new Point3D(1, 1.5, 0), new Vector(1, 0, 0))), "Ray's line is outside the sphere. The ray is orthogonal to the ray that goes through the center line");
     }
 }

@@ -20,7 +20,7 @@ public class Geometries implements Intersectable {
      */
     public Geometries() {
         // ArrayList has constant-time access and the class probably will access the list a lot more
-        // than add to the list, so I chose to use Array List instead of LinkedList.
+        // than add to the list, so we chose to use Array List instead of LinkedList.
         _intersectables = new ArrayList<>();
     }
 
