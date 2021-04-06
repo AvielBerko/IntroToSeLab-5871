@@ -61,6 +61,16 @@ class PlaneTest {
             );
             fail("Constructed a plane while point b and c are equals");
         } catch (IllegalArgumentException ignored) {}
+
+        // TC05: Test when all 3 points are on the same line.
+        try {
+            new Plane(
+                    new Point3D(0, 1, 2),
+                    new Point3D(1, 2, 3),
+                    new Point3D(2, 3, 4)
+            );
+            fail("Constructed a plane while all 3 points are on the same line");
+        } catch (IllegalArgumentException ignored) {}
     }
 
     /**
