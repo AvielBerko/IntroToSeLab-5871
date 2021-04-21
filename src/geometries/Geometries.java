@@ -5,6 +5,7 @@ import primitives.Ray;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -19,9 +20,9 @@ public class Geometries implements Intersectable {
      * Creates an empty list of intersectables.
      */
     public Geometries() {
-        // ArrayList has constant-time access and the class probably will access the list a lot more
-        // than add to the list, so we chose to use Array List instead of LinkedList.
-        _intersectables = new ArrayList<>();
+        // LinkedList has constant-time insertion (better than ArrayList linear-time insertion)
+        // both have linear-time scanning.
+        _intersectables = new LinkedList<>();
     }
 
     /**
@@ -29,7 +30,7 @@ public class Geometries implements Intersectable {
      * @param intersectables List of intersectables
      */
     public Geometries(Intersectable... intersectables) {
-        _intersectables = new ArrayList<>(Arrays.asList(intersectables));
+        _intersectables = new LinkedList<>(Arrays.asList(intersectables));
     }
 
     /**
@@ -51,7 +52,7 @@ public class Geometries implements Intersectable {
             }
 
             if (result == null) {
-                result = new ArrayList<>(intersections);
+                result = new LinkedList<>(intersections);
                 continue;
             }
 
