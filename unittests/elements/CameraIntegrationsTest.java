@@ -94,4 +94,43 @@ public class CameraIntegrationsTest {
 			assertEquals(expectedIntersections[p], planesIntersections.get(p).size(), "Wrong number of intersections, " + planes[p]);
 		}
 	}
+
+	@Test
+	void testTriangleAndCamera() {
+		int nX = 3, nY = 3;
+		Triangle[] triangles = new Triangle[]{
+				new Triangle(new Point3D(0,1,-2), new Point3D(1,-1,-2), new Point3D(-1,-1,-2)),
+				new Triangle(new Point3D(0,20,-2), new Point3D(1,-1,-2), new Point3D(-1,-1,-2))
+		};
+
+		Camera cam = new Camera(new Point3D(0,0,0.5), new Vector(0, 0, -1), new Vector(0, 1, 0))
+				.setDistance(1)
+				.setViewPlaneSize(3, 3);
+
+		List<List<Point3D>> trianglesIntersections = new ArrayList<>(Collections.nCopies(triangles.length, null));
+
+		for (int i = 0; i < nY; i++) {
+			for (int j = 0; j < nX; j++) {
+				Ray ray = cam.constructRayThroughPixel(nX, nY, j, i);
+				for (int t = 0; t < triangles.length; t++) {
+					List<Point3D> lst = triangles[t].findIntersections(ray);
+					if (lst == null) {
+						continue;
+					}
+					if (trianglesIntersections.get(t) == null) {
+						trianglesIntersections.set(t, new ArrayList<>());
+					}
+					trianglesIntersections.get(t).addAll(lst);
+				}
+			}
+		}
+		int[] expectedIntersections = new int[]{1,2};
+		for (int t = 0; t < triangles.length; t++) {
+			if (trianglesIntersections.get(t) == null) {
+				assertEquals(expectedIntersections[t], 0, "Wrong number of intersections, " + triangles[t] );
+				continue;
+			}
+			assertEquals(expectedIntersections[t], trianglesIntersections.get(t).size(), "Wrong number of intersections, " + triangles[t]);
+		}
+	}
 }
