@@ -10,7 +10,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class CameraIntegrationsTest {
+public class CameraIntegrationTest {
 	@Test
 	void testSphereAndCamera() {
 		Sphere[] spheres = new Sphere[]{
