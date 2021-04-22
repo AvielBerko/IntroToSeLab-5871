@@ -51,7 +51,6 @@ public class Camera {
 		return _distance;
 	}
 
-
 	// Chaining methods
 	public Camera setViewPlaneSize(double width, double height) {
 		_height = height;
@@ -66,23 +65,23 @@ public class Camera {
 
 	public Ray constructRayThroughPixel(int nX, int nY, int j, int i){
 
-		Point3D Pc = _p0.add(_vTo.scale(_distance));
+		Point3D pC = _p0.add(_vTo.scale(_distance));
 
-		double Rx = _width / nX;
-		double Ry = _height / nY;
+		double rX = _width / nX;
+		double rY = _height / nY;
 
-		Point3D Pij = Pc;
-		double Yi = -Ry * (i - (nY - 1) / 2d);
-		double Xj = Rx * (j - (nX - 1) / 2d);
+		Point3D pIJ = pC;
+		double yI = -rY * (i - (nY - 1) / 2d);
+		double xJ = rX * (j - (nX - 1) / 2d);
 
-		if(!isZero(Xj)){
-			Pij = Pij.add(_vRight.scale(Xj));
+		if(!isZero(xJ)){
+			pIJ = pIJ.add(_vRight.scale(xJ));
 		}
-		if(!isZero(Yi)){
-			Pij = Pij.add(_vUp.scale(Yi));
+		if(!isZero(yI)){
+			pIJ = pIJ.add(_vUp.scale(yI));
 		}
-		Vector Vij = Pij.subtract(_p0);
+		Vector vIJ = pIJ.subtract(_p0);
 
-		return  new Ray(_p0, Vij);
+		return  new Ray(_p0, vIJ);
 	}
 }
