@@ -1,5 +1,7 @@
 package primitives;
 
+import java.util.List;
+
 /**
  * A ray - A fundamental object in geometry with initial point and direction.
  */
@@ -52,6 +54,28 @@ public class Ray {
 
 		// For performance Improvement.
 		return _dir;
+	}
+
+	/**
+	 * Finds the closest point to the ray
+	 * @param points list of points to choose one of
+	 * @return the closest point if points is not null, else returns null
+	 */
+	public Point3D findClosestPoint(List<Point3D> points) {
+		if (points == null) return null;
+
+		Point3D result = null;
+		double closestDistanceSquared = Double.MAX_VALUE;
+
+		for (Point3D point : points) {
+			double distanceSquared = point.distanceSquared(_p0);
+			if (distanceSquared < closestDistanceSquared) {
+				closestDistanceSquared = distanceSquared;
+				result = point;
+			}
+		}
+
+		return result;
 	}
 
 	@Override
