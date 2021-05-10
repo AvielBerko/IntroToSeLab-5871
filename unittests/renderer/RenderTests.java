@@ -176,10 +176,10 @@ public class RenderTests {
                         }
                         break;
                         case "plane": {
-                            int numOfPoints = geometryElement.getAttributes().getLength();
-                            if (numOfPoints == 3) {
+                            int numOfAttributes = geometryElement.getAttributes().getLength();
+                            if (numOfAttributes == 3) {
                                 // creates a plane with 3 points
-                                Point3D[] points = new Point3D[numOfPoints];
+                                Point3D[] points = new Point3D[numOfAttributes];
                                 for (int p = 0; p < points.length; p++) {
                                     String[] pointCoordinates = geometryElement.getAttribute("p" + p).split(" ");
                                     if (pointCoordinates.length != 3) {
@@ -193,7 +193,7 @@ public class RenderTests {
                                 }
 
                                 builder.addGeometry(new Plane(points[0], points[1], points[2]));
-                            } else if (numOfPoints == 1) {
+                            } else if (numOfAttributes == 2) {
                                 // creates a plane with a point and a normal
                                 String[] pointCoordinates = geometryElement.getAttribute("point").split(" ");
                                 if (pointCoordinates.length != 3) {
