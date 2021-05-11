@@ -40,23 +40,33 @@ public class BasicRayTracer extends RayTracerBase {
         return _scene.background;
     }
 
+    /**
+     * Helper function for calculating the color at a given collision.
+     * @param geoPoint the point of the collision
+     * @param ray the ray from the camera
+     * @return the color at the collision
+     */
     private Color calcColor(GeoPoint geoPoint, Ray ray) {
         Point3D p = geoPoint.point;
         Vector n = geoPoint.geometry.getNormal(p);
+        double kd = geoPoint.geometry.getMaterial().kD;
+        double ks = geoPoint.geometry.getMaterial().kS;
+        double nShininess = geoPoint.geometry.getMaterial().nShininess;
+        Vector v = ray.getDir();
+
         Color lightsColor = Color.BLACK;
         for (LightSource ls : _scene.lights) {
-            double ln = ls.getL(p).dotProduct(n);
-            double vn = ray.getDir().dotProduct(n);
+            Vector l = ls.getL(p);
+            double ln = l.dotProduct(n);
+            double vn = v.dotProduct(n);
             if (ln * vn < 0) {
                 continue;
             }
-            Vector r = ls.getL(p).subtract(n.scale(2 * ln)).normalize();
-            double kd = geoPoint.geometry.getMaterial().kD;
-            double ks = geoPoint.geometry.getMaterial().kS;
-            double nShininess = geoPoint.geometry.getMaterial().nShininess;
-            double vr = ray.getDir().dotProduct(r);
-            double sumLightsEffects = kd * Math.abs(ln) + ks * Math.pow(Math.max(0, -vr),nShininess);
-            lightsColor = lightsColor.add(ls.getIntensity(p).scale(sumLightsEffects));
+
+            Vector r = l.subtract(n.scale(2 * ln)).normalize();
+            double vr = v.dotProduct(r);
+            double lightEffect = kd * Math.abs(ln) + ks * Math.pow(Math.max(0, -vr),nShininess);
+            lightsColor = lightsColor.add(ls.getIntensity(p).scale(lightEffect));
         }
         Color emissionColor = geoPoint.geometry.getEmission();
         Color ambientLightColor = _scene.ambientLight.getIntensity();
