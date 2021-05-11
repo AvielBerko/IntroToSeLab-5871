@@ -79,6 +79,12 @@ public class RenderTests {
         render.writeToImage();
     }
 
+    /**
+     * Builds a scene from a given xml file
+     * @param sceneName the name of the created scene
+     * @param filename the path for the xml file
+     * @return the created scene
+     */
     public Scene buildSceneFromXml(String sceneName, String filename) throws IOException, SAXException, ParserConfigurationException {
         Scene.Builder builder = Scene.Builder.create(sceneName);
 

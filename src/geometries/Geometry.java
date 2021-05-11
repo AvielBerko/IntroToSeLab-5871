@@ -6,7 +6,7 @@ import primitives.Vector;
 import primitives.Point3D;
 
 /**
- * An interface to represent a geometry.
+ * An abstract class to represent a geometry.
  */
 public abstract class Geometry implements Intersectable {
     protected Color _emission = Color.BLACK;
@@ -19,19 +19,37 @@ public abstract class Geometry implements Intersectable {
      */
     public abstract Vector getNormal(Point3D point);
 
+    /**
+     * Gets the emission color of the geometry.
+     * @return the geometry's emission
+     */
     public Color getEmission() {
         return _emission;
     }
 
+    /**
+     * Chaining method for setting the geometry's emission color.
+     * @param emission the new emission color to set
+     * @return the current geometry
+     */
     public Geometry setEmission(Color emission) {
         _emission = emission;
         return this;
     }
 
+    /**
+     * Gets the material of the geometry.
+     * @return the geometry's material
+     */
     public Material getMaterial() {
         return _material;
     }
 
+    /**
+     * Chaining method for setting the geometry's material.
+     * @param material the new material to set
+     * @return the current geometry
+     */
     public Geometry setMaterial(Material material) {
         _material = material;
         return this;

@@ -10,7 +10,10 @@ import java.util.stream.Collectors;
  * Gives interface for an object that is instersectable.
  */
 public interface Intersectable {
-    public static class GeoPoint {
+    /**
+     * A pair of 3D point and its geometry.
+     */
+    class GeoPoint {
         public Geometry geometry;
         public Point3D point;
 
@@ -27,10 +30,12 @@ public interface Intersectable {
             return geometry.equals(geoPoint.geometry) && point.equals(geoPoint.point);
         }
     }
+
     /**
      * Gives all the points where the given ray is intersecting with the object.
      * @param ray A ray to check if is intersecting with the object.
-     * @return  {@code List<Point3D>} of all the points of the intersections or {@code null} if no intersections at all.
+     * @return  {@code List<Point3D>} of all the points of the intersections,
+     * or {@code null} if no intersections at all.
      */
     default List<Point3D> findIntersections(Ray ray) {
         var geoList = findGeoIntersections(ray);
@@ -39,6 +44,12 @@ public interface Intersectable {
                 .map(gp -> gp.point)
                 .collect(Collectors.toList());
     }
-    List<GeoPoint> findGeoIntersections(Ray ray);
 
+    /**
+     * Gives all the geo points where the given ray is intersecting with the object.
+     * @param ray A ray to check if is intersecting with the object.
+     * @return  {@code List<GeoPoint>} of all the geo points of the intersections,
+     * or {@code null} if no intersections at all.
+     */
+    List<GeoPoint> findGeoIntersections(Ray ray);
 }

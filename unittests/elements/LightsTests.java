@@ -1,7 +1,6 @@
 package elements;
 
-import org.junit.Test;
-
+import org.junit.jupiter.api.Test;
 import elements.*;
 import geometries.*;
 import primitives.*;

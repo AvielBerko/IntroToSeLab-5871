@@ -8,28 +8,48 @@ import scene.Scene;
 import java.util.MissingResourceException;
 
 /**
- *
+ * Class for rendering a scene with ray tracing.
  */
 public class Render {
     ImageWriter _imageWriter = null;
     Camera _camera = null;
     RayTracerBase _rayTracerBase = null;
 
+    /**
+     * Chaining method for setting the image writer
+     * @param imageWriter the image writer to set
+     * @return the current render
+     */
     public Render setImageWriter(ImageWriter imageWriter) {
         _imageWriter = imageWriter;
         return this;
     }
 
+    /**
+     * Chaining method for setting the camera
+     * @param camera the camera to set
+     * @return the current render
+     */
     public Render setCamera(Camera camera) {
         _camera = camera;
         return this;
     }
 
+    /**
+     * Chaining method for setting the ray tracer
+     * @param rayTracer the ray tracer to set
+     * @return the current render
+     */
     public Render setRayTracer(RayTracerBase rayTracer) {
         _rayTracerBase = rayTracer;
         return this;
     }
 
+    /**
+     * Renders the image
+     *
+     * @exception UnsupportedOperationException when the render didn't receive all the arguments.
+     */
     public void renderImage() {
         try {
             if (_imageWriter == null) {
@@ -57,7 +77,11 @@ public class Render {
         }
     }
 
-
+    /**
+     * Adds a grid to the image
+     * @param interval num of the grid's lines
+     * @param color the color of the grid's lines
+     */
     public void printGrid(int interval, Color color) {
         int nX = _imageWriter.getNx();
         int nY = _imageWriter.getNy();
@@ -70,6 +94,9 @@ public class Render {
         }
     }
 
+    /**
+     * Saves the image according to image writer.
+     */
     public void writeToImage() {
         _imageWriter.writeToImage();
     }

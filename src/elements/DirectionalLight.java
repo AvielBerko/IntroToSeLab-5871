@@ -4,9 +4,17 @@ import primitives.Color;
 import primitives.Point3D;
 import primitives.Vector;
 
+/**
+ * Light from a direction.
+ */
 public class DirectionalLight extends Light implements LightSource {
 	private final Vector _direction;
 
+	/**
+	 * Constructs a directional light with intensity and direction.
+	 * @param intensity the intensity of the created directional light
+	 * @param direction the direction of the crated directional light
+	 */
 	DirectionalLight(Color intensity, Vector direction) {
 		super(intensity);
 		_direction = direction.normalized();

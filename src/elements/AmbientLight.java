@@ -8,7 +8,7 @@ import primitives.Color;
 public class AmbientLight extends Light {
 
     /**
-     * Constructor
+     * Constructs an ambient light with its intensity and its constant for intensity.
      * @param iA intensity color
      * @param kA constant for intensity
      */
@@ -16,6 +16,9 @@ public class AmbientLight extends Light {
         super(iA.scale(kA));
     }
 
+    /**
+     * Constructs a black ambient light.
+     */
     public AmbientLight() {
         super(Color.BLACK);
     }

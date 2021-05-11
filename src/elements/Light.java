@@ -2,9 +2,12 @@ package elements;
 
 import primitives.Color;
 
+/**
+ * Light object with intensity.
+ */
 class Light {
 	/**
-	 * intensity of light color
+	 * Intensity of light color
 	 */
 	final protected Color _intensity;
 
@@ -13,7 +16,7 @@ class Light {
 	}
 
 	/**
-	 * get intensity color
+	 * Get intensity color
 	 * @return intensity
 	 */
 	public Color getIntensity() {

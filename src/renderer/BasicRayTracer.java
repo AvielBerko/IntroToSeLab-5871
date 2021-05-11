@@ -11,6 +11,9 @@ import scene.Scene;
 
 import java.util.List;
 
+/**
+ * Basic implementation of RayTracerBase.
+ */
 public class BasicRayTracer extends RayTracerBase {
     /**
      * Constructs a ray tracer object with a given scene
@@ -58,7 +61,7 @@ public class BasicRayTracer extends RayTracerBase {
         Color emissionColor = geoPoint.geometry.getEmission();
         Color ambientLightColor = _scene.ambientLight.getIntensity();
 
-        lightsColor.add(emissionColor)
+        lightsColor = lightsColor.add(emissionColor)
                 .add(ambientLightColor);
         return lightsColor;
     }
