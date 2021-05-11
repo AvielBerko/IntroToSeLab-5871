@@ -77,7 +77,7 @@ public class Color {
 		int ir = (int) _r;
 		int ig = (int) _g;
 		int ib = (int) _b;
-		return new java.awt.Color(ir > 255 ? 255 : ir, ig > 255 ? 255 : ig, ib > 255 ? 255 : ib);
+		return new java.awt.Color(Math.min(ir, 255), Math.min(ig, 255), Math.min(ib, 255));
 	}
 
 	/**

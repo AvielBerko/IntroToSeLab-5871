@@ -16,6 +16,9 @@ public abstract class RayTracerBase {
      * @param scene the scene for ray tracing
      */
     public RayTracerBase(Scene scene) {
+        if(scene == null) {
+            throw new IllegalArgumentException("Scene cannot be null");
+        }
         _scene = scene;
     }
 

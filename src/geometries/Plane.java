@@ -13,7 +13,7 @@ import static primitives.Util.isZero;
  * Plane class represents two-dimensional plane in 3D Cartesian coordinate
  * system
  */
-public class Plane implements Geometry {
+public class Plane extends Geometry {
 
     protected final Point3D _q0;
     protected final Vector _normal;
@@ -85,7 +85,7 @@ public class Plane implements Geometry {
     }
 
     @Override
-    public List<Point3D> findIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersections(Ray ray) {
         Point3D p0 = ray.getP0();
         if (_q0.equals(p0)) {
             return null;
@@ -108,6 +108,6 @@ public class Plane implements Geometry {
         }
 
         Point3D p = ray.getPoint(t);
-        return List.of(p);
+        return List.of(new GeoPoint(this, p));
     }
 }

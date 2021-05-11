@@ -49,8 +49,7 @@ public class RenderTests {
         Render render = new Render() //
                 .setImageWriter(imageWriter) //
                 .setCamera(camera) //
-                .setScene(scene)
-                .setRayTracer(new RayTracerBasic(scene));
+                .setRayTracer(new BasicRayTracer(scene));
 
         render.renderImage();
         render.printGrid(100, new Color(java.awt.Color.YELLOW));
@@ -64,7 +63,7 @@ public class RenderTests {
     public void basicRenderXml() {
         Scene scene = null;
         try {
-            scene = buildSceneFromXml("XML Test scene", "scenes/basicRenderTestTwoColors.xml");
+            scene = buildSceneFromXml("XML Test scene", "XmlFiles/basicRenderTestTwoColors.xml");
         } catch (IOException | SAXException | ParserConfigurationException e) {
             e.printStackTrace();
         }
@@ -73,8 +72,7 @@ public class RenderTests {
         Render render = new Render() //
                 .setImageWriter(imageWriter) //
                 .setCamera(camera) //
-                .setRayTracer(new RayTracerBasic(scene))
-                .setScene(scene);
+                .setRayTracer(new BasicRayTracer(scene));
 
         render.renderImage();
         render.printGrid(100, new Color(java.awt.Color.YELLOW));
@@ -228,36 +226,37 @@ public class RenderTests {
 
         return builder.build();
     }
-
     // For stage 6 - please disregard in stage 5
     /**
      * Produce a scene with basic 3D model - including individual lights of the bodies
      * and render it into a png image with a grid
      */
-//	@Test
-//	public void basicRenderMultiColorTest() {
-//		Scene scene = Scene.Builder.create("Test scene")//
-//				.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.2))
-//				.build(); //
-//
-//		scene.geometries.add(new Sphere(50, new Point3D(0, 0, -100)) //
-//				.setEmission(new Color(java.awt.Color.CYAN)), //
-//				new Triangle(new Point3D(-100, 0, -100), new Point3D(0, 100, -100), new Point3D(-100, 100, -100)) // up left
-//						.setEmission(new Color(java.awt.Color.GREEN)),
-//				new Triangle(new Point3D(100, 0, -100), new Point3D(0, 100, -100), new Point3D(100, 100, -100)), // up right
-//				new Triangle(new Point3D(-100, 0, -100), new Point3D(0, -100, -100), new Point3D(-100, -100, -100)) // down left
-//						.setEmission(new Color(java.awt.Color.RED)),
-//				new Triangle(new Point3D(100, 0, -100), new Point3D(0, -100, -100), new Point3D(100, -100, -100)) // down right
-//						.setEmission(new Color(java.awt.Color.BLUE)));
-//
-//		ImageWriter imageWriter = new ImageWriter("color render test", 1000, 1000);
-//		Render render = new Render() //
-//				.setImageWriter(imageWriter) //
-//				.setCamera(camera) //
-//				.setRayTracer(new RayTracerBasic(scene));
-//
-//		render.renderImage();
-//		render.printGrid(100, new Color(java.awt.Color.WHITE));
-//		render.writeToImage();
-//	}
+    @Test
+    public void basicRenderMultiColorTest() {
+        Scene scene = Scene.Builder.create("Test scene")//
+                .setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.2))
+                .build(); //
+
+        scene.geometries.add(new Sphere(50, new Point3D(0, 0, -100)) //
+                        .setEmission(new Color(java.awt.Color.CYAN)), //
+                new Triangle(new Point3D(-100, 0, -100), new Point3D(0, 100, -100), new Point3D(-100, 100, -100)) // up left
+                        .setEmission(new Color(java.awt.Color.GREEN)),
+                new Triangle(new Point3D(100, 0, -100), new Point3D(0, 100, -100), new Point3D(100, 100, -100)), // up right
+                new Triangle(new Point3D(-100, 0, -100), new Point3D(0, -100, -100), new Point3D(-100, -100, -100)) // down left
+                        .setEmission(new Color(java.awt.Color.RED)),
+                new Triangle(new Point3D(100, 0, -100), new Point3D(0, -100, -100), new Point3D(100, -100, -100)) // down right
+                        .setEmission(new Color(java.awt.Color.BLUE)));
+
+        ImageWriter imageWriter = new ImageWriter("color render test", 1000, 1000);
+        Render render = new Render() //
+                .setImageWriter(imageWriter) //
+                .setCamera(camera) //
+                .setRayTracer(new BasicRayTracer(scene));
+
+        render.renderImage();
+        render.printGrid(100, new Color(java.awt.Color.WHITE));
+        render.writeToImage();
+    }
+
+
 }
