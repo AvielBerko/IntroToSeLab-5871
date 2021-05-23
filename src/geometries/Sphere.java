@@ -56,10 +56,10 @@ public class Sphere extends Geometry {
     }
 
     @Override
-    public List<GeoPoint> findGeoIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
         Point3D p0 = ray.getP0();
         Vector v = ray.getDir();
-        if (p0.equals(_center)) {
+        if (p0.equals(_center)/* && alignZero(_radius - maxDistance) <= 0*/) {
             Point3D p1 = ray.getPoint(_radius);
             return List.of(new GeoPoint(this, p1));
         }
@@ -78,17 +78,19 @@ public class Sphere extends Geometry {
         double t1 = alignZero(tm + th);
         double t2 = alignZero(tm - th);
 
-        if (t1 > 0) {
+//        if (alignZero(t1 - maxDistance) <= 0 && alignZero(t2 - maxDistance) <= 0) {
+        if (t1 > 0 && t2 > 0) {
             Point3D p1 = ray.getPoint(t1);
-
-            if (t2 > 0) {
-                Point3D p2 = p0.add(v.scale(t2));
-                return List.of(new GeoPoint(this,p1), new GeoPoint(this,p2));
-            }
-
-            return List.of(new GeoPoint(this,p1));
+            Point3D p2 = p0.add(v.scale(t2));
+            return List.of(new GeoPoint(this,p1), new GeoPoint(this,p2));
         }
 
+//        if (alignZero(t1 - maxDistance) <= 0) {
+        if (t1 > 0) {
+            Point3D p1 = ray.getPoint(t1);
+            return List.of(new GeoPoint(this,p1));
+        }
+//        if (alignZero(t2 - maxDistance) <= 0) {
         if (t2 > 0) {
             Point3D p2 = ray.getPoint(t2);
             return List.of(new GeoPoint(this,p2));

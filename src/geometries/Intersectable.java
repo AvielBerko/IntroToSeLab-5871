@@ -51,5 +51,9 @@ public interface Intersectable {
      * @return  {@code List<GeoPoint>} of all the geo points of the intersections,
      * or {@code null} if no intersections at all.
      */
-    List<GeoPoint> findGeoIntersections(Ray ray);
+    default List<GeoPoint> findGeoIntersections(Ray ray) {
+        return findGeoIntersections(ray, Double.POSITIVE_INFINITY);
+    }
+
+    List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance);
 }

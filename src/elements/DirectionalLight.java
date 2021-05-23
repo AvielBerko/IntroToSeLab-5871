@@ -15,7 +15,7 @@ public class DirectionalLight extends Light implements LightSource {
 	 * @param intensity the intensity of the created directional light
 	 * @param direction the direction of the crated directional light
 	 */
-	DirectionalLight(Color intensity, Vector direction) {
+	public DirectionalLight(Color intensity, Vector direction) {
 		super(intensity);
 		_direction = direction.normalized();
 	}
@@ -28,5 +28,10 @@ public class DirectionalLight extends Light implements LightSource {
 	@Override
 	public Vector getL(Point3D p) {
 		return _direction;
+	}
+
+	@Override
+	public double getDistance(Point3D point) {
+		return Double.POSITIVE_INFINITY;
 	}
 }
