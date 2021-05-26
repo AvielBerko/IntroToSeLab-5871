@@ -6,7 +6,7 @@ import geometries.*;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 import primitives.*;
-import scene.Scene;
+import _scene.Scene;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;

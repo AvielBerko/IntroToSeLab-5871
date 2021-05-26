@@ -2,6 +2,8 @@ package primitives;
 
 import geometries.Intersectable;
 import static geometries.Intersectable.GeoPoint;
+import static primitives.Util.alignZero;
+import static primitives.Util.isZero;
 
 import java.util.List;
 
@@ -9,6 +11,7 @@ import java.util.List;
  * A ray - A fundamental object in geometry with initial point and direction.
  */
 public class Ray {
+	private static final double DELTA = 0.1;
 	private final Point3D _p0;
 	private final Vector _dir;
 
@@ -24,6 +27,27 @@ public class Ray {
 
 		// For performance improvement.
 		_p0 = p0;
+	}
+
+	/**
+	 * Creates a new ray by point,vector direction and normal.
+	 * @param p0 head point of the ray
+	 * @param dir direction of the ray
+	 * @param normal normal of the ray
+	 */
+	public Ray(Point3D p0, Vector dir, Vector normal) {
+		_dir = dir;
+		// make sure the normal and the direction are not orthogonal
+		double nv = alignZero(normal.dotProduct(dir));
+
+		// if not orthogonal
+		if (!isZero(nv)) {
+			Vector moveVector = normal.scale(nv > 0 ? DELTA : -DELTA);
+			// move the head of the vector in the right direction
+			_p0 = p0.add(moveVector);
+		}
+		else
+			_p0 = p0;
 	}
 
 	/**

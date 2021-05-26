@@ -1,12 +1,11 @@
 package elements;
 
-import org.junit.Test;
 
-import elements.*;
 import geometries.*;
+import org.junit.jupiter.api.Test;
 import primitives.*;
 import renderer.*;
-import scene.Scene;
+import _scene.Scene;
 
 /**
  * Testing basic shadows
