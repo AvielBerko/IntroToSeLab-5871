@@ -57,18 +57,18 @@ public class ReflectionRefractionTests {
 		scene.geometries.add( //
 				new Sphere(400, new Point3D(-950, -900, -1000)) //
 						.setEmission(new Color(0, 0, 100)) //
-						.setMaterial(new Material().setKd(0.25).setKs(0.25).setShininess(20).setKt(0.0 /*5*/)),
+						.setMaterial(new Material().setKd(0.25).setKs(0.25).setShininess(20).setKt(0.5)),
 				new Sphere(200, new Point3D(-950, -900, -1000)) //
 						.setEmission(new Color(100, 20, 20)) //
 						.setMaterial(new Material().setKd(0.25).setKs(0.25).setShininess(20)),
 				new Triangle(new Point3D(1500, -1500, -1500), new Point3D(-1500, 1500, -1500),
 						new Point3D(670, 670, 3000)) //
 								.setEmission(new Color(20, 20, 20)) //
-								.setMaterial(new Material().setKr(0.0 /*1.0*/)),
+								.setMaterial(new Material().setKr(1.0)),
 				new Triangle(new Point3D(1500, -1500, -1500), new Point3D(-1500, 1500, -1500),
 						new Point3D(-1500, -1500, -2000)) //
 								.setEmission(new Color(20, 20, 20)) //
-								.setMaterial(new Material().setKr(0.0 /*5*/)));
+								.setMaterial(new Material().setKr(0.5)));
 
 		scene.lights.add(new SpotLight(new Color(1020, 400, 400), new Point3D(-750, -750, -150), new Vector(-1, -1, -4)) //
 				.setKl(0.00001).setKq(0.000005));
