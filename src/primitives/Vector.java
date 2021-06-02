@@ -77,18 +77,32 @@ public class Vector {
         return _head;
     }
 
+    /**
+     * Returns the vector's x coordinate
+     */
     public double getX() {
         return _head.getX();
     }
 
+    /**
+     * Returns the vector's y coordinate
+     */
     public double getY() {
         return _head.getY();
     }
 
+    /**
+     * Returns the vector's z coordinate
+     */
     public double getZ() {
         return _head.getZ();
     }
 
+    /**
+     * Rotates the vector around the x axis
+     * @param alpha the amount to rotate in degrees
+     * @return the current vector
+     */
     public Vector rotateX(double alpha) {
         double radianAlpha = alpha * Math.PI / 180;
 
@@ -100,6 +114,12 @@ public class Vector {
         return this;
     }
 
+
+    /**
+     * Rotates the vector around the y axis
+     * @param alpha the amount to rotate in degrees
+     * @return the current vector
+     */
     public Vector rotateY(double alpha) {
         double radianAlpha = alpha * Math.PI / 180;
 
@@ -111,6 +131,12 @@ public class Vector {
         return this;
     }
 
+
+    /**
+     * Rotates the vector around the z axis
+     * @param alpha the amount to rotate in degrees
+     * @return the current vector
+     */
     public Vector rotateZ(double alpha) {
         double radianAlpha = alpha * Math.PI / 180;
 

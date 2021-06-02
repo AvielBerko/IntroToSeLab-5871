@@ -126,19 +126,40 @@ public class Camera {
 		return this;
 	}
 
+	/**
+	 * Adds the given amount to the camera's position
+	 * @return the current camera
+	 */
 	public Camera move(Vector amount) {
 		_p0 = _p0.add(amount);
 		return this;
 	}
 
+	/**
+	 * Adds x, y, z to the camera's position
+	 * @return the current camera
+	 */
 	public Camera move(double x, double y, double z) {
 		return move(new Vector(x, y, z));
 	}
 
+	/**
+	 * Rotates the camera around the axes with the given angles
+	 * @param amount vector of angles
+	 * @return the current camera
+	 */
 	public Camera rotate(Vector amount) {
 		return rotate(amount.getX(), amount.getY(), amount.getZ());
 	}
 
+
+	/**
+	 * Rotates the camera around the axes with the given angles
+	 * @param x angles to rotate around the x axis
+	 * @param y angles to rotate around the y axis
+	 * @param z angles to rotate around the z axis
+	 * @return the current camera
+	 */
 	public Camera rotate(double x, double y, double z) {
 	    _vTo.rotateX(x).rotateY(y).rotateZ(z);
 		_vUp.rotateX(x).rotateY(y).rotateZ(z);
