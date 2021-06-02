@@ -126,33 +126,27 @@ public class Tube extends Geometry {
         double c = alignZero(squaredTemp2 - _radius * _radius);
 
         double squaredDelta = alignZero(b * b - 4 * a * c);
-        if (squaredDelta < 0) {
+        if (squaredDelta <= 0) {
             return null;
-        }
-        if (squaredDelta == 0) {
-            double t = alignZero(-b / (2 * a));
-            if (t < 0) {
-                return null;
-            }
-            return List.of(new GeoPoint(this, ray.getPoint(t)));
         }
 
         double delta = Math.sqrt(squaredDelta);
         double t1 = alignZero((-b + delta) / (2 * a));
         double t2 = alignZero((-b - delta) / (2 * a));
 
-        if (t1 < 0 && t2 < 0) {
-            return null;
+        if (t1 > 0 && t2 > 0 && alignZero(t1 - maxDistance) <= 0 && alignZero(t2 - maxDistance) <= 0) {
+            return List.of(
+                    new GeoPoint(this, ray.getPoint(t1)),
+                    new GeoPoint(this, ray.getPoint(t2))
+            );
         }
-        if (t1 < 0) {
-            return List.of(new GeoPoint(this, ray.getPoint(t2)));
-        }
-        if (t2 < 0) {
+        if (t1 > 0 && alignZero(t1 - maxDistance) <= 0) {
             return List.of(new GeoPoint(this, ray.getPoint(t1)));
         }
-        return List.of(
-                new GeoPoint(this, ray.getPoint(t1)),
-                new GeoPoint(this, ray.getPoint(t2))
-        );
+        if (t2 > 0 && alignZero(t2 - maxDistance) <= 0) {
+            return List.of(new GeoPoint(this, ray.getPoint(t2)));
+        }
+
+        return null;
     }
 }
