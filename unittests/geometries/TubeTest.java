@@ -60,6 +60,9 @@ class TubeTest {
         assertEquals(new Vector(0, -1, 0), tb.getNormal(new Point3D(1, 0, 2)), "Bad normal to tube");
     }
 
+    /**
+     * Test method for {@link geometries.Tube#findIntersections(primitives.Ray)}.
+     */
     @Test
     void testFindIntersections() {
         Tube tb = new Tube(new Ray(
