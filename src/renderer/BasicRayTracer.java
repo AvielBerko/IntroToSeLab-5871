@@ -7,7 +7,6 @@ import primitives.*;
 import java.util.List;
 
 import static geometries.Intersectable.GeoPoint;
-import static primitives.Util.alignZero;
 
 /**
  * Basic implementation of RayTracerBase.
@@ -46,7 +45,8 @@ public class BasicRayTracer extends RayTracerBase {
      * and the refraction with starting level of
      * {@code MAX_CALC_COLOR_LEVEL} and starting k
      * of {@code INITIAL_K}.
-     * @param gp the intersection point with geometry
+     *
+     * @param gp  the intersection point with geometry
      * @param ray the ray that caused the intersection
      * @return the color on the intersection point
      */
@@ -60,7 +60,8 @@ public class BasicRayTracer extends RayTracerBase {
      * on the intersection point with a given ray.
      * This is recursive function that calculates also
      * the reflection and refraction.
-     * @param gp the intersection point with geometry
+     *
+     * @param gp  the intersection point with geometry
      * @param ray the ray that caused the intersection
      * @return the color on the intersection point
      */
@@ -77,6 +78,7 @@ public class BasicRayTracer extends RayTracerBase {
 
     /**
      * Calculates the effects of the scene's lighting.
+     *
      * @param gp  the intersection point
      * @param ray the ray that caused the intersection
      * @return the color on the intersection point
@@ -118,9 +120,10 @@ public class BasicRayTracer extends RayTracerBase {
      * to the diffusion parameter, the angle between the
      * ray's direction and the normal at the intersection
      * and the light's intensity.
-     * @param kD the diffusion parameter of the material
-     * @param ln the dot product between the ray's direction
-     *           and the normal at the intersection
+     *
+     * @param kD             the diffusion parameter of the material
+     * @param ln             the dot product between the ray's direction
+     *                       and the normal at the intersection
      * @param lightIntensity the light's intensity
      * @return the color affected by the diffusion of the material
      */
@@ -135,10 +138,11 @@ public class BasicRayTracer extends RayTracerBase {
      * to the specular parameter, the ray's direction,
      * the normal at the intersection, the angle between
      * the two given vectors and the light's intensity.
-     * @param kS the specular parameter of the material
-     * @param l the ray's direction
-     * @param n the normal at the intersection
-     * @param ln the dot product between {@code l} and {@code n}
+     *
+     * @param kS             the specular parameter of the material
+     * @param l              the ray's direction
+     * @param n              the normal at the intersection
+     * @param ln             the dot product between {@code l} and {@code n}
      * @param lightIntensity the light's intensity
      * @return the color affected by the specular of the material
      */
@@ -151,11 +155,12 @@ public class BasicRayTracer extends RayTracerBase {
     /**
      * Calculates the shadow effect at the intersection point
      * with the effect of the blocking-object's transparency.
+     *
      * @param light the light source to check if the given
      *              point is blocked by
-     * @param l the ray's direction
-     * @param n the normal at the intersection
-     * @param gp the intersection point and geometry
+     * @param l     the ray's direction
+     * @param n     the normal at the intersection
+     * @param gp    the intersection point and geometry
      * @return the shadow effect from 0 (fully blocked) to 1 (not blocked at all)
      */
     private double transparency(LightSource light, Vector l, Vector n, GeoPoint gp) {
@@ -165,23 +170,16 @@ public class BasicRayTracer extends RayTracerBase {
 
         List<GeoPoint> intersections = _scene.geometries
                 .findGeoIntersections(lightRay, lightDistance);
-/*
-        if (intersections != null) {
-            _scene.geometries.findGeoIntersections(lightRay, light.getDistance(gp.point));
-        }
-        return intersections == null;
-*/
+
         if (intersections == null) {
             return 1.0;
         }
 
         double ktr = 1.0;
         for (GeoPoint p : intersections) {
-            if (alignZero(p.point.distance(gp.point) - lightDistance) <= 0) {
-                ktr *= p.geometry.getMaterial().kT;
-                if (ktr < MIN_CALC_COLOR_K) {
-                    return 0.0;
-                }
+            ktr *= p.geometry.getMaterial().kT;
+            if (ktr < MIN_CALC_COLOR_K) {
+                return 0.0;
             }
         }
         return ktr;
@@ -190,12 +188,13 @@ public class BasicRayTracer extends RayTracerBase {
     /**
      * Calculates the reflection and the refraction
      * at a given intersection point.
-     * @param gp  the intersection point
-     * @param ray the ray that caused the intersection
+     *
+     * @param gp    the intersection point
+     * @param ray   the ray that caused the intersection
      * @param level the number of the recursive calls
      *              to calculate the next reflections and
      *              refractions
-     * @param k the effect's strength by the reflection and refraction
+     * @param k     the effect's strength by the reflection and refraction
      * @return the color on the intersection point
      */
     private Color calcGlobalEffects(GeoPoint gp, Ray ray, int level, double k) {
@@ -221,13 +220,14 @@ public class BasicRayTracer extends RayTracerBase {
     /**
      * Calculates the effect of a reflection or a refraction
      * by the objects of the scene
-     * @param ray the reflection or refraction ray
+     *
+     * @param ray   the reflection or refraction ray
      * @param level the number of the recursive calls
      *              to calculate the next reflections and
      *              refractions
-     * @param kx the strength's of the reflection or the refraction by the material
-     * @param kkx the strength's of the reflection or the refraction affected
-     *            by the level of the tree
+     * @param kx    the strength's of the reflection or the refraction by the material
+     * @param kkx   the strength's of the reflection or the refraction affected
+     *              by the level of the tree
      * @return the color affected by the scene's objects
      */
     private Color calcGlobalEffect(Ray ray, int level, double kx, double kkx) {
@@ -240,9 +240,10 @@ public class BasicRayTracer extends RayTracerBase {
 
     /**
      * Constructs the reflection ray at the intersection point
+     *
      * @param point the intersection point
-     * @param v the intersection's ray direction
-     * @param n the normal at the intersection point
+     * @param v     the intersection's ray direction
+     * @param n     the normal at the intersection point
      * @return new reflection ray
      */
     private Ray constructReflectedRay(Point3D point, Vector v, Vector n) {
@@ -253,9 +254,10 @@ public class BasicRayTracer extends RayTracerBase {
 
     /**
      * Constructs the refraction ray at the intersection point
+     *
      * @param point the intersection point
-     * @param v the intersection's ray direction
-     * @param n the normal at the intersection point
+     * @param v     the intersection's ray direction
+     * @param n     the normal at the intersection point
      * @return new refraction ray
      */
     private Ray constructRefractedRay(Point3D point, Vector v, Vector n) {
@@ -264,6 +266,7 @@ public class BasicRayTracer extends RayTracerBase {
 
     /**
      * Finds the closest intersection with the ray to the ray's origin
+     *
      * @param ray the ray that caused the intersection
      * @return the closest point to the ray's origin
      */

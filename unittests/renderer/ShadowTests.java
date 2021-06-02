@@ -1,6 +1,9 @@
-package elements;
+package renderer;
 
 
+import elements.AmbientLight;
+import elements.Camera;
+import elements.SpotLight;
 import geometries.*;
 import org.junit.jupiter.api.Test;
 import primitives.*;
