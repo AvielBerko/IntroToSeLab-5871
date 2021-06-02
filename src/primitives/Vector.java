@@ -77,6 +77,51 @@ public class Vector {
         return _head;
     }
 
+    public double getX() {
+        return _head.getX();
+    }
+
+    public double getY() {
+        return _head.getY();
+    }
+
+    public double getZ() {
+        return _head.getZ();
+    }
+
+    public Vector rotateX(double alpha) {
+        double radianAlpha = alpha * Math.PI / 180;
+
+        double x = _head.getX();
+        double y = _head.getY() * Math.cos(radianAlpha) - _head.getZ() * Math.sin(radianAlpha);
+        double z = _head.getY() * Math.sin(radianAlpha) + _head.getZ() * Math.cos(radianAlpha);
+
+        _head = new Point3D(x, y, z);
+        return this;
+    }
+
+    public Vector rotateY(double alpha) {
+        double radianAlpha = alpha * Math.PI / 180;
+
+        double x = _head.getX() * Math.cos(radianAlpha) + _head.getZ() * Math.sin(radianAlpha);
+        double y = _head.getY();
+        double z = -_head.getX() * Math.sin(radianAlpha) + _head.getZ() * Math.cos(radianAlpha);
+
+        _head = new Point3D(x, y, z);
+        return this;
+    }
+
+    public Vector rotateZ(double alpha) {
+        double radianAlpha = alpha * Math.PI / 180;
+
+        double x = _head.getX() * Math.cos(radianAlpha) - _head.getY() * Math.sin(radianAlpha);
+        double y = _head.getX() * Math.sin(radianAlpha) + _head.getY() * Math.cos(radianAlpha);
+        double z = _head.getZ();
+
+        _head = new Point3D(x, y, z);
+        return this;
+    }
+
     /**
      * Performs vector addition between the current vector and a given vector.
      *

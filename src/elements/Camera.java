@@ -10,7 +10,7 @@ public class Camera {
 	/**
 	 * Camera's location.
 	 */
-	private final Point3D _p0;
+	private Point3D _p0;
 	/**
 	 * Camera's upper direction.
 	 */
@@ -22,7 +22,7 @@ public class Camera {
 	/**
 	 * Camera's right direction
 	 */
-	private final Vector _vRight;
+	private Vector _vRight;
 	/**
 	 * View plane's width.
 	 */
@@ -123,6 +123,27 @@ public class Camera {
 	 */
 	public Camera setDistance(double distance) {
 		_distance = distance;
+		return this;
+	}
+
+	public Camera move(Vector amount) {
+		_p0 = _p0.add(amount);
+		return this;
+	}
+
+	public Camera move(double x, double y, double z) {
+		return move(new Vector(x, y, z));
+	}
+
+	public Camera rotate(Vector amount) {
+		return rotate(amount.getX(), amount.getY(), amount.getZ());
+	}
+
+	public Camera rotate(double x, double y, double z) {
+	    _vTo.rotateX(x).rotateY(y).rotateZ(z);
+		_vUp.rotateX(x).rotateY(y).rotateZ(z);
+		_vRight = _vTo.crossProduct(_vUp);
+
 		return this;
 	}
 
