@@ -68,6 +68,10 @@ public class Ray {
 	 * @return A point on the ray.
 	 */
 	public Point3D getPoint(double t) {
+		if (isZero(t)) {
+			return _p0;
+		}
+
 		return _p0.add(_dir.scale(t));
 	}
 

@@ -87,7 +87,7 @@ class TubeTest {
                 new Point3D(0.5, 1, 0.5),
                 new Vector(-0.5, -0.5, 1)
         );
-        p1 = new Point3D(0.07, 0.67, 1.36);
+        p1 = new Point3D(0.06833752096446, 0.56833752096446, 1.36332495807108);
 
         result = tb.findIntersections(ray);
 
@@ -96,11 +96,11 @@ class TubeTest {
 
         // TC03: The ray intersects twice with the tube
         ray = new Ray(
-                new Point3D(0.5, 1, 0.5),
+                new Point3D(1, 1.5, -0.5),
                 new Vector(-0.5, -0.5, 1)
         );
-        p1 = new Point3D(0.07, 0.67, 1.36);
-        p2 = new Point3D(0.73, 0.33, 0.04);
+        p1 = new Point3D(0.06833752096446, 0.56833752096446, 1.36332495807108);
+        p2 = new Point3D(0.7316624790355399, 1.23166247903554, 0.036675041928920016);
 
         result = tb.findIntersections(ray);
 
@@ -164,10 +164,10 @@ class TubeTest {
 
         // TC08: The ray starts on the tube and goes outside (intersects once)
         ray = new Ray(
-                new Point3D(0.55, 0.55, 1.89),
+                new Point3D(0.5527864045000421, 0.5527864045000421, 1.8944271909999157),
                 new Vector(-0.5, -0.5, 1)
         );
-        p1 = new Point3D(0.55, 0.55, 1.89);
+        p1 = new Point3D(0.5527864045000421, 0.5527864045000421, 1.8944271909999157);
 
         result = tb.findIntersections(ray);
 
@@ -179,7 +179,7 @@ class TubeTest {
                 new Point3D(0.75, 0.75, 1.5),
                 new Vector(-0.5, -0.5, 1)
         );
-        p1 = new Point3D(0.55, 0.55, 1.89);
+        p1 = new Point3D(0.5527864045000421, 0.5527864045000421, 1.8944271909999157);
 
         result = tb.findIntersections(ray);
 
@@ -191,7 +191,7 @@ class TubeTest {
                 new Point3D(1, 1, 1),
                 new Vector(-0.5, -0.5, 1)
         );
-        p1 = new Point3D(0.55, 0.55, 1.89);
+        p1 = new Point3D(0.552786404500042, 0.552786404500042, 1.894427190999916);
 
         result = tb.findIntersections(ray);
 
@@ -203,7 +203,7 @@ class TubeTest {
                 new Point3D(1.25, 1.25, 0.5),
                 new Vector(-0.5, -0.5, 1)
         );
-        p1 = new Point3D(0.55, 0.55, 1.89);
+        p1 = new Point3D(0.5527864045000421, 0.5527864045000421, 1.8944271909999157);
 
         result = tb.findIntersections(ray);
 
@@ -212,11 +212,11 @@ class TubeTest {
 
         // TC12: The ray starts on the tube and goes inside (intersects twice)
         ray = new Ray(
-                new Point3D(1.45, 1.45, 0.11),
+                new Point3D(1.4472135954999579, 1.4472135954999579, 0.10557280900008412),
                 new Vector(-0.5, -0.5, 1)
         );
-        p1 = new Point3D(0.55, 0.55, 1.89);
-        p2 = new Point3D(1.45, 1.45, 0.11);
+        p1 = new Point3D(0.5527864045000421, 0.5527864045000421, 1.8944271909999157);
+        p2 = new Point3D(1.4472135954999579, 1.4472135954999579, 0.10557280900008412);
 
         result = tb.findIntersections(ray);
 
@@ -231,8 +231,8 @@ class TubeTest {
                 new Point3D(1.5, 1.5, 0),
                 new Vector(-0.5, -0.5, 1)
         );
-        p1 = new Point3D(0.55, 0.55, 1.89);
-        p2 = new Point3D(1.45, 1.45, 0.11);
+        p1 = new Point3D(0.5527864045000421, 0.5527864045000421, 1.8944271909999157);
+        p2 = new Point3D(1.4472135954999579, 1.4472135954999579, 0.10557280900008412);
 
         result = tb.findIntersections(ray);
 
@@ -255,10 +255,10 @@ class TubeTest {
 
         // TC15: The ray starts on the tube and goes outside (intersects once)
         ray = new Ray(
-                new Point3D(0.55, -0.45, 1.89),
+                new Point3D(0.5527864045000421, -0.44721359549995787, 1.8944271909999157),
                 new Vector(-0.5, -0.5, 1)
         );
-        p1 = new Point3D(0.55, -0.45, 1.89);
+        p1 = new Point3D(0.5527864045000421, -0.44721359549995787, 1.8944271909999157);
 
         result = tb.findIntersections(ray);
 
@@ -267,10 +267,10 @@ class TubeTest {
 
         // TC16: The ray starts after the tube's origin, inside the tube (intersects once)
         ray = new Ray(
-                new Point3D(0.75, 0.75, 1.5),
+                new Point3D(0.75, -0.25, 1.5),
                 new Vector(-0.5, -0.5, 1)
         );
-        p1 = new Point3D(0.55, -0.45, 1.89);
+        p1 = new Point3D(0.5527864045000421, -0.44721359549995787, 1.8944271909999157);
 
         result = tb.findIntersections(ray);
 
@@ -282,7 +282,7 @@ class TubeTest {
                 new Point3D(1, 0, 1),
                 new Vector(-0.5, -0.5, 1)
         );
-        p1 = new Point3D(0.55, -0.45, 1.89);
+        p1 = new Point3D(0.5527864045000421, -0.44721359549995787, 1.8944271909999157);
 
         result = tb.findIntersections(ray);
 
@@ -291,10 +291,10 @@ class TubeTest {
 
         // TC18: The ray starts before the tube's origin, inside the tube (intersects once)
         ray = new Ray(
-                new Point3D(1.25, 1.25, 0.5),
+                new Point3D(1.25, 0.25, 0.5),
                 new Vector(-0.5, -0.5, 1)
         );
-        p1 = new Point3D(0.55, 0.55, 1.89);
+        p1 = new Point3D(0.5527864045000421, -0.44721359549995787, 1.8944271909999157);
 
         result = tb.findIntersections(ray);
 
@@ -303,14 +303,13 @@ class TubeTest {
 
         // TC19: The ray starts on the tube and goes inside (intersects twice)
         ray = new Ray(
-                new Point3D(1.45, 0.45, 0.11),
+                new Point3D(1.4472135954999579, 0.4472135954999579, 0.10557280900008412),
                 new Vector(-0.5, -0.5, 1)
         );
-        p1 = new Point3D(0.55, 0.55, 1.89);
-        p2 = new Point3D(1.45, 0.45, 0.11);
+        p1 = new Point3D(0.5527864045000421, -0.44721359549995787, 1.8944271909999157);
+        p2 = new Point3D(1.4472135954999579, 0.4472135954999579, 0.10557280900008412);
 
         result = tb.findIntersections(ray);
-
         assertEquals(2, result.size(), "Wrong number of intersections");
         if (result.get(0).getX() > result.get(1).getX()) {
             result = List.of(result.get(1), result.get(0));
@@ -322,8 +321,8 @@ class TubeTest {
                 new Point3D(1.5, 0.5, 0),
                 new Vector(-0.5, -0.5, 1)
         );
-        p1 = new Point3D(0.55, 0.55, 1.89);
-        p2 = new Point3D(1.45, 0.45, 0.11);
+        p1 = new Point3D(0.5527864045000421, -0.44721359549995787, 1.8944271909999157);
+        p2 = new Point3D(1.4472135954999579, 0.4472135954999579, 0.10557280900008412);
 
         result = tb.findIntersections(ray);
 
@@ -421,10 +420,10 @@ class TubeTest {
 
         // TC28: The ray starts on the tube and goes outside (intersects once)
         ray = new Ray(
-                new Point3D(0.55, 0.55, 1.89),
+                new Point3D(0.552786404500042, 1, 1.894427190999916),
                 new Vector(-0.5, 0, 1)
         );
-        p1 = new Point3D(0.55, 0.55, 1.89);
+        p1 = new Point3D(0.552786404500042, 1, 1.894427190999916);
 
         result = tb.findIntersections(ray);
 
@@ -433,10 +432,10 @@ class TubeTest {
 
         // TC29: The ray starts before the tube's ray, inside the tube (intersects once)
         ray = new Ray(
-                new Point3D(0.75, 0.75, 1.5),
+                new Point3D(0.75, 1, 1.5),
                 new Vector(-0.5, 0, 1)
         );
-        p1 = new Point3D(0.55, 0.75, 1.89);
+        p1 = new Point3D(0.552786404500042, 1, 1.894427190999916);
 
         result = tb.findIntersections(ray);
 
@@ -448,7 +447,7 @@ class TubeTest {
                 new Point3D(1, 1, 1),
                 new Vector(-0.5, 0, 1)
         );
-        p1 = new Point3D(0.55, 1, 1.89);
+        p1 = new Point3D(0.552786404500042, 1, 1.894427190999916);
 
         result = tb.findIntersections(ray);
 
@@ -457,10 +456,10 @@ class TubeTest {
 
         // TC31: The ray starts after the tube's ray, inside the tube (intersects once)
         ray = new Ray(
-                new Point3D(1.25, 1.25, 0.5),
+                new Point3D(1.25, 1, 0.5),
                 new Vector(-0.5, 0, 1)
         );
-        p1 = new Point3D(0.55,1.25, 1.89);
+        p1 = new Point3D(0.552786404500042, 1, 1.894427190999916);
 
         result = tb.findIntersections(ray);
 
@@ -469,11 +468,11 @@ class TubeTest {
 
         // TC32: The ray starts on the tube and goes inside (intersects twice)
         ray = new Ray(
-                new Point3D(1.45, 1.45, 0.11),
+                new Point3D(1.4472135954999579, 1.0, 0.10557280900008419),
                 new Vector(-0.5, 0, 1)
         );
-        p1 = new Point3D(0.55, 1.45, 1.89);
-        p2 = new Point3D(1.45, 1.45, 0.11);
+        p1 = new Point3D(0.5527864045000419, 1.0, 1.8944271909999162);
+        p2 = new Point3D(1.4472135954999579, 1.0, 0.10557280900008419);
 
         result = tb.findIntersections(ray);
 
@@ -485,11 +484,11 @@ class TubeTest {
 
         // TC33: The ray starts before the tube (intersects twice)
         ray = new Ray(
-                new Point3D(1.5, 1.5, 0),
+                new Point3D(1.5, 1, 0),
                 new Vector(-0.5, 0, 1)
         );
-        p1 = new Point3D(0.55, 1.5, 1.89);
-        p2 = new Point3D(1.45, 1.5, 0.11);
+        p1 = new Point3D(0.5527864045000419, 1.0, 1.8944271909999162);
+        p2 = new Point3D(1.4472135954999579, 1.0, 0.10557280900008419);
 
         result = tb.findIntersections(ray);
 
@@ -513,10 +512,10 @@ class TubeTest {
 
         // TC35: The ray starts on the tube and goes outside (intersects once)
         ray = new Ray(
-                new Point3D(0.55, 0, 1.89),
+                new Point3D(0.552786404500042, 0.0, 1.894427190999916),
                 new Vector(-0.5, 0, 1)
         );
-        p1 = new Point3D(0.55, 0, 1.89);
+        p1 = new Point3D(0.552786404500042, 0.0, 1.894427190999916);
 
         result = tb.findIntersections(ray);
 
@@ -528,7 +527,7 @@ class TubeTest {
                 new Point3D(0.75, 0, 1.5),
                 new Vector(-0.5, 0, 1)
         );
-        p1 = new Point3D(0.55, 0, 1.89);
+        p1 = new Point3D(0.552786404500042, 0.0, 1.894427190999916);
 
         result = tb.findIntersections(ray);
 
@@ -540,7 +539,7 @@ class TubeTest {
                 new Point3D(1, 0, 1),
                 new Vector(-0.5, 0, 1)
         );
-        p1 = new Point3D(0.55, 0, 1.89);
+        p1 = new Point3D(0.552786404500042, 0.0, 1.894427190999916);
 
         result = tb.findIntersections(ray);
 
@@ -552,7 +551,7 @@ class TubeTest {
                 new Point3D(1.25, 0, 0.5),
                 new Vector(-0.5, 0, 1)
         );
-        p1 = new Point3D(0.55, 0, 1.89);
+        p1 = new Point3D(0.552786404500042, 0.0, 1.894427190999916);
 
         result = tb.findIntersections(ray);
 
@@ -561,11 +560,11 @@ class TubeTest {
 
         // TC39: The ray starts on the tube and goes inside (intersects twice)
         ray = new Ray(
-                new Point3D(1.45, 0, 0.11),
+                new Point3D(1.4472135954999579, 0.0, 0.10557280900008419),
                 new Vector(-0.5, 0, 1)
         );
-        p1 = new Point3D(0.55, 0, 1.89);
-        p2 = new Point3D(1.45, 0, 0.11);
+        p1 = new Point3D(0.552786404500042, 0.0, 1.894427190999916);
+        p2 = new Point3D(1.4472135954999579, 0.0, 0.10557280900008419);
 
         result = tb.findIntersections(ray);
 
@@ -580,8 +579,8 @@ class TubeTest {
                 new Point3D(1.5, 0, 0),
                 new Vector(-0.5, 0, 1)
         );
-        p1 = new Point3D(0.55, 0, 1.89);
-        p2 = new Point3D(1.45, 0, 0.11);
+        p1 = new Point3D(0.552786404500042, 0.0, 1.894427190999916);
+        p2 = new Point3D(1.4472135954999579, 0.0, 0.10557280900008419);
 
         result = tb.findIntersections(ray);
 
@@ -654,7 +653,7 @@ class TubeTest {
         // TC46: The ray starts before the tube's origin
         ray = new Ray(
                 new Point3D(1, -1, 1),
-                new Vector(0, 0, 1)
+                new Vector(0, 1, 0)
         );
 
         result = tb.findIntersections(ray);
@@ -664,7 +663,7 @@ class TubeTest {
         // TC47: The ray starts on the tube's origin
         ray = new Ray(
                 new Point3D(1, 0, 1),
-                new Vector(0, 0, 1)
+                new Vector(0, 1, 0)
         );
 
         result = tb.findIntersections(ray);
@@ -674,7 +673,7 @@ class TubeTest {
         // TC48: The ray starts after the tube's origin
         ray = new Ray(
                 new Point3D(1, 1, 1),
-                new Vector(0, 0, 1)
+                new Vector(0, 1, 0)
         );
 
         result = tb.findIntersections(ray);
@@ -685,44 +684,38 @@ class TubeTest {
         // TC49: The ray starts before the tube's origin
         ray = new Ray(
                 new Point3D(1, -1, 0),
-                new Vector(0, 0, 1)
+                new Vector(0, 1, 0)
         );
-        p1 = new Point3D(1, 1, 2);
 
         result = tb.findIntersections(ray);
 
-        assertEquals(1, result.size(), "Wrong number of intersections");
-        assertEquals(p1, result.get(0), "The ray is on the tube's surface, starts before the origin and is parallel to the tube's ray, resulted with wrong coordinates");
+        assertNull(result, "The ray is on the tube's surface, starts before the origin and is parallel to the tube's ray, shouldn't find any intersections");
 
         // TC50: The ray starts on the tube's origin
         ray = new Ray(
                 new Point3D(1, 0, 0),
-                new Vector(0, 0, 1)
+                new Vector(0, 1, 0)
         );
-        p1 = new Point3D(1, 1, 2);
 
         result = tb.findIntersections(ray);
 
-        assertEquals(1, result.size(), "Wrong number of intersections");
-        assertEquals(p1, result.get(0), "The ray is on the tube's surface, starts at the origin and is parallel to the tube's ray, resulted with wrong coordinates");
+        assertNull(result, "The ray is on the tube's surface, starts at the origin and is parallel to the tube's ray, shouldn't find any intersections");
 
         // TC51: The ray starts after the tube's origin
         ray = new Ray(
                 new Point3D(1, 1, 0),
-                new Vector(0, 0, 1)
+                new Vector(0, 1, 0)
         );
-        p1 = new Point3D(1, 1, 2);
 
         result = tb.findIntersections(ray);
 
-        assertEquals(1, result.size(), "Wrong number of intersections");
-        assertEquals(p1, result.get(0), "The ray is on the tube's surface, starts after the origin and is parallel to the tube's ray, resulted with wrong coordinates");
+        assertNull(result, "The ray is on the tube's surface, starts after the origin and is parallel to the tube's ray, shouldn't find any intersections");
 
         // *** Group: The ray is inside the tube and is parallel to the tube's ray (no intersections)
         // TC52: The ray starts before the tube's origin
         ray = new Ray(
                 new Point3D(0.5, -1, 0.5),
-                new Vector(0, 0, 1)
+                new Vector(0, 1, 0)
         );
 
         result = tb.findIntersections(ray);
@@ -732,7 +725,7 @@ class TubeTest {
         // TC53: The ray starts at the tube's origin
         ray = new Ray(
                 new Point3D(0.5, 0, 0.5),
-                new Vector(0, 0, 1)
+                new Vector(0, 1, 0)
         );
 
         result = tb.findIntersections(ray);
@@ -742,7 +735,7 @@ class TubeTest {
         // TC54: The ray starts after the tube's origin
         ray = new Ray(
                 new Point3D(0.5, 1, 0.5),
-                new Vector(0, 0, 1)
+                new Vector(0, 1, 0)
         );
 
         result = tb.findIntersections(ray);
@@ -753,7 +746,7 @@ class TubeTest {
         // TC55: The ray starts before the tube's origin
         ray = new Ray(
                 new Point3D(2, -1, 2),
-                new Vector(0, 0, 1)
+                new Vector(0, 1, 0)
         );
 
         result = tb.findIntersections(ray);
@@ -763,7 +756,7 @@ class TubeTest {
         // TC56: The ray starts at the tube's origin
         ray = new Ray(
                 new Point3D(2, 0, 2),
-                new Vector(0, 0, 1)
+                new Vector(0, 1, 0)
         );
 
         result = tb.findIntersections(ray);
@@ -773,7 +766,7 @@ class TubeTest {
         // TC57: The ray starts after the tube's origin
         ray = new Ray(
                 new Point3D(2, 1, 2),
-                new Vector(0, 0, 1)
+                new Vector(0, 1, 0)
         );
 
         result = tb.findIntersections(ray);
@@ -784,7 +777,7 @@ class TubeTest {
         // TC58: The ray starts before the tube's origin
         ray = new Ray(
                 new Point3D(1, -1, 1),
-                new Vector(0, 0, -1)
+                new Vector(0, -1, 0)
         );
 
         result = tb.findIntersections(ray);
@@ -794,7 +787,7 @@ class TubeTest {
         // TC59: The ray starts on the tube's origin
         ray = new Ray(
                 new Point3D(1, 0, 1),
-                new Vector(0, 0, -1)
+                new Vector(0, -1, 0)
         );
 
         result = tb.findIntersections(ray);
@@ -804,7 +797,7 @@ class TubeTest {
         // TC60: The ray starts after the tube's origin
         ray = new Ray(
                 new Point3D(1, 1, 1),
-                new Vector(0, 0, -1)
+                new Vector(0, -1, 0)
         );
 
         result = tb.findIntersections(ray);
@@ -815,44 +808,38 @@ class TubeTest {
         // TC61: The ray starts before the tube's origin
         ray = new Ray(
                 new Point3D(1, -1, 0),
-                new Vector(0, 0, -1)
+                new Vector(0, -1, 0)
         );
-        p1 = new Point3D(1, 1, 2);
 
         result = tb.findIntersections(ray);
 
-        assertEquals(1, result.size(), "Wrong number of intersections");
-        assertEquals(p1, result.get(0), "The ray is on the tube's surface, starts before the origin and is parallel to the tube's ray with the opposite direction, resulted with wrong coordinates");
+        assertNull(result, "The ray is on the tube's surface, starts before the origin and is parallel to the tube's ray with the opposite direction, shouldn't find any intersections");
 
         // TC62: The ray starts on the tube's origin
         ray = new Ray(
                 new Point3D(1, 0, 0),
-                new Vector(0, 0, -1)
+                new Vector(0, -1, 0)
         );
-        p1 = new Point3D(1, 1, 2);
 
         result = tb.findIntersections(ray);
 
-        assertEquals(1, result.size(), "Wrong number of intersections");
-        assertEquals(p1, result.get(0), "The ray is on the tube's surface, starts at the origin and is parallel to the tube's ray with the opposite direction, resulted with wrong coordinates");
+        assertNull(result, "The ray is on the tube's surface, starts at the origin and is parallel to the tube's ray with the opposite direction, shouldn't find any intersections");
 
         // TC63: The ray starts after the tube's origin
         ray = new Ray(
                 new Point3D(1, 1, 0),
-                new Vector(0, 0, -1)
+                new Vector(0, -1, 0)
         );
-        p1 = new Point3D(1, 1, 2);
 
         result = tb.findIntersections(ray);
 
-        assertEquals(1, result.size(), "Wrong number of intersections");
-        assertEquals(p1, result.get(0), "The ray is on the tube's surface, starts after the origin and is parallel to the tube's ray with the opposite direction, resulted with wrong coordinates");
+        assertNull(result, "The ray is on the tube's surface, starts after the origin and is parallel to the tube's ray with the opposite direction, shouldn't find any intersections");
 
         // *** Group: The ray is inside the tube and is parallel to the tube's ray with the opposite direction (no intersections)
         // TC64: The ray starts before the tube's origin
         ray = new Ray(
                 new Point3D(0.5, -1, 0.5),
-                new Vector(0, 0, -1)
+                new Vector(0, -1, 0)
         );
 
         result = tb.findIntersections(ray);
@@ -862,7 +849,7 @@ class TubeTest {
         // TC65: The ray starts at the tube's origin
         ray = new Ray(
                 new Point3D(0.5, 0, 0.5),
-                new Vector(0, 0, -1)
+                new Vector(0, -1, 0)
         );
 
         result = tb.findIntersections(ray);
@@ -872,7 +859,7 @@ class TubeTest {
         // TC66: The ray starts after the tube's origin
         ray = new Ray(
                 new Point3D(0.5, 1, 0.5),
-                new Vector(0, 0, -1)
+                new Vector(0, -1, 0)
         );
 
         result = tb.findIntersections(ray);
@@ -883,7 +870,7 @@ class TubeTest {
         // TC67: The ray starts before the tube's origin
         ray = new Ray(
                 new Point3D(2, -1, 2),
-                new Vector(0, 0, -1)
+                new Vector(0, -1, 0)
         );
 
         result = tb.findIntersections(ray);
@@ -893,7 +880,7 @@ class TubeTest {
         // TC68: The ray starts at the tube's origin
         ray = new Ray(
                 new Point3D(2, 0, 2),
-                new Vector(0, 0, -1)
+                new Vector(0, -1, 0)
         );
 
         result = tb.findIntersections(ray);
@@ -903,7 +890,7 @@ class TubeTest {
         // TC69: The ray starts after the tube's origin
         ray = new Ray(
                 new Point3D(2, 1, 2),
-                new Vector(0, 0, -1)
+                new Vector(0, -1, 0)
         );
 
         result = tb.findIntersections(ray);
