@@ -1,6 +1,6 @@
 package renderer;
 
-import _scene.Scene;
+import scene.Scene;
 import elements.LightSource;
 import primitives.*;
 

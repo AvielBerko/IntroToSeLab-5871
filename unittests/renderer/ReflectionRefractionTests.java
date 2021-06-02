@@ -1,6 +1,6 @@
 package renderer;
 
-import _scene.Scene;
+import scene.Scene;
 
 import elements.*;
 import geometries.Sphere;
@@ -114,5 +114,43 @@ public class ReflectionRefractionTests {
 
 		render.renderImage();
 		render.writeToImage();
+	}
+
+	/**
+	 * Produces 11 with the same scene as {@link ReflectionRefractionTests#trianglesTransparentSphere()}
+	 * but the camera is rotated around the z axis
+	 */
+	@Test
+	public void trianglesTransparentSphereRotated() {
+		for (int i = 0; i < 11; i++) {
+			Scene scene = new Scene("Test scene");
+
+			Camera camera = new Camera(new Point3D(0, 0, 1000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
+					.setViewPlaneSize(200, 200).setDistance(1000)
+					.rotate(0, 0, 36 * i);
+
+			scene.ambientLight =new AmbientLight(new Color(java.awt.Color.WHITE), 0.15);
+
+			scene.geometries.add( //
+					new Triangle(new Point3D(-150, -150, -115), new Point3D(150, -150, -135), new Point3D(75, 75, -150)) //
+							.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(60)), //
+					new Triangle(new Point3D(-150, -150, -115), new Point3D(-70, 70, -140), new Point3D(75, 75, -150)) //
+							.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(60)), //
+					new Sphere(30, new Point3D(60, 50, -50)) //
+							.setEmission(new Color(java.awt.Color.BLUE)) //
+							.setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6)));
+
+			scene.lights.add(new SpotLight(new Color(700, 400, 400), new Point3D(60, 50, 0), new Vector(0, 0, -1)) //
+					.setKl(4E-5).setKq(2E-7));
+
+			ImageWriter imageWriter = new ImageWriter("refractionShadowRotated" + i, 600, 600);
+			Render render = new Render() //
+					.setImageWriter(imageWriter) //
+					.setCamera(camera) //
+					.setRayTracer(new BasicRayTracer(scene));
+
+			render.renderImage();
+			render.writeToImage();
+		}
 	}
 }

@@ -2,7 +2,7 @@ package renderer;
 
 import primitives.Color;
 import primitives.Ray;
-import _scene.Scene;
+import scene.Scene;
 
 /**
  * Abstract class for ray tracing

@@ -7,8 +7,7 @@ import elements.SpotLight;
 import geometries.*;
 import org.junit.jupiter.api.Test;
 import primitives.*;
-import renderer.*;
-import _scene.Scene;
+import scene.Scene;
 
 /**
  * Testing basic shadows

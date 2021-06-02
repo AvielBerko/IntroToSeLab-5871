@@ -1,4 +1,4 @@
-package _scene;
+package scene;
 
 import elements.AmbientLight;
 import elements.LightSource;
@@ -17,7 +17,7 @@ public class Scene {
     public Color background = Color.BLACK;
     public AmbientLight ambientLight = new AmbientLight(Color.BLACK, 1);
     public Geometries geometries;
-    public List<LightSource> lights = new LinkedList<LightSource>();
+    public List<LightSource> lights = new LinkedList<>();
     /**
      * Constructs a new scene with a name
      * @param name the name of the scene
