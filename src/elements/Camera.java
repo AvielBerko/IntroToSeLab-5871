@@ -143,6 +143,11 @@ public class Camera {
 		return move(new Vector(x, y, z));
 	}
 
+	public Camera setP0(double x, double y, double z) {
+		_p0 = new Point3D(x, y, z);
+		return this;
+	}
+
 	/**
 	 * Rotates the camera around the axes with the given angles
 	 * @param amount vector of angles
