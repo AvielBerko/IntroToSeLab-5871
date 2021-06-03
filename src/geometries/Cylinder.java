@@ -36,8 +36,8 @@ public class Cylinder extends Tube {
 
         Point3D p0 = _axisRay.getP0();
         Point3D p1 = _axisRay.getPoint(_height);
-        cap0 = new Plane(p0, getNormal(p0));
-        cap1 = new Plane(p1, getNormal(p1));
+        cap0 = new Plane(p0, _axisRay.getDir().scale(-1) /* Sets the normal directed outside of the cylinder */);
+        cap1 = new Plane(p1, _axisRay.getDir());
     }
 
     /**
@@ -51,33 +51,20 @@ public class Cylinder extends Tube {
 
     @Override
     public Vector getNormal(Point3D p) {
-        // Finding the normal to the side:
-        // n = normalize(p - o)
-        // t = v + (p - p0)
-        // o = p0 + t * v
+        if (isBetweenCaps(p)) {
+            return super.getNormal(p);
+        }
 
-        Vector v = _axisRay.getDir();
+        // Checks if the point is on the bottom cap
+        Vector v0 = _axisRay.getDir();
         Point3D p0 = _axisRay.getP0();
-
-        // if p == p0, it means (p - p0) is a zero vector.
-        // should return the vector of the base as the normal.
-        if (p.equals(p0)) {
-            return v.scale(-1);
+        if (p.equals(p0) || v0.dotProduct(p.subtract(p0)) == 0) {
+            return cap0.getNormal(p);
         }
 
-        double t = v.dotProduct(p.subtract(p0));
-
-        // Checking if the point is on the top or the bottom.
-        if (isZero(t)) {
-            return v.scale(-1);
-        }
-        if (isZero(t - _height)) {
-            return v;
-        }
-
-        Point3D o = p0.add(v.scale(t));
-
-        return p.subtract(o).normalize();
+        // If we got to here, the point should be on the top cap,
+        // because we don't count points that aren't on the cylinder.
+        return cap1.getNormal(p);
     }
 
     @Override
@@ -94,10 +81,8 @@ public class Cylinder extends Tube {
                 // Checks if the intersection points are on the cylinder
                 GeoPoint q0 = tubePoints.get(0);
                 GeoPoint q1 = tubePoints.get(1);
-                boolean q0Intersects = v0.dotProduct(q0.point.subtract(p0)) > 0 &&
-                        v0.dotProduct(q0.point.subtract(p1)) < 0;
-                boolean q1Intersects = v0.dotProduct(q1.point.subtract(p0)) > 0 &&
-                        v0.dotProduct(q1.point.subtract(p1)) < 0;
+                boolean q0Intersects = isBetweenCaps(q0.point);
+                boolean q1Intersects = isBetweenCaps(q1.point);
 
                 if (q0Intersects && q1Intersects) {
                     return tubePoints;
@@ -115,8 +100,7 @@ public class Cylinder extends Tube {
             if (tubePoints.size() == 1) {
                 // Checks if the intersection point is on the cylinder
                 GeoPoint q = tubePoints.get(0);
-                if (v0.dotProduct(q.point.subtract(p0)) > 0 &&
-                        v0.dotProduct(q.point.subtract(p1)) < 0) {
+                if (isBetweenCaps(q.point)) {
                     result = new LinkedList<>();
                     result.add(q);
                 }
@@ -155,6 +139,20 @@ public class Cylinder extends Tube {
         }
 
         return result;
+    }
+
+    private boolean isBetweenCaps(Point3D p) {
+        Vector v0 = _axisRay.getDir();
+        Point3D p0 = _axisRay.getP0();
+        Point3D p1 = _axisRay.getPoint(_height);
+
+        // Checks against zero vector...
+        if (p.equals(p0) || p.equals(p1)) {
+            return false;
+        }
+
+        return v0.dotProduct(p.subtract(p0)) > 0 &&
+                v0.dotProduct(p.subtract(p1)) < 0;
     }
 
     @Override
