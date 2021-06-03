@@ -7,15 +7,12 @@ import primitives.Vector;
 import java.util.LinkedList;
 import java.util.List;
 
-import static primitives.Util.isZero;
-
 /**
  * Cylinder class represents a cylinder in 3D Cartesian coordinate system.
  */
 public class Cylinder extends Tube {
     protected final double _height;
-    protected final Plane cap0;
-    protected final Plane cap1;
+    protected final Plane bottomCap, topCap;
 
     /**
      * Creates a new cylinder by a given axis ray, radius and height.
@@ -36,8 +33,8 @@ public class Cylinder extends Tube {
 
         Point3D p0 = _axisRay.getP0();
         Point3D p1 = _axisRay.getPoint(_height);
-        cap0 = new Plane(p0, _axisRay.getDir().scale(-1) /* Sets the normal directed outside of the cylinder */);
-        cap1 = new Plane(p1, _axisRay.getDir());
+        bottomCap = new Plane(p0, _axisRay.getDir().scale(-1) /* Sets the normal directed outside of the cylinder */);
+        topCap = new Plane(p1, _axisRay.getDir());
     }
 
     /**
@@ -59,17 +56,16 @@ public class Cylinder extends Tube {
         Vector v0 = _axisRay.getDir();
         Point3D p0 = _axisRay.getP0();
         if (p.equals(p0) || v0.dotProduct(p.subtract(p0)) == 0) {
-            return cap0.getNormal(p);
+            return bottomCap.getNormal(p);
         }
 
         // If we got to here, the point should be on the top cap,
-        // because we don't count points that aren't on the cylinder.
-        return cap1.getNormal(p);
+        // because we don't count the points that aren't on the cylinder.
+        return topCap.getNormal(p);
     }
 
     @Override
     public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
-        Vector v0 = _axisRay.getDir();
         Point3D p0 = _axisRay.getP0();
         Point3D p1 = _axisRay.getPoint(_height);
         List<GeoPoint> result = null;
@@ -108,7 +104,7 @@ public class Cylinder extends Tube {
         }
 
         // Finds the bottom cap's intersections
-        List<GeoPoint> cap0Point = cap0.findGeoIntersections(ray, maxDistance);
+        List<GeoPoint> cap0Point = bottomCap.findGeoIntersections(ray, maxDistance);
         if (cap0Point != null) {
             // Checks if the intersection point is on the cap
             GeoPoint gp = cap0Point.get(0);
@@ -125,7 +121,7 @@ public class Cylinder extends Tube {
         }
 
         // Finds the top cap's intersections
-        List<GeoPoint> cap1Point = cap1.findGeoIntersections(ray, maxDistance);
+        List<GeoPoint> cap1Point = topCap.findGeoIntersections(ray, maxDistance);
         if (cap1Point != null) {
             // Checks if the intersection point is on the cap
             GeoPoint gp = cap1Point.get(0);
@@ -141,6 +137,11 @@ public class Cylinder extends Tube {
         return result;
     }
 
+    /**
+     * Helper function that checks if a points is between the two caps (not on them, even on the edge)
+     * @param p The point that will be checked.
+     * @return True if it is between the caps. Otherwise, false.
+     */
     private boolean isBetweenCaps(Point3D p) {
         Vector v0 = _axisRay.getDir();
         Point3D p0 = _axisRay.getP0();
