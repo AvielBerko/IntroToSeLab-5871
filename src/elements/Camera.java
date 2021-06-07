@@ -1,7 +1,11 @@
 package elements;
 
 import primitives.*;
+
+import java.util.LinkedList;
+
 import static primitives.Util.isZero;
+import static primitives.Util.random;
 
 /**
  * Camera object in 3d scene for creating rays through pixels.
@@ -35,7 +39,10 @@ public class Camera {
 	 * The distance between the camera and the view plane.
 	 */
 	private double _distance;
-
+	/**
+	 * The number of rays sent by the camera.
+	 */
+	private int numOfRays = 0;
 	/**
 	 * Constructs a camera with location, to and up vectors.
 	 * The right vector is being calculated by the to and up vectors.
@@ -127,6 +134,28 @@ public class Camera {
 	}
 
 	/**
+	 * Chaining method for setting the starting point of the camera.
+	 * @param x The x coordinate of the point.
+	 * @param y The x coordinate of the point.
+	 * @param z The x coordinate of the point.
+	 * @return The camera itself.
+	 */
+	public Camera setP0(double x, double y, double z) {
+		_p0 = new Point3D(x, y, z);
+		return this;
+	}
+
+	/**
+	 * Chaining method for setting the  number of rays constructed by the camera.
+	 * @param numOfRays The number of rays constructed.
+	 * @return The camera itself.
+	 */
+	public Camera setNumOfRays(int numOfRays) {
+		this.numOfRays = numOfRays;
+		return this;
+	}
+
+	/**
 	 * Adds the given amount to the camera's position
 	 * @return the current camera
 	 */
@@ -141,11 +170,6 @@ public class Camera {
 	 */
 	public Camera move(double x, double y, double z) {
 		return move(new Vector(x, y, z));
-	}
-
-	public Camera setP0(double x, double y, double z) {
-		_p0 = new Point3D(x, y, z);
-		return this;
 	}
 
 	/**
@@ -182,7 +206,12 @@ public class Camera {
 	 * @return A ray going through the given pixel.
 	 */
 	public Ray constructRayThroughPixel(int nX, int nY, int j, int i){
+		Point3D pIJ = CalculateCenterOfPixel(nX,nY,j,i);
+		Vector vIJ = pIJ.subtract(_p0);
+		return new Ray(_p0, vIJ);
+	}
 
+	private Point3D CalculateCenterOfPixel(int nX, int nY, int j, int i) {
 		Point3D pC = _p0.add(_vTo.scale(_distance));
 
 		double rX = _width / nX;
@@ -199,8 +228,30 @@ public class Camera {
 		if(!isZero(yI)){
 			pIJ = pIJ.add(_vUp.scale(yI));
 		}
-		Vector vIJ = pIJ.subtract(_p0);
+		return pIJ;
+	}
 
-		return new Ray(_p0, vIJ);
+	public LinkedList<Ray> constructRayPixelWithAA(int nX, int nY, int j, int i) {
+		if (isZero(_distance))
+			throw new IllegalArgumentException("distance can't be 0");
+
+		LinkedList<Ray> rays = new LinkedList<>();
+
+		double rX = _width / nX;
+		double rY = _height / nY;
+
+		double  randX,randY;
+
+		Point3D pCenterPixel = CalculateCenterOfPixel(nX,nY,j,i);
+		rays.add(new Ray(_p0, pCenterPixel.subtract(_p0)));
+
+		Point3D pInPixel;
+		for (int k = 0; k < numOfRays; k++) {
+			randX= random(-rX/2,rX/2);
+			randY =  random(-rY/2,rY/2);
+			pInPixel = new Point3D(pCenterPixel.getX()+randX,pCenterPixel.getY()+randY,pCenterPixel.getZ());
+			rays.add(new Ray(_p0, pInPixel.subtract(_p0)));
+		}
+		return rays;
 	}
 }

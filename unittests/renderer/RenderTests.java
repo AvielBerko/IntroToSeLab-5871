@@ -22,7 +22,8 @@ import java.io.IOException;
 public class RenderTests {
     private final Camera camera = new Camera(Point3D.ZERO, new Vector(0, 0, -1), new Vector(0, 1, 0)) //
             .setDistance(100) //
-            .setViewPlaneSize(500, 500);
+            .setViewPlaneSize(500, 500)
+            .setNumOfRays(50);
 
     /**
      * Produce a scene with basic 3D model and render it into a png image with a

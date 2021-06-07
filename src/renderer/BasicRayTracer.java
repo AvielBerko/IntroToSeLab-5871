@@ -4,6 +4,7 @@ import scene.Scene;
 import elements.LightSource;
 import primitives.*;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import static geometries.Intersectable.GeoPoint;
@@ -36,6 +37,15 @@ public class BasicRayTracer extends RayTracerBase {
     public Color traceRay(Ray ray) {
         GeoPoint closestPoint = findClosestIntersection(ray);
         return closestPoint == null ? _scene.background : calcColor(closestPoint, ray);
+    }
+
+    @Override
+    public Color averageColor(LinkedList<Ray> rays) {
+        Color color=Color.BLACK;
+        for( Ray ray:rays){
+            color=color.add(traceRay(ray));
+        }
+        return color.reduce(rays.size());
     }
 
     /**

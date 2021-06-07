@@ -5,6 +5,7 @@ import multithreading.ThreadPool;
 import primitives.Color;
 import primitives.Ray;
 
+import java.util.LinkedList;
 import java.util.MissingResourceException;
 
 /**
@@ -122,13 +123,16 @@ public class Render {
             // rendering the image when single-threaded
             int lastPercent = -1;
             int pixels = nX * nY;
+            LinkedList<Ray> rays;
             for (int i = 0; i < nY; i++) {
                 for (int j = 0; j < nX; j++) {
                     if (_printPercent) {
                         int currentPixel = i * nX + j;
                         lastPercent = printPercent(currentPixel, pixels, lastPercent);
                     }
-                    castRay(nX, nY, j, i);
+                    //castRay(nX, nY, j, i);
+                    rays = _camera.constructRayPixelWithAA(nX,nY,j,i);
+                    _imageWriter.writePixel(j,i,_rayTracer.averageColor(rays));
                 }
             }
             // prints the 100% percent
