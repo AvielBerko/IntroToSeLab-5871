@@ -4,6 +4,7 @@ import elements.LightSource;
 import primitives.*;
 import scene.Scene;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class BasicRayTracer extends RayTracerBase {
     private static final double INITIAL_K = 1.0;
     private static final int MAX_CALC_COLOR_LEVEL = 10;
     private static final double MIN_CALC_COLOR_K = 0.001;
-
+    private int glossinessRays = 10;
 
     /**
      * Constructs a ray tracer object with a given scene
@@ -215,18 +216,16 @@ public class BasicRayTracer extends RayTracerBase {
         Vector v = ray.getDir();
         Material material = gp.geometry.getMaterial();
 
-        int rays = 20;
-        if (isZero(material.kG)) {
-            rays = 1;
-        }
-        for (int i = 0; i < rays; ++i) {
+        for(Ray reflectedRay : constructReflectedRays(gp.point, v, n, material.kG, glossinessRays)) {
             double kkr = k * material.kR;
             if (kkr > MIN_CALC_COLOR_K) {
                 color = color.add(
-                        calcGlobalEffect(constructReflectedRay(gp.point, v, n, material.kG), level, material.kR, kkr).scale(1d / rays)
+                        calcGlobalEffect(reflectedRay, level, material.kR, kkr).scale(1d / glossinessRays)
                 );
             }
+        }
 
+        for (int i = 0; i < glossinessRays; ++i) {
             double kkt = k * material.kT;
             if (kkt > MIN_CALC_COLOR_K) {
                 color = color.add(
@@ -266,21 +265,20 @@ public class BasicRayTracer extends RayTracerBase {
      * @param n     the normal at the intersection point
      * @return new reflection ray
      */
-    private Ray constructReflectedRay(Point3D point, Vector v, Vector n, double kG) {
+    private Ray[] constructReflectedRays(Point3D point, Vector v, Vector n, double kG, int numOfRays) {
         Vector vn = n.scale(-2 * v.dotProduct(n));
         Vector r = v.add(vn);
         if (isZero(kG)) {
-            return new Ray(point, r, n);
+            return new Ray[]{new Ray(point, r, n)};
         }
 
-        Vector randomized = getRandomVectorOnUnitHemisphere(n);
+        Vector[] randomizedVectors = getRandomVectorsOnUnitHemisphere(n, numOfRays);
+        Ray[] rays = new Ray[numOfRays];
+
         if (isZero(kG - 1)) {
-            return new Ray(point, randomized, n);
+            return (Ray[]) Arrays.stream(randomizedVectors).map(vector -> new Ray(point, vector, n)).toArray();
         }
-
-        randomized = randomized.scale(1 - kG)
-                .add(r.scale(kG));
-        return new Ray(point, randomized, n);
+        return (Ray[]) Arrays.stream(randomizedVectors).map(vector -> new Ray(point, vector.scale(1 - kG).add(r.scale(kG)), n)).toArray();
     }
 
     /**
@@ -291,7 +289,7 @@ public class BasicRayTracer extends RayTracerBase {
      * @param n     the normal at the intersection point
      * @return new refraction ray
      */
-    private Ray constructRefractedRay(Point3D point, Vector v, Vector n, double kG) {
+    private Ray[] constructRefractedRays(Point3D point, Vector v, Vector n, double kG) {
         if (isZero(kG)) {
             return new Ray(point, v, n);
         }
@@ -306,7 +304,7 @@ public class BasicRayTracer extends RayTracerBase {
         return new Ray(point, randomized, n);
     }
 
-    private Vector getRandomVectorOnUnitHemisphere(Vector n) {
+    private Vector[] getRandomVectorsOnUnitHemisphere(Vector n, int numOfVectors) {
         // glossiness source: https://stackoverflow.com/questions/32077952/ray-tracing-glossy-reflection-sampling-ray-direction
         // source: https://my.eng.utah.edu/~cs6958/slides/pathtrace.pdf
 
@@ -324,21 +322,27 @@ public class BasicRayTracer extends RayTracerBase {
         Vector x = n.crossProduct(axis);
         Vector z = n.crossProduct(x);
 
-        // pick a point on the hemisphere bottom
-        double u, v, u_2, v_2;
-        do {
-            u = random() * 2 - 1;
-            v = random() * 2 - 1;
-            u_2 = u * u;
-            v_2 = v * v;
-        } while (u_2 + v_2 >= 1);
+        Vector[] randomVectors = new Vector[numOfVectors];
+        for (int i = 0; i < numOfVectors; i++) {
 
-        // calculate the height of the point
-        double w = Math.sqrt(1 - u_2 - v_2);
 
-        return x.scale(u)
-                .add(z.scale(v))
-                .add(n.scale(w));
+            // pick a point on the hemisphere bottom
+            double u, v, u_2, v_2;
+            do {
+                u = random() * 2 - 1;
+                v = random() * 2 - 1;
+                u_2 = u * u;
+                v_2 = v * v;
+            } while (u_2 + v_2 >= 1);
+
+            // calculate the height of the point
+            double w = Math.sqrt(1 - u_2 - v_2);
+
+            randomVectors[i] = x.scale(u)
+                    .add(z.scale(v))
+                    .add(n.scale(w));
+        }
+        return randomVectors;
     }
 
     /**
