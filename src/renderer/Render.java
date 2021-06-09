@@ -123,16 +123,13 @@ public class Render {
             // rendering the image when single-threaded
             int lastPercent = -1;
             int pixels = nX * nY;
-            LinkedList<Ray> rays;
             for (int i = 0; i < nY; i++) {
                 for (int j = 0; j < nX; j++) {
                     if (_printPercent) {
                         int currentPixel = i * nX + j;
                         lastPercent = printPercent(currentPixel, pixels, lastPercent);
                     }
-                    //castRay(nX, nY, j, i);
-                    rays = _camera.constructRayPixelWithAA(nX,nY,j,i);
-                    _imageWriter.writePixel(j,i,_rayTracer.averageColor(rays));
+                    castRay(nX, nY, j, i);
                 }
             }
             // prints the 100% percent
@@ -152,8 +149,17 @@ public class Render {
      * @param row the row of the current pixel
      */
     private void castRay(int nX, int nY, int col, int row) {
-        Ray ray = _camera.constructRayThroughPixel(nX, nY, col, row);
-        Color pixelColor = _rayTracer.traceRay(ray);
+        boolean antiAliasing = true;
+        Color pixelColor;
+
+        if (antiAliasing) {
+            LinkedList<Ray> rays = _camera.constructRayPixelWithAA(nX, nY, col, row);
+            pixelColor = _rayTracer.averageColor(rays);
+        } else {
+            Ray ray = _camera.constructRayThroughPixel(nX, nY, col, row);
+            pixelColor = _rayTracer.traceRay(ray);
+        }
+
         _imageWriter.writePixel(col, row, pixelColor);
     }
 
@@ -208,7 +214,6 @@ public class Render {
             notifyAll();
         }
 
-        Pixel result = new Pixel();
         int nX = _imageWriter.getNx();
         int nY = _imageWriter.getNy();
 
@@ -221,6 +226,7 @@ public class Render {
             _nextPixel.col = 0;
         }
 
+        Pixel result = new Pixel();
         result.col = _nextPixel.col++;
         result.row = _nextPixel.row;
         return result;

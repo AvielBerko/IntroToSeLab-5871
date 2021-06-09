@@ -46,6 +46,42 @@ public class ReflectionRefractionTests {
 		render.writeToImage();
 	}
 
+	@Test
+	public void sphereAndTriangle() {
+		Camera camera = new Camera(new Point3D(0, 0, 1000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
+				.setViewPlaneSize(150, 150)
+				.setDistance(1000)
+				.setNumOfRays(50);
+
+		scene.geometries.add( //
+				new Triangle(
+						new Point3D(0, 30, 0),
+						new Point3D(-30, 0, 0),
+						new Point3D(0, -30, 0))
+						.setEmission(new Color(java.awt.Color.BLUE)) //
+						.setMaterial(new Material()
+								.setKd(0.2)
+								.setKs(0.2)
+								.setShininess(100)
+								.setKt(0.6)
+								.setKg(0.85)),
+				new Sphere(25, new Point3D(0, 0, -50)) //
+						.setEmission(new Color(java.awt.Color.RED)) //
+						.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100)));
+		scene.lights.add( //
+				new SpotLight(new Color(1000, 600, 0), new Point3D(-100, -100, 500), new Vector(-1, -1, -2)) //
+						.setKl(0.0004).setKq(0.0000006));
+
+		Render render = new Render() //
+				.setImageWriter(new ImageWriter("refractionSphereAndTriangle", 500, 500)) //
+				.setCamera(camera) //
+				.setMultithreading(3)
+				.setPrintPercent(true)
+				.setRayTracer(new BasicRayTracer(scene));
+		render.renderImage();
+		render.writeToImage();
+	}
+
 	/**
 	 * Produce a picture of a sphere lighted by a spot light
 	 */

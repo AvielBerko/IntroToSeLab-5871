@@ -1,13 +1,15 @@
 package renderer;
 
-import scene.Scene;
 import elements.LightSource;
 import primitives.*;
+import scene.Scene;
 
 import java.util.LinkedList;
 import java.util.List;
 
 import static geometries.Intersectable.GeoPoint;
+import static java.lang.Math.random;
+import static primitives.Util.isZero;
 
 /**
  * Basic implementation of RayTracerBase.
@@ -41,9 +43,9 @@ public class BasicRayTracer extends RayTracerBase {
 
     @Override
     public Color averageColor(LinkedList<Ray> rays) {
-        Color color=Color.BLACK;
-        for( Ray ray:rays){
-            color=color.add(traceRay(ray));
+        Color color = Color.BLACK;
+        for (Ray ray : rays) {
+            color = color.add(traceRay(ray));
         }
         return color.reduce(rays.size());
     }
@@ -213,15 +215,23 @@ public class BasicRayTracer extends RayTracerBase {
         Vector v = ray.getDir();
         Material material = gp.geometry.getMaterial();
 
-        double kkr = k * material.kR;
-        if (kkr > MIN_CALC_COLOR_K) {
-            color = calcGlobalEffect(constructReflectedRay(gp.point, v, n), level, material.kR, kkr);
+        int rays = 20;
+        if (isZero(material.kG)) {
+            rays = 1;
         }
+        for (int i = 0; i < rays; ++i) {
+            double kkr = k * material.kR;
+            if (kkr > MIN_CALC_COLOR_K) {
+                color = color.add(
+                        calcGlobalEffect(constructReflectedRay(gp.point, v, n, material.kG), level, material.kR, kkr).scale(1d / rays)
+                );
+            }
 
-        double kkt = k * material.kT;
-        if (kkt > MIN_CALC_COLOR_K) {
-            color = color.add(
-                    calcGlobalEffect(constructRefractedRay(gp.point, v, n), level, material.kT, kkt));
+            double kkt = k * material.kT;
+            if (kkt > MIN_CALC_COLOR_K) {
+                color = color.add(
+                        calcGlobalEffect(constructRefractedRay(gp.point, v, n, material.kG), level, material.kT, kkt).scale(1d / rays));
+            }
         }
 
         return color;
@@ -256,10 +266,21 @@ public class BasicRayTracer extends RayTracerBase {
      * @param n     the normal at the intersection point
      * @return new reflection ray
      */
-    private Ray constructReflectedRay(Point3D point, Vector v, Vector n) {
+    private Ray constructReflectedRay(Point3D point, Vector v, Vector n, double kG) {
         Vector vn = n.scale(-2 * v.dotProduct(n));
         Vector r = v.add(vn);
-        return new Ray(point, r, n);
+        if (isZero(kG)) {
+            return new Ray(point, r, n);
+        }
+
+        Vector randomized = getRandomVectorOnUnitHemisphere(n);
+        if (isZero(kG - 1)) {
+            return new Ray(point, randomized, n);
+        }
+
+        randomized = randomized.scale(1 - kG)
+                .add(r.scale(kG));
+        return new Ray(point, randomized, n);
     }
 
     /**
@@ -270,8 +291,54 @@ public class BasicRayTracer extends RayTracerBase {
      * @param n     the normal at the intersection point
      * @return new refraction ray
      */
-    private Ray constructRefractedRay(Point3D point, Vector v, Vector n) {
-        return new Ray(point, v, n);
+    private Ray constructRefractedRay(Point3D point, Vector v, Vector n, double kG) {
+        if (isZero(kG)) {
+            return new Ray(point, v, n);
+        }
+
+        Vector randomized = getRandomVectorOnUnitHemisphere(n.scale(-1));
+        if (isZero(kG - 1)) {
+            return new Ray(point, randomized, n);
+        }
+
+        randomized = randomized.scale(1 - kG)
+                .add(v.scale(kG));
+        return new Ray(point, randomized, n);
+    }
+
+    private Vector getRandomVectorOnUnitHemisphere(Vector n) {
+        // glossiness source: https://stackoverflow.com/questions/32077952/ray-tracing-glossy-reflection-sampling-ray-direction
+        // source: https://my.eng.utah.edu/~cs6958/slides/pathtrace.pdf
+
+        // pick axis with smallest component in normal
+        Vector axis;
+        if (Math.abs(n.getX()) < Math.abs(n.getY()) && Math.abs(n.getX()) < Math.abs(n.getZ())) {
+            axis = new Vector(1, 0, 0);
+        } else if (Math.abs(n.getY()) < Math.abs(n.getZ())) {
+            axis = new Vector(0, 1, 0);
+        } else {
+            axis = new Vector(0, 0, 1);
+        }
+
+        // find two vectors orthogonal to the normal
+        Vector x = n.crossProduct(axis);
+        Vector z = n.crossProduct(x);
+
+        // pick a point on the hemisphere bottom
+        double u, v, u_2, v_2;
+        do {
+            u = random() * 2 - 1;
+            v = random() * 2 - 1;
+            u_2 = u * u;
+            v_2 = v * v;
+        } while (u_2 + v_2 >= 1);
+
+        // calculate the height of the point
+        double w = Math.sqrt(1 - u_2 - v_2);
+
+        return x.scale(u)
+                .add(z.scale(v))
+                .add(n.scale(w));
     }
 
     /**

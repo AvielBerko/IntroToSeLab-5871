@@ -21,6 +21,12 @@ public class Material {
 	 */
 	public double kR = 0;
 	/**
+	 * kG is the glossiness parameter of the material.
+	 * It can get a value between 0 and 1 where 0 is
+	 * a matte material and 1 is gloss material
+	 */
+	public double kG = 0;
+	/**
 	 * nShininess is the shininess parameter of the material
 	 */
 	public int nShininess = 0;
@@ -66,6 +72,15 @@ public class Material {
 		return this;
 	}
 
+	/**
+	 * Chaining method for setting the glossiness of the material.
+	 * @param kG the glossiness to set, value in range [0,1]
+	 * @return the current material
+	 */
+	public Material setKg(double kG) {
+		this.kG = kG;
+		return this;
+	}
 
 	/**
 	 * Chaining method for setting the shininess of the material.
