@@ -1,6 +1,5 @@
 package primitives;
 
-import geometries.Intersectable;
 import static geometries.Intersectable.GeoPoint;
 import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
@@ -23,27 +22,24 @@ public class Ray {
 	 */
 	public Ray(Point3D p0, Vector dir) {
 		_dir = dir.normalized();
-		//_p0 = new Point3D(_p0.getX(), _p0.getY(), _p0.getZ());
-
-		// For performance improvement.
 		_p0 = p0;
 	}
 
 	/**
 	 * Creates a new ray by point,vector direction and normal.
-	 * @param p0 head point of the ray
-	 * @param dir direction of the ray
-	 * @param normal normal of the ray
+	 * @param p0 head point of the ray.
+	 * @param dir direction of the ray.
+	 * @param normal normal of the ray.
 	 */
 	public Ray(Point3D p0, Vector dir, Vector normal) {
 		_dir = dir;
-		// make sure the normal and the direction are not orthogonal
+		// make sure the normal and the direction are not orthogonal.
 		double nv = alignZero(normal.dotProduct(dir));
 
-		// if not orthogonal
+		// if not orthogonal.
 		if (!isZero(nv)) {
 			Vector moveVector = normal.scale(nv > 0 ? DELTA : -DELTA);
-			// move the head of the vector in the right direction
+			// move the head of the vector in the right direction.
 			_p0 = p0.add(moveVector);
 		}
 		else
@@ -56,9 +52,6 @@ public class Ray {
 	 * @return A shallow copy of the initial point.
 	 */
 	public Point3D getP0() {
-		//return new Point3D(_p0.getX(), _p0.getY(), _p0.getZ());
-
-	    // For performance Improvement.
 		return _p0;
 	}
 
@@ -81,9 +74,6 @@ public class Ray {
 	 * @return A shallow copy of the direction vector.
 	 */
 	public Vector getDir() {
-	    // return new Vector(_dir.getHead());
-
-		// For performance Improvement.
 		return _dir;
 	}
 
@@ -109,6 +99,11 @@ public class Ray {
 		return result;
 	}
 
+	/**
+	 * Receives a list of geopoints and finds the closest point to the ray.
+	 * @param geoPoints The list of geopoints
+	 * @return The closest geopoint.
+	 */
 	public GeoPoint findClosestGeoPoint(List<GeoPoint> geoPoints) {
 		if (geoPoints == null) return null;
 
@@ -125,6 +120,7 @@ public class Ray {
 
 		return result;
 	}
+
 
 	@Override
 	public boolean equals(Object o) {

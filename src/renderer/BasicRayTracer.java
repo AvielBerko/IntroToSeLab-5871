@@ -48,15 +48,6 @@ public class BasicRayTracer extends RayTracerBase {
         return closestPoint == null ? _scene.background : calcColor(closestPoint, ray);
     }
 
-    @Override
-    public Color averageColor(LinkedList<Ray> rays) {
-        Color color = Color.BLACK;
-        for (Ray ray : rays) {
-            color = color.add(traceRay(ray));
-        }
-        return color.reduce(rays.size());
-    }
-
     /**
      * Calculates the color of the intersected object
      * on the intersection point with a given ray.
@@ -86,7 +77,7 @@ public class BasicRayTracer extends RayTracerBase {
      */
     private Color calcColor(GeoPoint gp, Ray ray, int level, double k) {
         Color color = gp.geometry.getEmission()
-                .add(getLocalEffects(gp, ray, k));
+                .add(calcLocalEffects(gp, ray, k));
 
         if (level == 1) {
             return color;
@@ -102,7 +93,7 @@ public class BasicRayTracer extends RayTracerBase {
      * @param ray the ray that caused the intersection
      * @return the color on the intersection point
      */
-    private Color getLocalEffects(GeoPoint gp, Ray ray, double k) {
+    private Color calcLocalEffects(GeoPoint gp, Ray ray, double k) {
         Point3D p = gp.point;
         Vector n = gp.geometry.getNormal(p);
         double kd = gp.geometry.getMaterial().kD;
@@ -221,6 +212,9 @@ public class BasicRayTracer extends RayTracerBase {
         Color color = Color.BLACK;
         Vector n = gp.geometry.getNormal(gp.point);
         Vector v = ray.getDir();
+        if (v.dotProduct(n) < 0) {
+            n = n.scale(-1);
+        }
         Material material = gp.geometry.getMaterial();
 
         // adds the reflection effect
@@ -235,7 +229,7 @@ public class BasicRayTracer extends RayTracerBase {
         // adds the refraction effect
         double kkt = k * material.kT;
         if (kkt > MIN_CALC_COLOR_K) {
-            for (Ray refractedRay : constructRefractedRays(gp.point, v, n, material.kG, _glossinessRays)) {
+            for (Ray refractedRay : constructRefractedRays(gp.point, v, n.scale(-1), material.kG, _glossinessRays)) {
                 color = color.add(calcGlobalEffect(refractedRay, level, material.kT, kkt)
                         .scale(1d / _glossinessRays));
             }
@@ -276,8 +270,8 @@ public class BasicRayTracer extends RayTracerBase {
      * @return randomized reflection rays
      */
     private Ray[] constructReflectedRays(Point3D point, Vector v, Vector n, double kG, int numOfRays) {
-        Vector vn = n.scale(-2 * v.dotProduct(n));
-        Vector r = v.add(vn);
+        Vector n2vn = n.scale(-2 * v.dotProduct(n));
+        Vector r = v.add(n2vn);
 
         // If kG is equals to 1 then return only 1 ray, the specular ray (r)
         if (isZero(kG - 1)) {
@@ -288,16 +282,16 @@ public class BasicRayTracer extends RayTracerBase {
 
         // If kG is equals to 0 then select all the randomized vectors
         if (isZero(kG)) {
-            return (Ray[]) Arrays.stream(randomizedVectors)
+            return Arrays.stream(randomizedVectors)
                     .map(vector -> new Ray(point, vector, n))
-                    .toArray();
+                    .toArray(Ray[]::new);
         }
 
         // If kG is in range (0,1) then move the randomized vectors towards the specular vector (v)
-        return (Ray[]) Arrays.stream(randomizedVectors)
+        return Arrays.stream(randomizedVectors)
                 .map(vector -> new Ray(point,
                         vector.scale(1 - kG).add(r.scale(kG)), n))
-                .toArray();
+                .toArray(Ray[]::new);
     }
 
     /**
@@ -320,16 +314,16 @@ public class BasicRayTracer extends RayTracerBase {
 
         // If kG is equals to 0 then select all the randomized vectors
         if (isZero(kG)) {
-            return (Ray[]) Arrays.stream(randomizedVectors)
+            return Arrays.stream(randomizedVectors)
                     .map(vector -> new Ray(point, vector, n))
-                    .toArray();
+                    .toArray(Ray[]::new);
         }
 
         // If kG is in range (0,1) then move the randomized vectors towards the specular vector (v)
-        return (Ray[]) Arrays.stream(randomizedVectors)
+        return Arrays.stream(randomizedVectors)
                 .map(vector -> new Ray(point,
                         vector.scale(1 - kG).add(v.scale(kG)), n))
-                .toArray();
+                .toArray(Ray[]::new);
     }
 
     /**
