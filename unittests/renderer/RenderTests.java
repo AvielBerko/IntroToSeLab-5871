@@ -148,7 +148,7 @@ public class RenderTests {
                                 continue;
                             }
                             double radius = Double.parseDouble(geometryElement.getAttribute("radius"));
-                            builder.addGeometry(new Sphere(
+                            builder.addGeometries(new Sphere(
                                     radius,
                                     new Point3D(
                                             Double.parseDouble(centerCoordinates[0]),
@@ -174,9 +174,9 @@ public class RenderTests {
                             }
 
                             if (geometryElement.getNodeName().equals("triangle")) {
-                                builder.addGeometry(new Triangle(points[0], points[1], points[2]));
+                                builder.addGeometries(new Triangle(points[0], points[1], points[2]));
                             } else {
-                                builder.addGeometry(new Polygon(points));
+                                builder.addGeometries(new Polygon(points));
                             }
                         }
                         break;
@@ -197,7 +197,7 @@ public class RenderTests {
                                     );
                                 }
 
-                                builder.addGeometry(new Plane(points[0], points[1], points[2]));
+                                builder.addGeometries(new Plane(points[0], points[1], points[2]));
                             } else if (numOfAttributes == 2) {
                                 // creates a plane with a point and a normal
                                 String[] pointCoordinates = geometryElement.getAttribute("point").split(" ");
@@ -220,7 +220,7 @@ public class RenderTests {
                                         Double.parseDouble(normalCoordinates[2])
                                 );
 
-                                builder.addGeometry(new Plane(point, normal));
+                                builder.addGeometries(new Plane(point, normal));
                             }
                         }
                         break;

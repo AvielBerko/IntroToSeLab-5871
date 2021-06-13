@@ -43,7 +43,7 @@ public class Camera {
     /**
      * The number of rays sent by the camera.
      */
-    private int numOfRays = 0;
+    private int _numOfRays = 10;
 
     /**
      * Constructs a camera with location, to and up vectors.
@@ -161,7 +161,11 @@ public class Camera {
      * @return The camera itself.
      */
     public Camera setNumOfRays(int numOfRays) {
-        this.numOfRays = numOfRays;
+        if (numOfRays <= 0) {
+            throw new IllegalArgumentException("number of rays should be greater than 0");
+        }
+
+        _numOfRays = numOfRays;
         return this;
     }
 
@@ -274,7 +278,7 @@ public class Camera {
         rays.add(new Ray(_p0, pCenterPixel.subtract(_p0)));
 
         Point3D pInPixel;
-        for (int k = 0; k < numOfRays; k++) {
+        for (int k = 0; k < _numOfRays; k++) {
             randX = random(-rX / 2, rX / 2);
             randY = random(-rY / 2, rY / 2);
             pInPixel = new Point3D(pCenterPixel.getX() + randX, pCenterPixel.getY() + randY, pCenterPixel.getZ());

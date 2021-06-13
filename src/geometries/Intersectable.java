@@ -55,5 +55,12 @@ public interface Intersectable {
         return findGeoIntersections(ray, Double.POSITIVE_INFINITY);
     }
 
+    /**
+     * Gives all the geo points where the given ray is intersecting with the object within the given distance.
+     * @param ray A ray to check if is intersecting with the object.
+     * @param maxDistance the maximum distance of the intersection points
+     * @return  {@code List<GeoPoint>} of all the geo points of the intersections,
+     * or {@code null} if no intersections at all.
+     */
     List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance);
 }

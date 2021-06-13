@@ -4,8 +4,10 @@ import elements.AmbientLight;
 import elements.LightSource;
 import geometries.Geometries;
 import geometries.Geometry;
+import geometries.Intersectable;
 import primitives.Color;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -68,11 +70,11 @@ public class Scene {
 
         /**
          * Sets lights of the created scene
-         * @param lights the list of light to set
+         * @param lights the array of light to set
          * @return the current builder
          */
-        public Builder setLights(List<LightSource> lights) {
-            _scene.lights = lights;
+        public Builder setLights(LightSource... lights) {
+            _scene.lights = Arrays.asList(lights);
             return this;
         }
 
@@ -87,12 +89,16 @@ public class Scene {
         }
 
         /**
-         * Adds one geometry to the created scene
-         * @param geometry the geometry to add
+         * Adds geometries to the scene
+         * @param geometries the geometries to add
          * @return the current builder
          */
-        public Builder addGeometry(Geometry geometry) {
-            _scene.geometries.add(geometry);
+        public Builder addGeometries(Intersectable... geometries) {
+            if (_scene.geometries == null) {
+                _scene.geometries = new Geometries(geometries);
+            } else {
+                _scene.geometries.add(geometries);
+            }
             return this;
         }
 

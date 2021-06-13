@@ -32,6 +32,10 @@ public class BasicRayTracer extends RayTracerBase {
     }
 
     public BasicRayTracer setGlossinessRays(int glossinessRays) {
+        if (glossinessRays <= 0) {
+            throw new IllegalArgumentException("number of glossiness rays should be greater than 0");
+        }
+
         _glossinessRays = glossinessRays;
         return this;
     }
