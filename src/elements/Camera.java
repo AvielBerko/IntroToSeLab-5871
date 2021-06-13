@@ -134,7 +134,7 @@ public class Camera {
      * @return The camera itself.
      */
     public Camera setDistance(double distance) {
-        if (isZero(_distance)) {
+        if (isZero(distance)) {
             throw new IllegalArgumentException("distance can't be 0");
         }
         _distance = distance;

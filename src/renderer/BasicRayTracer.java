@@ -210,28 +210,31 @@ public class BasicRayTracer extends RayTracerBase {
      */
     private Color calcGlobalEffects(GeoPoint gp, Ray ray, int level, double k) {
         Color color = Color.BLACK;
-        Vector n = gp.geometry.getNormal(gp.point);
+        Material material = gp.geometry.getMaterial();
+
         Vector v = ray.getDir();
-        if (v.dotProduct(n) < 0) {
+        Vector n = gp.geometry.getNormal(gp.point);
+        if (v.dotProduct(n) > 0) {
             n = n.scale(-1);
         }
-        Material material = gp.geometry.getMaterial();
 
         // adds the reflection effect
         double kkr = k * material.kR;
         if (kkr > MIN_CALC_COLOR_K) {
-            for (Ray reflectedRay : constructReflectedRays(gp.point, v, n, material.kG, _glossinessRays)) {
+            Ray[] reflectedRays = constructReflectedRays(gp.point, v, n, material.kG, _glossinessRays);
+            for (Ray reflectedRay : reflectedRays) {
                 color = color.add(calcGlobalEffect(reflectedRay, level, material.kR, kkr)
-                        .scale(1d / _glossinessRays));
+                        .scale(1d / reflectedRays.length));
             }
         }
 
         // adds the refraction effect
         double kkt = k * material.kT;
         if (kkt > MIN_CALC_COLOR_K) {
-            for (Ray refractedRay : constructRefractedRays(gp.point, v, n.scale(-1), material.kG, _glossinessRays)) {
+            Ray[] refractedRays = constructRefractedRays(gp.point, v, n.scale(-1), material.kG, _glossinessRays);
+            for (Ray refractedRay : refractedRays) {
                 color = color.add(calcGlobalEffect(refractedRay, level, material.kT, kkt)
-                        .scale(1d / _glossinessRays));
+                        .scale(1d / refractedRays.length));
             }
         }
 
@@ -310,7 +313,7 @@ public class BasicRayTracer extends RayTracerBase {
             return new Ray[]{new Ray(point, v, n)};
         }
 
-        Vector[] randomizedVectors = getRandomVectorsOnUnitHemisphere(n.scale(-1), numOfRays);
+        Vector[] randomizedVectors = getRandomVectorsOnUnitHemisphere(n, numOfRays);
 
         // If kG is equals to 0 then select all the randomized vectors
         if (isZero(kG)) {
