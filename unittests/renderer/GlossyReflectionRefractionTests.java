@@ -10,6 +10,7 @@ import primitives.*;
 import scene.Scene;
 
 public class GlossyReflectionRefractionTests {
+
     @Test
     public void reflectionSphereAndCylinder() {
         Camera camera = new Camera(
@@ -48,8 +49,8 @@ public class GlossyReflectionRefractionTests {
                                 new Point3D(100, -50, -150))
                                 .setEmission(new Color(40, 40, 40))
                                 .setMaterial(new Material()
-                                        .setKd(0.5).setKs(0.4)
-                                        .setKr(0.0).setShininess(50)),
+                                        .setKd(0.6).setKs(0.4)
+                                        .setShininess(50)),
                         new Polygon(
                                 new Point3D(-100, -50, -150),
                                 new Point3D(-100, 75, -150),
@@ -57,8 +58,8 @@ public class GlossyReflectionRefractionTests {
                                 new Point3D(100, -50, -150))
                                 .setEmission(new Color(40, 40, 40))
                                 .setMaterial(new Material()
-                                        .setKd(0.5).setKs(0.4)
-                                        .setKr(0.0).setShininess(50))
+                                        .setKd(0.6).setKs(0.4)
+                                        .setShininess(50))
                 ).build();
 
         Render render = new Render()
@@ -74,7 +75,7 @@ public class GlossyReflectionRefractionTests {
     }
 
     @Test
-    public void reflectionSpheresCylinders() {
+    public void reflectionSphereCylinderShowKg() {
         Camera camera = new Camera(
                 new Point3D(0, 0, 1000),
                 new Vector(0, 0, -1),
@@ -112,8 +113,8 @@ public class GlossyReflectionRefractionTests {
                                     new Point3D(100, -50, -150))
                                     .setEmission(new Color(40, 40, 40))
                                     .setMaterial(new Material()
-                                            .setKd(0.5).setKs(0.4)
-                                            .setKr(0.0).setShininess(50)),
+                                            .setKd(0.6).setKs(0.4)
+                                            .setShininess(50)),
                             new Polygon(
                                     new Point3D(-100, -50, -150),
                                     new Point3D(-100, 75, -150),
@@ -121,13 +122,143 @@ public class GlossyReflectionRefractionTests {
                                     new Point3D(100, -50, -150))
                                     .setEmission(new Color(40, 40, 40))
                                     .setMaterial(new Material()
-                                            .setKd(0.5).setKs(0.4)
-                                            .setKr(0.0).setShininess(50))
+                                            .setKd(0.6).setKs(0.4)
+                                            .setShininess(50))
                     ).build();
 
             Render render = new Render()
                     .setImageWriter(
                             new ImageWriter("reflectionGlossiness/glossiness" + (i + 1), 750, 500))
+                    .setCamera(camera)
+                    .setMultithreading(3)
+                    .setPrintPercent(true)
+                    .setAntiAliasing(true)
+                    .setRayTracer(new BasicRayTracer(scene).setGlossinessRays(20));
+            render.renderImage();
+            render.writeToImage();
+        }
+    }
+
+    @Test
+    public void refractionSphereAndPane() {
+        Camera camera = new Camera(
+                new Point3D(0, 0, 1000),
+                new Vector(0, 0, -1),
+                new Vector(0, 1, 0))
+                .setViewPlaneSize(225, 150)
+                .setDistance(800)
+                .setNumOfRays(20);
+
+        Scene scene = Scene.Builder.create("Test Scene")
+                .setLights(
+                        new SpotLight(
+                                new Color(500, 500, 500),
+                                new Point3D(-100, 100, 100),
+                                new Vector(-0.5, -1, -0.5))
+                                .setKl(0.004)
+                                .setKq(0.000006))
+                .addGeometries(
+                        new Sphere(50, new Point3D(0, 0, 0))
+                                .setEmission(new Color(5, 50, 120))
+                                .setMaterial(new Material()
+                                        .setKd(0.6).setKs(0.4)
+                                        .setShininess(100)),
+                        new Polygon(
+                                new Point3D(0, -50, 75),
+                                new Point3D(0, 50, 75),
+                                new Point3D(75, 50, 75),
+                                new Point3D(75, -50, 75))
+                                .setEmission(new Color(40, 40, 40))
+                                .setMaterial(new Material()
+                                        .setKt(1.0).setKg(0.8)),
+                        new Polygon(
+                                new Point3D(-75, -50, -75),
+                                new Point3D(-75, -50, 75),
+                                new Point3D(75, -50, 75),
+                                new Point3D(75, -50, -75))
+                                .setEmission(new Color(40, 40, 40))
+                                .setMaterial(new Material()
+                                        .setKd(0.6).setKs(0.4)
+                                        .setShininess(50)),
+                        new Polygon(
+                                new Point3D(-75, -50, -75),
+                                new Point3D(-75, 75, -75),
+                                new Point3D(75, 75, -75),
+                                new Point3D(75, -50, -75))
+                                .setEmission(new Color(40, 40, 40))
+                                .setMaterial(new Material()
+                                        .setKd(0.6).setKs(0.4)
+                                        .setShininess(50))
+                ).build();
+
+        Render render = new Render()
+                .setImageWriter(
+                        new ImageWriter("refractionGlossinessSphereAndPane", 750, 500))
+                .setCamera(camera)
+                .setMultithreading(3)
+                .setPrintPercent(true)
+                .setAntiAliasing(true)
+                .setRayTracer(new BasicRayTracer(scene).setGlossinessRays(20));
+        render.renderImage();
+        render.writeToImage();
+    }
+
+    @Test
+    public void refractionSphereAndPaneShowKg() {
+        Camera camera = new Camera(
+                new Point3D(0, 0, 1000),
+                new Vector(0, 0, -1),
+                new Vector(0, 1, 0))
+                .setViewPlaneSize(225, 150)
+                .setDistance(800)
+                .setNumOfRays(20);
+
+        for (int i = 0; i < 10; i++) {
+            Scene scene = Scene.Builder.create("Test Scene")
+                    .setLights(
+                            new SpotLight(
+                                    new Color(500, 500, 500),
+                                    new Point3D(-100, 100, 100),
+                                    new Vector(-0.5, -1, -0.5))
+                                    .setKl(0.004)
+                                    .setKq(0.000006))
+                    .addGeometries(
+                            new Sphere(50, new Point3D(0, 0, 0))
+                                    .setEmission(new Color(5, 50, 120))
+                                    .setMaterial(new Material()
+                                            .setKd(0.6).setKs(0.4)
+                                            .setShininess(100)),
+                            new Polygon(
+                                    new Point3D(0, -50, 75),
+                                    new Point3D(0, 50, 75),
+                                    new Point3D(75, 50, 75),
+                                    new Point3D(75, -50, 75))
+                                    .setEmission(new Color(40, 40, 40))
+                                    .setMaterial(new Material()
+                                            .setKt(1.0).setKg(1.0 / (i + 1))),
+                            new Polygon(
+                                    new Point3D(-75, -50, -75),
+                                    new Point3D(-75, -50, 75),
+                                    new Point3D(75, -50, 75),
+                                    new Point3D(75, -50, -75))
+                                    .setEmission(new Color(40, 40, 40))
+                                    .setMaterial(new Material()
+                                            .setKd(0.6).setKs(0.4)
+                                            .setShininess(50)),
+                            new Polygon(
+                                    new Point3D(-75, -50, -75),
+                                    new Point3D(-75, 75, -75),
+                                    new Point3D(75, 75, -75),
+                                    new Point3D(75, -50, -75))
+                                    .setEmission(new Color(40, 40, 40))
+                                    .setMaterial(new Material()
+                                            .setKd(0.6).setKs(0.4)
+                                            .setShininess(50))
+                    ).build();
+
+            Render render = new Render()
+                    .setImageWriter(
+                            new ImageWriter("refractionGlossiness/glossienss" + (i + 1), 750, 500))
                     .setCamera(camera)
                     .setMultithreading(3)
                     .setPrintPercent(true)

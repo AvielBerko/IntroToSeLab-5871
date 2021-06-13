@@ -78,7 +78,7 @@ public class Material {
 	 * @return the current material
 	 */
 	public Material setKg(double kG) {
-		this.kG = kG;
+		this.kG = Math.pow(kG, 0.5);
 		return this;
 	}
 
