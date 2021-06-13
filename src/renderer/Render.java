@@ -18,7 +18,7 @@ public class Render {
     private ThreadPool<Pixel> _threadPool = null;
     private Pixel _nextPixel = null;
     private boolean _printPercent = false;
-    private boolean _antiAliasing = true;
+    private boolean _antiAliasing = false;
 
     /**
      * Chaining method for setting the image writer.

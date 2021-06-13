@@ -77,6 +77,7 @@ public class ReflectionRefractionTests {
 				.setCamera(camera) //
 				.setMultithreading(3)
 				.setPrintPercent(true)
+				.setAntiAliasing(true)
 				.setRayTracer(new BasicRayTracer(scene));
 		render.renderImage();
 		render.writeToImage();

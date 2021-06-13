@@ -25,7 +25,7 @@ public class Material {
 	 * It can get a value between 0 and 1 where 0 is
 	 * a matte material and 1 is gloss material
 	 */
-	public double kG = 0;
+	public double kG = 1.0;
 	/**
 	 * nShininess is the shininess parameter of the material
 	 */
