@@ -5,7 +5,6 @@ import primitives.*;
 import scene.Scene;
 
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 
 import static geometries.Intersectable.GeoPoint;

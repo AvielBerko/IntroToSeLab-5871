@@ -1,5 +1,6 @@
 package geometries;
 
+import primitives.BoundingBox;
 import primitives.Point3D;
 import primitives.Ray;
 
@@ -63,4 +64,9 @@ public interface Intersectable {
      * or {@code null} if no intersections at all.
      */
     List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance);
+
+    default BoundingBox getBoundingBox() {
+        // TODO: implement this on every geometry
+        return null;
+    }
 }
