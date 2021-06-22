@@ -1,9 +1,8 @@
 package geometries;
 
-import primitives.Point3D;
+import primitives.BoundingBox;
 import primitives.Ray;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -43,10 +42,22 @@ public class Geometries implements Intersectable {
 
     @Override
     public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
+        return findGeoIntersections(ray, maxDistance, false);
+    }
+
+    @Override
+    public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance, boolean useBB) {
+        if (useBB) {
+            BoundingBox bb = getBoundingBox();
+            if (bb != null && !bb.isIntersecting(ray, maxDistance)) {
+                return null;
+            }
+        }
+
         List<GeoPoint> result = null;
 
         for (Intersectable intersectable : _intersectables) {
-            List<GeoPoint> intersections = intersectable.findGeoIntersections(ray, maxDistance);
+            List<GeoPoint> intersections = intersectable.findGeoIntersections(ray, maxDistance, useBB);
             if (intersections == null) {
                 continue;
             }
@@ -60,5 +71,14 @@ public class Geometries implements Intersectable {
         }
 
         return result;
+    }
+
+    @Override
+    public BoundingBox getBoundingBox() {
+        return BoundingBox.surround(
+                _intersectables.stream()
+                .map(Intersectable::getBoundingBox)
+                .toArray(BoundingBox[]::new)
+        );
     }
 }

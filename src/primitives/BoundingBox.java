@@ -1,5 +1,7 @@
 package primitives;
 
+import java.util.Arrays;
+
 public class BoundingBox {
     private final Point3D _min, _max;
 
@@ -13,6 +15,15 @@ public class BoundingBox {
         _min = min;
         _max = max;
     }
+
+    public Point3D getMin() {
+        return _min;
+    }
+
+    public Point3D getMax() {
+        return _max;
+    }
+
 
     public boolean isIntersecting(Ray ray, double maxDistance) {
         Point3D origin = ray.getP0();
@@ -49,5 +60,43 @@ public class BoundingBox {
 
     private static class T {
         public double min, max;
+    }
+
+    public static BoundingBox surround(BoundingBox... boundingBoxes) {
+        // TODO: check what if boundingBoxes contains null
+        if (boundingBoxes.length == 0) {
+            return null;
+        }
+
+        return new BoundingBox(
+                new Point3D(
+                        Point3D.getMinByAxis(Point3D::getX,
+                                Arrays.stream(boundingBoxes)
+                                        .map(BoundingBox::getMin)
+                                        .toArray(Point3D[]::new)),
+                        Point3D.getMinByAxis(Point3D::getY,
+                                Arrays.stream(boundingBoxes)
+                                        .map(BoundingBox::getMin)
+                                        .toArray(Point3D[]::new)),
+                        Point3D.getMinByAxis(Point3D::getZ,
+                                Arrays.stream(boundingBoxes)
+                                        .map(BoundingBox::getMin)
+                                        .toArray(Point3D[]::new))
+                ),
+                new Point3D(
+                        Point3D.getMaxByAxis(Point3D::getX,
+                                Arrays.stream(boundingBoxes)
+                                        .map(BoundingBox::getMax)
+                                        .toArray(Point3D[]::new)),
+                        Point3D.getMaxByAxis(Point3D::getY,
+                                Arrays.stream(boundingBoxes)
+                                        .map(BoundingBox::getMax)
+                                        .toArray(Point3D[]::new)),
+                        Point3D.getMaxByAxis(Point3D::getZ,
+                                Arrays.stream(boundingBoxes)
+                                        .map(BoundingBox::getMax)
+                                        .toArray(Point3D[]::new))
+                )
+        );
     }
 }
