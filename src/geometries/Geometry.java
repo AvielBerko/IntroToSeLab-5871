@@ -63,6 +63,11 @@ public abstract class Geometry implements Intersectable {
         return _boundingBox;
     }
 
+    /**
+     * Calculates the bounding box.
+     * The calculation will differ between every geometry
+     * @return The bounding box that was calculated
+     */
     protected BoundingBox calculateBoundingBox() {
         return null;
     }

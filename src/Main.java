@@ -19,13 +19,5 @@ public final class Main {
      * @param args irrelevant here
      */
     public static void main(String[] args) {
-
-        Sphere sphere = new Sphere(50, new Point3D(0,0,-50));
-        Ray ray = new Ray(
-                new Point3D(-18.77, 30.98, -15.39),
-                new Vector(-0.29, -0.74, 0.6)
-        );
-
-        System.out.println(sphere.findIntersections(ray));
     }
 }

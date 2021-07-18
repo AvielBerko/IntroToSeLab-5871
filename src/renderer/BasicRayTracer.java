@@ -46,6 +46,11 @@ public class BasicRayTracer extends RayTracerBase {
         return this;
     }
 
+    /**
+     * Chaining method, Sets the max level of calculations to the CalcColor function
+     * @param level The number of levels to set
+     * @return The BasicRayTracer itself
+     */
     public BasicRayTracer setMaxCalcColorLevel(int level) {
         // If the number to set is not positive
         if (level <= 0) {
@@ -56,6 +61,11 @@ public class BasicRayTracer extends RayTracerBase {
         return this;
     }
 
+    /**
+     * Chaining method, Sets whether to use bounding boxes or not
+     * @param use The boolean value to use BB or not
+     * @return The BasicRayTracer itself
+     */
     public BasicRayTracer useBoundingBoxes(boolean use) {
         _useBoundingBoxes = use;
         return this;
