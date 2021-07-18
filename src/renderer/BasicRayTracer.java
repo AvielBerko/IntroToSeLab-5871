@@ -16,9 +16,9 @@ import static primitives.Util.isZero;
  */
 public class BasicRayTracer extends RayTracerBase {
     private static final double INITIAL_K = 1.0;
-    private static final int MAX_CALC_COLOR_LEVEL = 3;
     private static final double MIN_CALC_COLOR_K = 0.001;
 
+    private int _maxCalcColorLevel = 10;
     private int _glossinessRays = 10;
     private boolean _useBoundingBoxes = true;
 
@@ -43,6 +43,16 @@ public class BasicRayTracer extends RayTracerBase {
         }
 
         _glossinessRays = glossinessRays;
+        return this;
+    }
+
+    public BasicRayTracer setMaxCalcColorLevel(int level) {
+        // If the number to set is not positive
+        if (level <= 0) {
+            throw new IllegalArgumentException("max calc color level should be greater than 0");
+        }
+
+        _maxCalcColorLevel = level;
         return this;
     }
 
@@ -76,7 +86,7 @@ public class BasicRayTracer extends RayTracerBase {
      * @return the color on the intersection point
      */
     private Color calcColor(GeoPoint gp, Ray ray) {
-        return calcColor(gp, ray, MAX_CALC_COLOR_LEVEL, INITIAL_K)
+        return calcColor(gp, ray, _maxCalcColorLevel, INITIAL_K)
                 .add(_scene.ambientLight.getIntensity());
     }
 
