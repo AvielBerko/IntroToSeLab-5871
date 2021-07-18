@@ -8,11 +8,7 @@ import primitives.*;
 public abstract class Geometry implements Intersectable {
     protected Color _emission = Color.BLACK;
     protected Material _material = new Material();
-    protected final BoundingBox _boundingBox;
-
-    public Geometry() {
-        _boundingBox = calculateBoundingBox();
-    }
+    protected BoundingBox _boundingBox;
 
     /**
      * Returns a normal for a given point on the geometry.
@@ -59,6 +55,11 @@ public abstract class Geometry implements Intersectable {
 
     @Override
     public BoundingBox getBoundingBox() {
+        if (_boundingBox != null) {
+            return _boundingBox;
+        }
+
+        _boundingBox = calculateBoundingBox();
         return _boundingBox;
     }
 
