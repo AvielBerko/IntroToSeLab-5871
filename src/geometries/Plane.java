@@ -77,15 +77,8 @@ public class Plane extends Geometry {
     }
 
     @Override
-    public String toString() {
-        return "Plane{" +
-                "q0=" + _q0 +
-                ", normal=" + _normal +
-                '}';
-    }
-
-    @Override
     public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
+        // If the ray's starting point is the same point as the plane's
         Point3D p0 = ray.getP0();
         if (_q0.equals(p0)) {
             return null;
@@ -108,5 +101,15 @@ public class Plane extends Geometry {
         }
 
         return null;
+    }
+
+
+    /*************** Admin *****************/
+    @Override
+    public String toString() {
+        return "Plane{" +
+                "q0=" + _q0 +
+                ", normal=" + _normal +
+                '}';
     }
 }

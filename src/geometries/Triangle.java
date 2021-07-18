@@ -18,6 +18,8 @@ public class Triangle extends Polygon {
         super(a, b, c);
     }
 
+
+    /*************** Admin *****************/
     @Override
     public String toString() {
         return "Triangle{" +

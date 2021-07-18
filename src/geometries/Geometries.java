@@ -56,20 +56,24 @@ public class Geometries implements Intersectable {
                 return null;
             }
         }
-
+        // The list of all intersections geoPoints from all geometries
         List<GeoPoint> result = null;
 
+        // Looops on every intersectable in the list of geometries
         for (Intersectable intersectable : _intersectables) {
             List<GeoPoint> intersections = intersectable.findGeoIntersections(ray, maxDistance, useBB);
+
+            // If the current intersectable has no intersections, go to the next intersectable
             if (intersections == null) {
                 continue;
             }
 
+            // If this is the first intersectable that has intersections
             if (result == null) {
                 result = new LinkedList<>(intersections);
                 continue;
             }
-
+            // Add all intersectable's intersections to the result list
             result.addAll(intersections);
         }
 

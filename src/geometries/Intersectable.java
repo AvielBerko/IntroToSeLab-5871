@@ -80,5 +80,9 @@ public interface Intersectable {
         return findGeoIntersections(ray, maxDistance);
     }
 
+    /**
+     * Gets the boundingBox surrounding the object
+     * @return The bounding box
+     */
     BoundingBox getBoundingBox();
 }

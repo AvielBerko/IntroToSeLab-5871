@@ -90,9 +90,13 @@ public class Polygon extends Geometry {
 		return _plane.getNormal(null);
 	}
 
+	// Finds Plane's intersections and checks if they are in the polygon
 	@Override
 	public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
+
+		// Finds Plane's intersections
 		List<GeoPoint> result = _plane.findGeoIntersections(ray, maxDistance);
+		// If the plane has no intersections - the polygon has none too
 		if (result == null) {
 			return null;
 		}

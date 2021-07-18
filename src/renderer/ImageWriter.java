@@ -18,15 +18,15 @@ import javax.imageio.*;
  * @author Dan
  */
 public class ImageWriter {
-	private int _nX;
-	private int _nY;
+	private final int _nX;
+	private final int _nY;
 
 	private static final String FOLDER_PATH = System.getProperty("user.dir") + "/images";
 
-	private BufferedImage _image;
-	private String _imageName;
+	private final BufferedImage _image;
+	private final String _imageName;
 	
-	private Logger _logger = Logger.getLogger("ImageWriter");
+	private final Logger _logger = Logger.getLogger("ImageWriter");
 
 	// ***************** Constructors ********************** //
 	/**

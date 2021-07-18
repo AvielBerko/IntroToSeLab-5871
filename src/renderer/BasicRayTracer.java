@@ -31,7 +31,13 @@ public class BasicRayTracer extends RayTracerBase {
         super(scene);
     }
 
+    /**
+     * Chaining method, sets the number of glossiness rays to shoot from the object
+     * @param glossinessRays the number of rays to set
+     * @return the BasicRayTracer itself.
+     */
     public BasicRayTracer setGlossinessRays(int glossinessRays) {
+        // If the number to set is not positive
         if (glossinessRays <= 0) {
             throw new IllegalArgumentException("number of glossiness rays should be greater than 0");
         }
@@ -103,6 +109,7 @@ public class BasicRayTracer extends RayTracerBase {
      * @return the color on the intersection point
      */
     private Color calcLocalEffects(GeoPoint gp, Ray ray, double k) {
+        // Sets the parameters to the calculations
         Point3D p = gp.point;
         Vector n = gp.geometry.getNormal(p);
         double kd = gp.geometry.getMaterial().kD;
@@ -110,8 +117,10 @@ public class BasicRayTracer extends RayTracerBase {
         double nShininess = gp.geometry.getMaterial().nShininess;
         Vector v = ray.getDir();
 
-
+        // The final color (starts with black - 0,0,0 and adds colors)
         Color lightsColor = Color.BLACK;
+
+        // Loops on every light in the scene
         for (LightSource ls : _scene.lights) {
             Vector l = ls.getL(p);
             double ln = l.dotProduct(n);
@@ -121,8 +130,10 @@ public class BasicRayTracer extends RayTracerBase {
             }
 
             double ktr = transparency(ls, l, n, gp);
+            // If the change is larger then the minimum k
             if (ktr * k > MIN_CALC_COLOR_K) {
                 Color lightIntensity = ls.getIntensity(gp.point).scale(ktr);
+                // Adds the diffuse and specular components
                 lightsColor = lightsColor.add(
                         calcDiffusive(kd, ln, lightIntensity),
                         calcSpecular(ks, l, n, ln, v, nShininess, lightIntensity)
@@ -187,16 +198,22 @@ public class BasicRayTracer extends RayTracerBase {
         Ray lightRay = new Ray(gp.point, lightDirection, n);
         double lightDistance = light.getDistance(gp.point);
 
+        // Finds all intersections
         List<GeoPoint> intersections = _scene.geometries
                 .findGeoIntersections(lightRay, lightDistance, _useBoundingBoxes);
 
+        // If there are no intersections, stop the check
         if (intersections == null) {
             return 1.0;
         }
 
         double ktr = 1.0;
+
+        // Loops on every intersection and multiplies their kT values
         for (GeoPoint p : intersections) {
             ktr *= p.geometry.getMaterial().kT;
+
+            // If the change is smaller then the minimum K, stop and return 0
             if (ktr < MIN_CALC_COLOR_K) {
                 return 0.0;
             }
@@ -227,26 +244,31 @@ public class BasicRayTracer extends RayTracerBase {
             n = n.scale(-1);
         }
 
-        // adds the reflection effect
+        // Adds the reflection effect
         double kkr = k * material.kR;
         if (kkr > MIN_CALC_COLOR_K) {
+            // Constructs the reflected rays
             Ray[] reflectedRays = constructReflectedRays(gp.point, v, n, material.kG, _glossinessRays);
+            // Loops on every ray and adds it's color to the sum
             for (Ray reflectedRay : reflectedRays) {
                 color = color.add(calcGlobalEffect(reflectedRay, level, material.kR, kkr)
                         .scale(1d / reflectedRays.length));
             }
         }
 
-        // adds the refraction effect
+        // Adds the refraction effect
         double kkt = k * material.kT;
         if (kkt > MIN_CALC_COLOR_K) {
+            // Constructs the refracted rays
             Ray[] refractedRays = constructRefractedRays(gp.point, v, n.scale(-1), material.kG, _glossinessRays);
+            // Loops on every ray and adds it's color to the sum
             for (Ray refractedRay : refractedRays) {
                 color = color.add(calcGlobalEffect(refractedRay, level, material.kT, kkt)
                         .scale(1d / refractedRays.length));
             }
         }
 
+        // Returns the final color after adding the reflection and refraction effects
         return color;
     }
 
