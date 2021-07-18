@@ -19,7 +19,7 @@ public class GlossyReflectionRefractionTests {
                 new Vector(0, 1, 0))
                 .setViewPlaneSize(225, 150)
                 .setDistance(800)
-                .setNumOfRays(20);
+                .setNumOfRays(50);
 
         Scene scene = Scene.Builder.create("Test Scene")
                 .setLights(
@@ -140,7 +140,7 @@ public class GlossyReflectionRefractionTests {
     }
 
     @Test
-    public void refractionSphereAndPane() {
+    public void refractionSphereAndPlane() {
         Camera camera = new Camera(
                 new Point3D(0, 0, 1000),
                 new Vector(0, 0, -1),
@@ -193,7 +193,7 @@ public class GlossyReflectionRefractionTests {
 
         Render render = new Render()
                 .setImageWriter(
-                        new ImageWriter("refractionGlossinessSphereAndPane", 750, 500))
+                        new ImageWriter("refractionGlossinessSphereAndPlane", 750, 500))
                 .setCamera(camera)
                 .setMultithreading(3)
                 .setPrintPercent(true)

@@ -6,6 +6,8 @@ import primitives.Vector;
 
 /**
  * Light with a position.
+ * Lights to all directions at the same intensity.
+ * Reduces over distance.
  */
 public class PointLight extends Light implements LightSource {
 
@@ -26,7 +28,7 @@ public class PointLight extends Light implements LightSource {
 	}
 
 	/**
-	 * Chaining method for setting k constant.
+	 * Chaining method for setting k constant
 	 * @param kC the new kC
 	 * @return the current point light
 	 */
@@ -36,7 +38,7 @@ public class PointLight extends Light implements LightSource {
 	}
 
 	/**
-	 * Chaining method for setting k linear.
+	 * Chaining method for setting k linear
 	 * @param kL the new kL
 	 * @return the current point light
 	 */
@@ -46,7 +48,7 @@ public class PointLight extends Light implements LightSource {
 	}
 
 	/**
-	 * Chaining method for setting k quadratic.
+	 * Chaining method for setting k quadratic
 	 * @param kQ the new kQ
 	 * @return the current point light
 	 */
@@ -57,8 +59,12 @@ public class PointLight extends Light implements LightSource {
 
 	@Override
 	public Color getIntensity(Point3D p) {
+		// The distance between the light source and the object
 		double d = p.distance(_position);
+
+		// The reduction of the intensity through distance
 		double attenuator = 1d/(_kC + _kL * d + _kQ * d * d);
+
 		return _intensity.scale(attenuator);
 	}
 

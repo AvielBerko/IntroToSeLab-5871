@@ -3,14 +3,18 @@ package elements;
 import primitives.Color;
 
 /**
- * Light object with intensity.
+ * Light object with intensity
  */
-class Light {
+abstract class Light {
 	/**
 	 * Intensity of light color
 	 */
 	final protected Color _intensity;
 
+	/**
+	 * Constructor, builds a new light with a given intensity
+	 * @param intensity the intensity of the light
+	 */
 	Light(Color intensity) {
 		_intensity = intensity;
 	}

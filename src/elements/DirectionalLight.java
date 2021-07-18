@@ -6,6 +6,7 @@ import primitives.Vector;
 
 /**
  * Light from a direction.
+ * No reduction of intensity over distance.
  */
 public class DirectionalLight extends Light implements LightSource {
 	private final Vector _direction;

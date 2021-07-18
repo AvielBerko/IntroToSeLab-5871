@@ -5,14 +5,16 @@ import primitives.Point3D;
 import primitives.Vector;
 
 /**
- * Spotlight at a position.
+ * Light with a position.
+ * Lights to a specific direction (other directions gets a lower intensity).
+ * Reduces over distance.
  */
 public class SpotLight extends PointLight {
 
 	private final Vector _direction;
 
 	/**
-	 * Constructs a spotlight with intensity, position and direction.
+	 * Constructs a spotlight with intensity, position and direction
 	 * @param intensity the intensity of the created spotlight
 	 * @param position the position of the created spotlight
 	 * @param direction the direction of the spotlight
