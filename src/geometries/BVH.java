@@ -26,8 +26,8 @@ public class BVH implements Intersectable {
         Intersectable median = new Median<>(intersectables, comparator).findMedian();
 
         int maxLeftSize = (intersectables.size() + 1) / 2;
-        List<Intersectable> left = new ArrayList<Intersectable>(maxLeftSize);
-        List<Intersectable> right = new ArrayList<Intersectable>(intersectables.size() - maxLeftSize);
+        List<Intersectable> left = new ArrayList<>(maxLeftSize);
+        List<Intersectable> right = new ArrayList<>(intersectables.size() - maxLeftSize);
         for(Intersectable intersectable : intersectables) {
             // We need to ensure no less than half go to the right (happens when many are equal)
             if (comparator.compare(intersectable, median) <= 0 && left.size() < maxLeftSize) {

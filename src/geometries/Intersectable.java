@@ -88,13 +88,28 @@ public interface Intersectable {
      */
     BoundingBox getBoundingBox();
 
+    default Point3D getBoundingBoxCenter() {
+        BoundingBox bb = getBoundingBox();
+        if (bb == null) {
+            return null;
+        }
+
+        return bb.getCenter();
+    }
+
     static Comparator<Intersectable> getComparatorByAxis(Axis axis) {
         return (bb1, bb2) -> {
-            double center1 = bb1.getBoundingBox()
-                    .getCenter().get(axis);
-            double center2 = bb2.getBoundingBox()
-                    .getCenter().get(axis);
-            return Double.compare(center1, center2);
+            Point3D center1 = bb1.getBoundingBoxCenter();
+            if (center1 == null) {
+                return 0;
+            }
+
+            Point3D center2 = bb2.getBoundingBoxCenter();
+            if (center2 == null) {
+                return 0;
+            }
+
+            return Double.compare(center1.get(axis), center2.get(axis));
         };
     }
 }

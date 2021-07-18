@@ -115,7 +115,7 @@ public class Cylinder extends Tube {
                     result = new LinkedList<>();
                 }
 
-                result.add(gp);
+                result.add(new GeoPoint(this, gp.point));
                 if (result.size() == 2) {
                     return result;
                 }
@@ -128,11 +128,12 @@ public class Cylinder extends Tube {
             // Checks if the intersection point is on the cap
             GeoPoint gp = cap1Point.get(0);
             if (gp.point.distanceSquared(p1) < _radius * _radius) {
+                GeoPoint cylinderGP = new GeoPoint(this, gp.point);
                 if (result == null) {
-                    return List.of(gp);
+                    return List.of(cylinderGP);
                 }
 
-                result.add(gp);
+                result.add(cylinderGP);
             }
         }
 

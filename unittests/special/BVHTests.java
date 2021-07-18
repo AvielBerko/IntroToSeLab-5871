@@ -281,7 +281,7 @@ public class BVHTests {
         Point3D b = new Point3D(40, 0, 15);
 
 
-        scene.geometries.add(
+        scene.geometries.add(new BVH(
                 //sphere
 
                 new Sphere(22, new Point3D(80, -28, 0))
@@ -467,7 +467,7 @@ public class BVHTests {
                                 .setKt(1.0).setKg(0.8))
 
 
-        );
+        ));
     }
 
     @Test
@@ -481,13 +481,13 @@ public class BVHTests {
                 .setGeometries(
                         getTeapotModel(
                                 new Color(5, 5, 5),
-                                new Material().setKr(1.0).setKg(0.8)
+                                new Material().setKr(1.0).setKg(0.9)
                         ))
                 .addGeometries(
-                        new Cylinder(new Ray(
+                        new Tube(new Ray(
                                 new Point3D(-50, 0, -100),
-                                new Vector(60, 85, 0)),
-                                15, 100)
+                                new Vector(120, 85, 0)),
+                                15)
                                 .setEmission(new Color(100, 75, 0))
                                 .setMaterial(new Material()
                                         .setKd(0.6).setKs(0.4)
@@ -521,17 +521,17 @@ public class BVHTests {
                 new Vector(0, 1, 0)) //
                 .setDistance(1000)
                 .setViewPlaneSize(200, 200)
-                .setNumOfRays(10);
+                .setNumOfRays(20);
         ImageWriter imageWriter = new ImageWriter("bvh/teapot", 800, 800);
         Render render = new Render() //
                 .setCamera(camera) //
                 .setImageWriter(imageWriter) //
                 .setMultithreading(3)
                 .setAntiAliasing(true)
-//                .setPrintPercent(true)
+                .setPrintPercent(true)
                 .setRayTracer(new BasicRayTracer(scene)
                         .useBoundingBoxes(true)
-                        .setMaxCalcColorLevel(3));
+                        .setMaxCalcColorLevel(4));
         render.renderImage();
         render.writeToImage();
     }

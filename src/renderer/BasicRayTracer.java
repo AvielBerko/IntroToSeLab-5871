@@ -151,7 +151,7 @@ public class BasicRayTracer extends RayTracerBase {
             }
         }
 
-        return lightsColor.add(gp.geometry.getEmission());
+        return lightsColor;
     }
 
     /**

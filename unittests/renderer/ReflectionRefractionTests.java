@@ -1,5 +1,6 @@
 package renderer;
 
+import geometries.Cylinder;
 import scene.Scene;
 
 import elements.*;
