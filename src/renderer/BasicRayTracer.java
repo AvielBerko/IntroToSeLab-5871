@@ -16,10 +16,11 @@ import static primitives.Util.isZero;
  */
 public class BasicRayTracer extends RayTracerBase {
     private static final double INITIAL_K = 1.0;
-    private static final int MAX_CALC_COLOR_LEVEL = 10;
+    private static final int MAX_CALC_COLOR_LEVEL = 3;
     private static final double MIN_CALC_COLOR_K = 0.001;
 
     private int _glossinessRays = 10;
+    private boolean _useBoundingBoxes = true;
 
     /**
      * Constructs a ray tracer object with a given scene
@@ -36,6 +37,11 @@ public class BasicRayTracer extends RayTracerBase {
         }
 
         _glossinessRays = glossinessRays;
+        return this;
+    }
+
+    public BasicRayTracer useBoundingBoxes(boolean use) {
+        _useBoundingBoxes = use;
         return this;
     }
 
@@ -182,7 +188,7 @@ public class BasicRayTracer extends RayTracerBase {
         double lightDistance = light.getDistance(gp.point);
 
         List<GeoPoint> intersections = _scene.geometries
-                .findGeoIntersections(lightRay, lightDistance);
+                .findGeoIntersections(lightRay, lightDistance, _useBoundingBoxes);
 
         if (intersections == null) {
             return 1.0;
@@ -386,7 +392,7 @@ public class BasicRayTracer extends RayTracerBase {
      * @return the closest point to the ray's origin
      */
     private GeoPoint findClosestIntersection(Ray ray) {
-        List<GeoPoint> intersections = _scene.geometries.findGeoIntersections(ray);
+        List<GeoPoint> intersections = _scene.geometries.findGeoIntersections(ray, _useBoundingBoxes);
         if (intersections == null) {
             return null;
         }

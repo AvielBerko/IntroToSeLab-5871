@@ -80,7 +80,5 @@ public interface Intersectable {
         return findGeoIntersections(ray, maxDistance);
     }
 
-    default BoundingBox getBoundingBox() {
-        return null;
-    }
+    BoundingBox getBoundingBox();
 }

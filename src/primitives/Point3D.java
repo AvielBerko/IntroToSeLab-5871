@@ -82,6 +82,14 @@ public class Point3D {
         return _z._coord;
     }
 
+    public double get(Axis axis) {
+        return switch (axis) {
+            case X -> _x._coord;
+            case Y -> _y._coord;
+            case Z -> _z._coord;
+        };
+    }
+
     /**
      * Adds a vector to the current point.
      *
@@ -135,24 +143,24 @@ public class Point3D {
         return Math.sqrt(distanceSquared(point));
     }
 
-    public static double getMinByAxis(Function<Point3D, Double> mapToAxis, Point3D... points) {
+    public static double getMinByAxis(Axis axis, Point3D... points) {
         if (points.length == 0) {
             return Double.NaN;
         }
 
         return Arrays.stream(points)
-                .map(mapToAxis)
+                .map(point -> point.get(axis))
                 .min(Double::compare)
                 .get();
     }
 
-    public static double getMaxByAxis(Function<Point3D, Double> mapToAxis, Point3D... points) {
+    public static double getMaxByAxis(Axis axis, Point3D... points) {
         if (points.length == 0) {
             return Double.NaN;
         }
 
         return Arrays.stream(points)
-                .map(mapToAxis)
+                .map(point -> point.get(axis))
                 .max(Double::compare)
                 .get();
     }

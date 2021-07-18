@@ -1,9 +1,6 @@
 package geometries;
 
-import primitives.Color;
-import primitives.Material;
-import primitives.Vector;
-import primitives.Point3D;
+import primitives.*;
 
 /**
  * An abstract class to represent a geometry.
@@ -11,6 +8,11 @@ import primitives.Point3D;
 public abstract class Geometry implements Intersectable {
     protected Color _emission = Color.BLACK;
     protected Material _material = new Material();
+    protected final BoundingBox _boundingBox;
+
+    public Geometry() {
+        _boundingBox = calculateBoundingBox();
+    }
 
     /**
      * Returns a normal for a given point on the geometry.
@@ -53,5 +55,14 @@ public abstract class Geometry implements Intersectable {
     public Geometry setMaterial(Material material) {
         _material = material;
         return this;
+    }
+
+    @Override
+    public BoundingBox getBoundingBox() {
+        return _boundingBox;
+    }
+
+    protected BoundingBox calculateBoundingBox() {
+        return null;
     }
 }

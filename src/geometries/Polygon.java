@@ -129,18 +129,18 @@ public class Polygon extends Geometry {
 	}
 
 	@Override
-	public BoundingBox getBoundingBox() {
+	protected BoundingBox calculateBoundingBox() {
 		Point3D[] verticesArray = _vertices.toArray(Point3D[]::new);
 		return new BoundingBox(
 				new Point3D(
-						Point3D.getMinByAxis(Point3D::getX, verticesArray),
-						Point3D.getMinByAxis(Point3D::getY, verticesArray),
-						Point3D.getMinByAxis(Point3D::getZ, verticesArray)
+						Point3D.getMinByAxis(Axis.X, verticesArray),
+						Point3D.getMinByAxis(Axis.Y, verticesArray),
+						Point3D.getMinByAxis(Axis.Z, verticesArray)
 				),
 				new Point3D(
-						Point3D.getMaxByAxis(Point3D::getX, verticesArray),
-						Point3D.getMaxByAxis(Point3D::getY, verticesArray),
-						Point3D.getMaxByAxis(Point3D::getZ, verticesArray)
+						Point3D.getMaxByAxis(Axis.X, verticesArray),
+						Point3D.getMaxByAxis(Axis.Y, verticesArray),
+						Point3D.getMaxByAxis(Axis.Z, verticesArray)
 				)
 		);
 	}

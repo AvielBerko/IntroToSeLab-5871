@@ -13,6 +13,7 @@ import java.util.List;
  */
 public class Geometries implements Intersectable {
     private final List<Intersectable> _intersectables;
+    private BoundingBox _bb;
 
     /**
      * Default constructor.
@@ -30,6 +31,7 @@ public class Geometries implements Intersectable {
      */
     public Geometries(Intersectable... intersectables) {
         _intersectables = new LinkedList<>(Arrays.asList(intersectables));
+        _bb = createBoundingBox();
     }
 
     /**
@@ -38,6 +40,7 @@ public class Geometries implements Intersectable {
      */
     public void add(Intersectable... intersectables) {
         _intersectables.addAll(Arrays.asList(intersectables));
+        _bb = createBoundingBox();
     }
 
     @Override
@@ -75,10 +78,14 @@ public class Geometries implements Intersectable {
 
     @Override
     public BoundingBox getBoundingBox() {
+        return _bb;
+    }
+
+    private BoundingBox createBoundingBox() {
         return BoundingBox.surround(
                 _intersectables.stream()
-                .map(Intersectable::getBoundingBox)
-                .toArray(BoundingBox[]::new)
+                        .map(Intersectable::getBoundingBox)
+                        .toArray(BoundingBox[]::new)
         );
     }
 }

@@ -140,7 +140,7 @@ public class GlossyReflectionRefractionTests {
     }
 
     @Test
-    public void refractionSphereAndPlane() {
+    public void refractionSphereAndPane() {
         Camera camera = new Camera(
                 new Point3D(0, 0, 1000),
                 new Vector(0, 0, -1),
@@ -193,7 +193,7 @@ public class GlossyReflectionRefractionTests {
 
         Render render = new Render()
                 .setImageWriter(
-                        new ImageWriter("refractionGlossinessSphereAndPlane", 750, 500))
+                        new ImageWriter("refractionGlossinessSphereAndPane", 750, 500))
                 .setCamera(camera)
                 .setMultithreading(3)
                 .setPrintPercent(true)

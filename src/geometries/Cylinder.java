@@ -138,8 +138,27 @@ public class Cylinder extends Tube {
         return result;
     }
 
+    /**
+     * Helper function that checks if a points is between the two caps (not on them, even on the edge)
+     * @param p The point that will be checked.
+     * @return True if it is between the caps. Otherwise, false.
+     */
+    private boolean isBetweenCaps(Point3D p) {
+        Vector v0 = _axisRay.getDir();
+        Point3D p0 = _axisRay.getP0();
+        Point3D p1 = _axisRay.getPoint(_height);
+
+        // Checks against zero vector...
+        if (p.equals(p0) || p.equals(p1)) {
+            return false;
+        }
+
+        return v0.dotProduct(p.subtract(p0)) > 0 &&
+                v0.dotProduct(p.subtract(p1)) < 0;
+    }
+
     @Override
-    public BoundingBox getBoundingBox() {
+    protected BoundingBox calculateBoundingBox() {
         // source: https://gdalgorithms-list.narkive.com/s2wbl3Cd/axis-aligned-bounding-box-of-cylinder#post8
         Vector dir = _axisRay.getDir();
         double sX = (dir.getX() * _height + 2 * _radius * Math.sqrt(1 - dir.getX() * dir.getX())) / 2;
@@ -162,24 +181,6 @@ public class Cylinder extends Tube {
         );
     }
 
-    /**
-     * Helper function that checks if a points is between the two caps (not on them, even on the edge)
-     * @param p The point that will be checked.
-     * @return True if it is between the caps. Otherwise, false.
-     */
-    private boolean isBetweenCaps(Point3D p) {
-        Vector v0 = _axisRay.getDir();
-        Point3D p0 = _axisRay.getP0();
-        Point3D p1 = _axisRay.getPoint(_height);
-
-        // Checks against zero vector...
-        if (p.equals(p0) || p.equals(p1)) {
-            return false;
-        }
-
-        return v0.dotProduct(p.subtract(p0)) > 0 &&
-                v0.dotProduct(p.subtract(p1)) < 0;
-    }
 
     @Override
     public String toString() {

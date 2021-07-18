@@ -98,7 +98,7 @@ public class Sphere extends Geometry {
     }
 
     @Override
-    public BoundingBox getBoundingBox() {
+    protected BoundingBox calculateBoundingBox() {
         return new BoundingBox(
                 new Point3D(_center.getX() - _radius, _center.getY() - _radius, _center.getZ() - _radius),
                 new Point3D(_center.getX() + _radius, _center.getY() + _radius, _center.getZ() + _radius)
