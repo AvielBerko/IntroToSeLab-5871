@@ -88,6 +88,7 @@ public class Ray {
 		Point3D result = null;
 		double closestDistanceSquared = Double.MAX_VALUE;
 
+		// Loops every point in the list and finds the one with the shortest distance from p0
 		for (Point3D point : points) {
 			double distanceSquared = point.distanceSquared(_p0);
 			if (distanceSquared < closestDistanceSquared) {
@@ -110,6 +111,7 @@ public class Ray {
 		GeoPoint result = null;
 		double closestDistanceSquared = Double.MAX_VALUE;
 
+		// Loops every geoPoint in the list and finds the one with the shortest distance from p0
 		for (GeoPoint geo : geoPoints) {
 			double distanceSquared = geo.point.distanceSquared(_p0);
 			if (distanceSquared < closestDistanceSquared) {
@@ -122,6 +124,7 @@ public class Ray {
 	}
 
 
+	/*************** Admin *****************/
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;

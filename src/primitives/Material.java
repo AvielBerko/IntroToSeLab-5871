@@ -33,7 +33,7 @@ public class Material {
 
 
 	/**
-	 * Chaining method for setting the diffuse of the material.
+	 * Chaining method for setting the diffuse of the material
 	 * @param kD the diffuse to set
 	 * @return the current material
 	 */
@@ -43,7 +43,7 @@ public class Material {
 	}
 
 	/**
-	 * Chaining method for setting the specular of the material.
+	 * Chaining method for setting the specular of the material
 	 * @param kS the specular to set
 	 * @return the current material
 	 */
@@ -53,7 +53,7 @@ public class Material {
 	}
 
 	/**
-	 * Chaining method for setting the transparency of the material.
+	 * Chaining method for setting the transparency of the material
 	 * @param kT the transparency to set
 	 * @return the current material
 	 */
@@ -63,7 +63,7 @@ public class Material {
 	}
 
 	/**
-	 * Chaining method for setting the reflection of the material.
+	 * Chaining method for setting the reflection of the material
 	 * @param kR the reflection to set
 	 * @return the current material
 	 */
@@ -73,7 +73,7 @@ public class Material {
 	}
 
 	/**
-	 * Chaining method for setting the glossiness of the material.
+	 * Chaining method for setting the glossiness of the material
 	 * @param kG the glossiness to set, value in range [0,1]
 	 * @return the current material
 	 */
@@ -83,7 +83,7 @@ public class Material {
 	}
 
 	/**
-	 * Chaining method for setting the shininess of the material.
+	 * Chaining method for setting the shininess of the material
 	 * @param nShininess the shininess to set
 	 * @return the current material
 	 */

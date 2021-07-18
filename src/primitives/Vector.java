@@ -106,6 +106,7 @@ public class Vector {
     public Vector rotateX(double alpha) {
         double radianAlpha = alpha * Math.PI / 180;
 
+
         double x = _head.getX();
         double y = _head.getY() * Math.cos(radianAlpha) - _head.getZ() * Math.sin(radianAlpha);
         double z = _head.getY() * Math.sin(radianAlpha) + _head.getZ() * Math.cos(radianAlpha);
@@ -156,6 +157,7 @@ public class Vector {
      */
     public Vector add(Vector other) {
         Point3D result =_head.add(other);
+        // Handles the case of zero vector
         if(ZERO.equals(result)){
             throw new IllegalArgumentException("Resulting a ZERO Vector");
         }
@@ -180,6 +182,7 @@ public class Vector {
      * @return A new vector of the result.
      */
     public Vector scale(double scalar) {
+        // Handles the case of zero vector
         if (isZero(scalar)) {
             throw new IllegalArgumentException("Resulting a ZERO Vector");
         }
@@ -270,6 +273,7 @@ public class Vector {
         double z = _head._z._coord;
 
         Point3D temp = new Point3D(x / len, y / len, z / len);
+        // Handles the case of zero vector
         if (ZERO.equals(temp)) {
             throw new ArithmeticException("Resulting a ZERO Vector");
         }
@@ -293,6 +297,8 @@ public class Vector {
         return new Vector(x / len, y / len, z / len);
     }
 
+
+    /*************** Admin *****************/
     @Override
     public String toString() {
         return "Vector" + _head;
