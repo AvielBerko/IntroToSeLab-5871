@@ -36,9 +36,6 @@ public class Sphere extends Geometry {
      * @return A shallow copy of the center point.
      */
     public Point3D getCenter() {
-        // return new Point3D(_center.getX(), _center.getY(), _center.getZ());
-
-        // For performance improvement.
         return _center;
     }
 
@@ -58,8 +55,11 @@ public class Sphere extends Geometry {
 
     @Override
     public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
+        // source: https://imgur.com/Zh4CSDU
+
         Point3D p0 = ray.getP0();
         Vector v = ray.getDir();
+        // When the ray starts on the center, find one intersection
         if (p0.equals(_center) && alignZero(_radius - maxDistance) <= 0) {
             Point3D p1 = ray.getPoint(_radius);
             return List.of(new GeoPoint(this, p1));
@@ -100,8 +100,14 @@ public class Sphere extends Geometry {
     @Override
     protected BoundingBox calculateBoundingBox() {
         return new BoundingBox(
-                new Point3D(_center.getX() - _radius, _center.getY() - _radius, _center.getZ() - _radius),
-                new Point3D(_center.getX() + _radius, _center.getY() + _radius, _center.getZ() + _radius)
+                new Point3D(
+                        _center.getX() - _radius,
+                        _center.getY() - _radius,
+                        _center.getZ() - _radius),
+                new Point3D(
+                        _center.getX() + _radius,
+                        _center.getY() + _radius,
+                        _center.getZ() + _radius)
         );
     }
 

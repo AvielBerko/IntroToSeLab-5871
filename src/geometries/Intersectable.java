@@ -88,6 +88,11 @@ public interface Intersectable {
      */
     BoundingBox getBoundingBox();
 
+    /**
+     * Gets the center point of the bounding box if has any.
+     * @return The center {@code Point3D} of the bounding box.
+     *         If no bounding box, returns {@code null}
+     */
     default Point3D getBoundingBoxCenter() {
         BoundingBox bb = getBoundingBox();
         if (bb == null) {
@@ -97,6 +102,11 @@ public interface Intersectable {
         return bb.getCenter();
     }
 
+    /**
+     * Creates a comparator between intersectables' bounding boxes' center by a given axis.
+     * @param axis the axis to compare between the bounding boxes.
+     * @return the created comparator.
+     */
     static Comparator<Intersectable> getComparatorByAxis(Axis axis) {
         return (bb1, bb2) -> {
             Point3D center1 = bb1.getBoundingBoxCenter();

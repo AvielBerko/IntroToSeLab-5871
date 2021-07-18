@@ -33,9 +33,6 @@ public class Vector {
      * @exception IllegalArgumentException When the given coordinates are all 0.
      */
     public Vector(Coordinate x, Coordinate y, Coordinate z) {
-        // this(new Point3D(x, y, z));
-
-        // For performance improvement.
         Point3D head = new Point3D(x, y, z);
 
         if (head.equals(ZERO)) {
@@ -53,9 +50,6 @@ public class Vector {
      * @exception IllegalArgumentException When the given coordinates are all 0.
      */
     public Vector(double x, double y, double z) {
-        //this(new Point3D(x, y, z));
-
-        // For performance improvement.
         Point3D head = new Point3D(x, y, z);
 
         if (head.equals(ZERO)) {
@@ -71,9 +65,6 @@ public class Vector {
      * @return A shallow copy of the head vector.
      */
     public Point3D getHead() {
-        // return new Point3D(_head._x._coord, _head._y._coord, _head._z._coord);
-
-        // For performance improvement.
         return _head;
     }
 

@@ -24,9 +24,6 @@ public class Point3D {
      * @param z the coordinate for the Z axis.
      */
     public Point3D(Coordinate x, Coordinate y, Coordinate z) {
-        // this(x.coord, y.coord, z.coord);
-
-        // For performance improvement.
         _x = x;
         _y = y;
         _z = z;
@@ -52,9 +49,6 @@ public class Point3D {
      * @return A shallow copy of the X axis coordinate.
      */
     public double getX() {
-        // return new Coordinate(_x);
-
-        // For performance improvement.
         return _x._coord;
     }
 
@@ -64,9 +58,6 @@ public class Point3D {
      * @return A shallow copy of the Y axis coordinate.
      */
     public double getY() {
-        // return new Coordinate(_y);
-
-        // For performance improvement.
         return _y._coord;
     }
 
@@ -76,9 +67,6 @@ public class Point3D {
      * @return A shallow copy of the Z axis coordinate.
      */
     public double getZ() {
-        // return new Coordinate(_z);
-
-        // For performance improvement.
         return _z._coord;
     }
 

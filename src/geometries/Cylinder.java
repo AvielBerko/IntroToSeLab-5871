@@ -68,6 +68,8 @@ public class Cylinder extends Tube {
 
     @Override
     public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
+        // source: https://cs.nyu.edu/~dzorin/cg12/lecture19.pdf#page=14
+
         Point3D p0 = _axisRay.getP0();
         Point3D p1 = _axisRay.getPoint(_height);
         List<GeoPoint> result = null;

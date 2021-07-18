@@ -1,7 +1,6 @@
 package geometries;
 
 import java.util.List;
-import java.util.function.Function;
 
 import primitives.*;
 import static primitives.Util.*;
@@ -90,9 +89,9 @@ public class Polygon extends Geometry {
 		return _plane.getNormal(null);
 	}
 
-	// Finds Plane's intersections and checks if they are in the polygon
 	@Override
 	public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
+	    // source: https://imgur.com/OTv37br
 
 		// Finds Plane's intersections
 		List<GeoPoint> result = _plane.findGeoIntersections(ray, maxDistance);
@@ -101,6 +100,7 @@ public class Polygon extends Geometry {
 			return null;
 		}
 
+		// Checks that the intersection point within the plane is inside the polygon as well
 		int numVertices = _vertices.size();
 		Point3D p0 = ray.getP0();
 		Vector v = ray.getDir();

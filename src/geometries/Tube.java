@@ -38,9 +38,6 @@ public class Tube extends Geometry {
      * @return A shallow copy of the axis ray.
      */
     public Ray getAxisRay() {
-        //return new Ray(_axisRay.getPoint(), _axisRay.getDir());
-
-        // For performance improvement.
         return _axisRay;
     }
 
@@ -78,6 +75,8 @@ public class Tube extends Geometry {
 
     @Override
     public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
+        // source: https://cs.nyu.edu/~dzorin/cg12/lecture19.pdf#page=12
+
         Vector v = ray.getDir();
         Vector v0 = _axisRay.getDir();
 
@@ -127,7 +126,9 @@ public class Tube extends Geometry {
         double t1 = alignZero((-b + delta) / (2 * a));
         double t2 = alignZero((-b - delta) / (2 * a));
 
-        if (t1 > 0 && t2 > 0 && alignZero(t1 - maxDistance) <= 0 && alignZero(t2 - maxDistance) <= 0) {
+        if (t1 > 0 && t2 > 0 &&
+            alignZero(t1 - maxDistance) <= 0 &&
+            alignZero(t2 - maxDistance) <= 0) {
             return List.of(
                     new GeoPoint(this, ray.getPoint(t1)),
                     new GeoPoint(this, ray.getPoint(t2))

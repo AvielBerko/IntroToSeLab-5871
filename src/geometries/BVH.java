@@ -9,14 +9,25 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * Bounded Volume Hierarchy
+ * Automatically generates a binary tree to create hierarchy of bounding boxes.
+ */
 public class BVH implements Intersectable {
 
     private final Intersectable _root;
 
+    /**
+     * Constructs the BVH from a given intersectables.
+     */
     public BVH(Intersectable... intersectables) {
         _root = generateRoot(Arrays.asList(intersectables), Axis.X);
     }
 
+    /**
+     * Generates a binary tree for the BVH by comparing the center of the bounding boxes.
+     * Source: https://github.com/eregon/raytracer/blob/master/src/raytracer/BVH.java#L21
+     */
     private static Intersectable generateRoot(List<Intersectable> intersectables, Axis axis) {
         if (intersectables.size() == 1) {
             return intersectables.get(0);
@@ -25,6 +36,7 @@ public class BVH implements Intersectable {
         Comparator<Intersectable> comparator = Intersectable.getComparatorByAxis(axis);
         Intersectable median = new Median<>(intersectables, comparator).findMedian();
 
+        // Splits the intersectables around the median
         int maxLeftSize = (intersectables.size() + 1) / 2;
         List<Intersectable> left = new ArrayList<>(maxLeftSize);
         List<Intersectable> right = new ArrayList<>(intersectables.size() - maxLeftSize);
@@ -37,6 +49,7 @@ public class BVH implements Intersectable {
             }
         }
 
+        // Generate the node's children with the next axis
         Axis nextAxis = axis.getNext();
         return new Node(
                 generateRoot(left, nextAxis),
@@ -66,11 +79,17 @@ public class BVH implements Intersectable {
         return _root.getBoundingBox();
     }
 
+    /**
+     * Helper class for the BVH binary tree.
+     */
     private static class Node implements Intersectable {
 
         private final Intersectable _left, _right;
         private final BoundingBox _boundingBox;
 
+        /**
+         * Constructs a new Node with a given children.
+         */
         public Node(Intersectable left, Intersectable right) {
             _left = left;
             _right = right;
@@ -97,6 +116,7 @@ public class BVH implements Intersectable {
                 return left;
             }
 
+            // Concatenates the intersections points' lists
             return Stream.concat(left.stream(), right.stream())
                     .collect(Collectors.toList());
         }

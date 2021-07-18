@@ -52,9 +52,6 @@ public class Plane extends Geometry {
      * @return A shallow copy of the point.
      */
     public Point3D getPoint() {
-        // return new Point3D(_q0.getX(), _q0.getY(), _q0.getZ());
-
-        // For performance improvement.
         return _q0;
     }
 
@@ -65,9 +62,6 @@ public class Plane extends Geometry {
      */
     @Deprecated
     public Vector getNormal() {
-        // return new Vector(_normal.getHead());
-
-        // For performance improvement.
         return _normal;
     }
 
@@ -78,33 +72,39 @@ public class Plane extends Geometry {
 
     @Override
     public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
-        // If the ray's starting point is the same point as the plane's
+        //source: https://imgur.com/QwKWg10
+
+        // Checks if the ray is starting on the plane's point (q0)
         Point3D p0 = ray.getP0();
         if (_q0.equals(p0)) {
             return null;
         }
 
+        // Checks if the ray is starting on the plane
         double nQMinusP0 = _normal.dotProduct(_q0.subtract(p0));
         if (isZero(nQMinusP0)) {
             return null;
         }
 
+
+        // Checks if the ray is parallel to the plane
         Vector v = ray.getDir();
         double nv = _normal.dotProduct(v);
         if (isZero(nv)) {
             return null;
         }
 
+        // Finds the distance from the ray's point to the intersection point
         double t = alignZero(nQMinusP0 / nv);
         if (t > 0 && alignZero(t - maxDistance) <= 0) {
             return List.of(new GeoPoint(this, ray.getPoint(t)));
         }
 
+        // Gets here when the intersection is behind the ray,
+        // or the when the intersection is beyond the max distance.
         return null;
     }
 
-
-    /*************** Admin *****************/
     @Override
     public String toString() {
         return "Plane{" +
