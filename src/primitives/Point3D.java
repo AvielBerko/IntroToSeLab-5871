@@ -143,6 +143,12 @@ public class Point3D {
         return Math.sqrt(distanceSquared(point));
     }
 
+    /**
+     * Finds the point with the minimum value in a given axis and returns it's coordinate on that axis
+     * @param axis The axis to find the minimum value in
+     * @param points The list of point to find a minimum from
+     * @return The value of the coordinate with the minimum value in the given axis
+     */
     public static double getMinByAxis(Axis axis, Point3D... points) {
         if (points.length == 0) {
             return Double.NaN;
@@ -154,6 +160,12 @@ public class Point3D {
                 .get();
     }
 
+    /**
+     * Finds the point with the maximum value in a given axis and returns it's coordinate on that axis
+     * @param axis The axis to find the maximum value in
+     * @param points The list of point to find a maximum from
+     * @return The value of the coordinate with the maximum value in the given axis
+     */
     public static double getMaxByAxis(Axis axis, Point3D... points) {
         if (points.length == 0) {
             return Double.NaN;
@@ -165,6 +177,12 @@ public class Point3D {
                 .get();
     }
 
+    /**
+     * Gets a center point between 2 given points
+     * @param a The first point
+     * @param b The second point
+     * @return The middle point between the 2 given points
+     */
     public static Point3D getCenter(Point3D a, Point3D b) {
         double x = (a.getX() + b.getX()) / 2;
         double y = (a.getY() + b.getY()) / 2;

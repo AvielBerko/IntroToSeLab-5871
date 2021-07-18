@@ -85,6 +85,10 @@ public class Geometries implements Intersectable {
         return _bb;
     }
 
+    /**
+     * Creates a new bounding box that surround the intersectables
+     * @return The Bounding Box
+     */
     private BoundingBox createBoundingBox() {
         return BoundingBox.surround(
                 _intersectables.stream()

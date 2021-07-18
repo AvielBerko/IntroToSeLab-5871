@@ -135,6 +135,7 @@ public class Polygon extends Geometry {
 	@Override
 	protected BoundingBox calculateBoundingBox() {
 		Point3D[] verticesArray = _vertices.toArray(Point3D[]::new);
+		// The bounding box point will be the min's and max's of every axis
 		return new BoundingBox(
 				new Point3D(
 						Point3D.getMinByAxis(Axis.X, verticesArray),
