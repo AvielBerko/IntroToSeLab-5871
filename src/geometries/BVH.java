@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 
 public class BVH implements Intersectable {
 
-    private Intersectable _root;
+    private final Intersectable _root;
 
     public BVH(Intersectable... intersectables) {
         _root = generateRoot(Arrays.asList(intersectables), Axis.X);
@@ -47,7 +47,7 @@ public class BVH implements Intersectable {
     public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance, boolean useBB) {
         if (useBB) {
             BoundingBox bb = getBoundingBox();
-            if (bb != null && !bb.isIntersecting(ray, maxDistance)) {
+            if (bb != null && !bb.isIntersecting(ray)) {
                 return null;
             }
         }
@@ -83,7 +83,7 @@ public class BVH implements Intersectable {
         public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance, boolean useBB) {
             if (useBB) {
                 BoundingBox bb = getBoundingBox();
-                if (bb != null && !bb.isIntersecting(ray, maxDistance)) {
+                if (bb != null && !bb.isIntersecting(ray)) {
                     return null;
                 }
             }

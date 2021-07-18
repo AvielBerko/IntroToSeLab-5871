@@ -480,34 +480,35 @@ public class BVHTests {
                                 .setKq(0.000001))
                 .setGeometries(
                         getTeapotModel(
-                                new Color(5, 5, 5),
+                                new Color(10, 10, 10),
                                 new Material().setKr(1.0).setKg(0.9)
                         ))
                 .addGeometries(
-                        new Tube(new Ray(
-                                new Point3D(-50, 0, -100),
-                                new Vector(120, 85, 0)),
-                                15)
+                        // Teapot Stand
+                        new Cylinder(new Ray(
+                                new Point3D(0, -90, 0),
+                                new Vector(0, 1, 0)),
+                                50, 50)
                                 .setEmission(new Color(100, 75, 0))
                                 .setMaterial(new Material()
                                         .setKd(0.6).setKs(0.4)
                                         .setShininess(80)),
                         // Floor
                         new Polygon(
-                                new Point3D(-100, -50, -150),
-                                new Point3D(-100, -50, 150),
-                                new Point3D(100, -50, 150),
-                                new Point3D(100, -50, -150))
+                                new Point3D(-300, -90, -150),
+                                new Point3D(-300, -90, 150),
+                                new Point3D(100, -90, 150),
+                                new Point3D(100, -90, -150))
                                 .setEmission(new Color(40, 40, 40))
                                 .setMaterial(new Material()
                                         .setKd(0.6).setKs(0.4)
                                         .setShininess(50)),
                         // Wall
                         new Polygon(
-                                new Point3D(-100, -50, 150),
-                                new Point3D(-100, 75, 150),
+                                new Point3D(-300, -90, 150),
+                                new Point3D(-300, 75, 150),
                                 new Point3D(100, 75, 150),
-                                new Point3D(100, -50, 150))
+                                new Point3D(100, -90, 150))
                                 .setEmission(new Color(40, 40, 40))
                                 .setMaterial(new Material()
                                         .setKd(0.6).setKs(0.4)
@@ -516,18 +517,18 @@ public class BVHTests {
                 .build();
 
         Camera camera = new Camera(
-                new Point3D(0, 0, -1000),
+                new Point3D(-100, 0, -1000),
                 new Vector(0, 0, 1),
                 new Vector(0, 1, 0)) //
                 .setDistance(1000)
-                .setViewPlaneSize(200, 200)
+                .setViewPlaneSize(400, 400)
                 .setNumOfRays(20);
         ImageWriter imageWriter = new ImageWriter("bvh/teapot", 800, 800);
         Render render = new Render() //
                 .setCamera(camera) //
                 .setImageWriter(imageWriter) //
                 .setMultithreading(3)
-                .setAntiAliasing(true)
+//                .setAntiAliasing(true)
                 .setPrintPercent(true)
                 .setRayTracer(new BasicRayTracer(scene)
                         .useBoundingBoxes(true)

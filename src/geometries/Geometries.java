@@ -52,14 +52,14 @@ public class Geometries implements Intersectable {
     public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance, boolean useBB) {
         if (useBB) {
             BoundingBox bb = getBoundingBox();
-            if (bb != null && !bb.isIntersecting(ray, maxDistance)) {
+            if (bb != null && !bb.isIntersecting(ray)) {
                 return null;
             }
         }
         // The list of all intersections geoPoints from all geometries
         List<GeoPoint> result = null;
 
-        // Looops on every intersectable in the list of geometries
+        // Loops on every intersectable in the list of geometries
         for (Intersectable intersectable : _intersectables) {
             List<GeoPoint> intersections = intersectable.findGeoIntersections(ray, maxDistance, useBB);
 

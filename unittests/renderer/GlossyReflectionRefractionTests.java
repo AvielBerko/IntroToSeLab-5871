@@ -84,7 +84,8 @@ public class GlossyReflectionRefractionTests {
                 .setDistance(800)
                 .setNumOfRays(20);
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i <= 10; i++) {
+            double glossiness = i / 10.0;
             Scene scene = Scene.Builder.create("Test Scene")
                     .setLights(
                             new SpotLight(
@@ -97,7 +98,7 @@ public class GlossyReflectionRefractionTests {
                             new Sphere(50, new Point3D(50, 0, 0))
                                     .setEmission(new Color(5, 5, 5))
                                     .setMaterial(new Material()
-                                            .setKr(1.0).setKg(1.0 / (i + 1))),
+                                            .setKr(1.0).setKg(glossiness)),
                             new Cylinder(new Ray(
                                     new Point3D(-90, -35, 0),
                                     new Vector(60, 85, 0)),
@@ -128,7 +129,7 @@ public class GlossyReflectionRefractionTests {
 
             Render render = new Render()
                     .setImageWriter(
-                            new ImageWriter("reflectionGlossiness/glossiness" + (i + 1), 750, 500))
+                            new ImageWriter("reflectionGlossiness/glossiness" + glossiness, 750, 500))
                     .setCamera(camera)
                     .setMultithreading(3)
                     .setPrintPercent(true)
@@ -213,7 +214,8 @@ public class GlossyReflectionRefractionTests {
                 .setDistance(800)
                 .setNumOfRays(20);
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i <= 10; i++) {
+            double glossiness = i / 10.0;
             Scene scene = Scene.Builder.create("Test Scene")
                     .setLights(
                             new SpotLight(
@@ -235,7 +237,7 @@ public class GlossyReflectionRefractionTests {
                                     new Point3D(75, -50, 75))
                                     .setEmission(new Color(40, 40, 40))
                                     .setMaterial(new Material()
-                                            .setKt(1.0).setKg(1.0 / (i + 1))),
+                                            .setKt(1.0).setKg(glossiness)),
                             new Polygon(
                                     new Point3D(-75, -50, -75),
                                     new Point3D(-75, -50, 75),
@@ -258,7 +260,7 @@ public class GlossyReflectionRefractionTests {
 
             Render render = new Render()
                     .setImageWriter(
-                            new ImageWriter("refractionGlossiness/glossienss" + (i + 1), 750, 500))
+                            new ImageWriter("refractionGlossiness/glossienss" + glossiness, 750, 500))
                     .setCamera(camera)
                     .setMultithreading(3)
                     .setPrintPercent(true)

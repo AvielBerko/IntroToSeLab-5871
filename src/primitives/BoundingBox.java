@@ -33,7 +33,7 @@ public class BoundingBox {
     }
 
 
-    public boolean isIntersecting(Ray ray, double maxDistance) {
+    public boolean isIntersecting(Ray ray) {
         Point3D origin = ray.getP0();
         Vector dir = ray.getDir();
 
@@ -41,14 +41,9 @@ public class BoundingBox {
         T ty = calculateTa(_min.getY(), _max.getY(), origin.getY(), dir.getY());
         T tz = calculateTa(_min.getZ(), _max.getZ(), origin.getZ(), dir.getZ());
 
-        boolean isIntersecting = tx.min <= ty.max && tx.min <= tz.max &&
-                                 ty.min <= tx.max && ty.min <= tz.max &&
-                                 tz.min <= tx.max && tz.min <= ty.max;
-
-        double minSquaredDistance = tx.min * tx.min + ty.min * ty.min + tz.min * tz.min;
-        boolean inDistance = maxDistance * maxDistance >= minSquaredDistance;
-
-        return isIntersecting /* && inDistance*/;
+        return tx.min <= ty.max && tx.min <= tz.max &&
+               ty.min <= tx.max && ty.min <= tz.max &&
+               tz.min <= tx.max && tz.min <= ty.max;
     }
 
     private T calculateTa(double aMin, double aMax, double aOrigin, double aDir) {

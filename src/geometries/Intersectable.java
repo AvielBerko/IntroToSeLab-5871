@@ -74,7 +74,7 @@ public interface Intersectable {
     default List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance, boolean useBB) {
         if (useBB) {
             BoundingBox bb = getBoundingBox();
-            if (bb != null && !bb.isIntersecting(ray, maxDistance)) {
+            if (bb != null && !bb.isIntersecting(ray)) {
                 return null;
             }
         }
