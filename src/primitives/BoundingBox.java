@@ -1,6 +1,9 @@
 package primitives;
 
+import geometries.Intersectable;
+
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Objects;
 
 public class BoundingBox {
@@ -23,6 +26,10 @@ public class BoundingBox {
 
     public Point3D getMax() {
         return _max;
+    }
+
+    public Point3D getCenter() {
+        return Point3D.getCenter(_min, _max);
     }
 
 

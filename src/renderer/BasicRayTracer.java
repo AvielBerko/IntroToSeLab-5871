@@ -187,7 +187,10 @@ public class BasicRayTracer extends RayTracerBase {
      * @return the color affected by the specular of the material
      */
     private Color calcSpecular(double kS, Vector l, Vector n, double ln, Vector v, double nShininess, Color lightIntensity) {
-        Vector r = l.subtract(n.scale(ln * 2));
+        Vector r = l;
+        if (!isZero(ln * 2)) {
+            r = l.subtract(n.scale(ln * 2));
+        }
         double vr = Math.pow(v.scale(-1).dotProduct(r), nShininess);
         return lightIntensity.scale(kS * vr);
     }

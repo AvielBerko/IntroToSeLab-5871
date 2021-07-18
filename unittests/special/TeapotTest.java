@@ -2,6 +2,7 @@ package special;
 
 import elements.Camera;
 import elements.PointLight;
+import geometries.BVH;
 import geometries.Triangle;
 import org.junit.jupiter.api.Test;
 import primitives.Color;
@@ -626,7 +627,7 @@ public class TeapotTest {
     }
 
     private void setupTeapot() {
-        scene.geometries.add( //
+        scene.geometries.add(new BVH( //
                 new Triangle(pnts[7], pnts[6], pnts[1]).setEmission(color).setMaterial(mat), //
                 new Triangle(pnts[1], pnts[2], pnts[7]).setEmission(color).setMaterial(mat), //
                 new Triangle(pnts[8], pnts[7], pnts[2]).setEmission(color).setMaterial(mat), //
@@ -1619,7 +1620,7 @@ public class TeapotTest {
                 new Triangle(pnts[528], pnts[529], pnts[469]).setEmission(color).setMaterial(mat), //
                 new Triangle(pnts[470], pnts[469], pnts[529]).setEmission(color).setMaterial(mat), //
                 new Triangle(pnts[529], pnts[530], pnts[470]).setEmission(color).setMaterial(mat) //
-        );
+        ));
     }
 
 }

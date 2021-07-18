@@ -3,15 +3,9 @@ package special;
 import elements.Camera;
 import elements.PointLight;
 import elements.SpotLight;
-import geometries.Geometries;
-import geometries.Polygon;
-import geometries.Sphere;
-import geometries.Triangle;
+import geometries.*;
 import org.junit.jupiter.api.Test;
-import primitives.Color;
-import primitives.Material;
-import primitives.Point3D;
-import primitives.Vector;
+import primitives.*;
 import renderer.BasicRayTracer;
 import renderer.ImageWriter;
 import renderer.Render;
@@ -219,12 +213,270 @@ public class BVHTests {
     }
 
     @Test
+    public void project() {
+        Camera camera = new Camera(
+                new Point3D(0, 0, 1000),
+                new Vector(0, 0, -1),
+                new Vector(0, 1, 0))
+                .setViewPlaneSize(200, 125)
+                .setDistance(800)
+                .setNumOfRays(50);
+
+        Scene scene = new Scene("Test Scene");
+        setLights(scene);
+        setGeometries(scene);
+
+        Render render = new Render() //
+                .setCamera(camera) //
+                .setMultithreading(3)
+                .setPrintPercent(true)
+                .setAntiAliasing(true)
+                .setRayTracer(new BasicRayTracer(scene)
+                        .setGlossinessRays(20)
+                        .useBoundingBoxes(true));
+
+        ImageWriter imageWriter = new ImageWriter("project", 600, 450);
+        render.setImageWriter(imageWriter);
+        render.renderImage();
+        render.writeToImage();
+    }
+
+
+    private void setLights(Scene scene){
+        scene.lights.add(
+                new SpotLight(
+                        new Color(400, 400, 400),
+                        new Point3D(-50, 100, 100),
+                        new Vector(-0.5, -1, -0.5))
+                        .setKl(0.004)
+                        .setKq(0.000006)
+        );
+        scene.lights.add(
+                new SpotLight(
+                        new Color(0,250,350),
+                        new Point3D(-200, 100, 0),
+                        new Vector(1, 1, -2))
+                .setKl(0.00000005).setKq(0.000000005));
+        scene.lights.add(
+                new SpotLight(
+                        new Color(0,250,350),
+                        new Point3D(-200, 50, 0),
+                        new Vector(1, 0.5, -2))
+                .setKl(0.00000005).setKq(0.000000005));
+        scene.lights.add(
+                new SpotLight(
+                        new Color(0,250,350),
+                        new Point3D(-200, 55, 0),
+                        new Vector(1, 1, -2))
+                .setKl(0.00000005).setKq(0.000000005));
+
+
+    }
+
+    private void setGeometries(Scene scene) {
+        //triangles
+        Point3D h = new Point3D(60, -50, 30);
+        Point3D g = new Point3D(45, -30, 0);
+        Point3D a = new Point3D(30, -50, 30);
+        Point3D b = new Point3D(40, 0, 15);
+
+
+        scene.geometries.add(
+                //sphere
+
+                new Sphere(22, new Point3D(80, -28, 0))
+                        .setEmission(new Color(30, 40, 50))
+                        .setMaterial(new Material()
+                                .setKr(0.8)),
+
+                new Sphere(5, new Point3D(-45, -45, -5))
+                        .setEmission(new Color(0, 60, 0))
+                        .setMaterial(new Material()
+                                .setKr(0.8).setKg(0.95)),
+
+                //triangles
+
+                new Triangle(a, g, h)
+                        .setEmission(new Color(0, 75, 66))
+                        .setMaterial(new Material()
+                                .setKd(0.6).setKs(0.4).setKt(0.6)
+                                .setShininess(80)),
+                new Triangle(a, b, h)
+                        .setEmission(new Color(0, 75, 66))
+                        .setMaterial(new Material()
+                                .setKd(0.6).setKs(0.4).setKt(0.6)
+                                .setShininess(80)),
+                new Triangle(a, b, g)
+                        .setEmission(new Color(0, 75, 66))
+                        .setMaterial(new Material()
+                                .setKd(0.6).setKs(0.4).setKt(0.6)
+                                .setShininess(80)),
+                new Triangle(g, b, h)
+                        .setEmission(new Color(0, 75, 66))
+                        .setMaterial(new Material()
+                                .setKd(0.6).setKs(0.4).setKt(0.6)
+                                .setShininess(80)),
+
+                //cylinder
+                new Cylinder(new Ray(
+                        new Point3D(-80, -45, 0),
+                        new Vector(60, 85, 0)),
+                        13, 50)
+                        .setEmission(new Color(0, 100, 70))
+                        .setMaterial(new Material()
+                                .setKd(0.6).setKs(0.4)
+                                .setShininess(50))
+                ,
+                new Cylinder(new Ray(
+                        new Point3D(-70, -61, 0),
+                        new Vector(1, 0, 0)),
+                        11, 140)
+                        .setEmission(new Color(0, 51, 102))
+                        .setMaterial(new Material()
+                                .setKd(0.6).setKs(0.4).setKg(0.9)
+                                .setShininess(50)),
+
+
+                //square
+                //1
+                new Polygon(new Point3D(-25, -50, -30),
+                        new Point3D(-25, -50, 30),
+                        new Point3D(15, -50, 30),
+                        new Point3D(15, -50, -30))
+                        .setEmission(new Color(0, 75, 100))
+                        .setMaterial(new Material()
+                                .setKd(0.6).setKs(0.4)
+                                .setShininess(50)),
+                new Polygon(new Point3D(-25, -25, -30),
+                        new Point3D(-25, -25, 30),
+                        new Point3D(15, -25, 30),
+                        new Point3D(15, -25, -30))
+                        .setEmission(new Color(0, 75, 100))
+                        .setMaterial(new Material()
+                                .setKd(0.6).setKs(0.4)
+                                .setShininess(50)),
+                new Polygon(new Point3D(-25, -50, -30),
+                        new Point3D(-25, -50, 30),
+                        new Point3D(-25, -25, 30),
+                        new Point3D(-25, -25, -30))
+                        .setEmission(new Color(0, 75, 100))
+                        .setMaterial(new Material()
+                                .setKd(0.6).setKs(0.4)
+                                .setShininess(50)),
+                new Polygon(new Point3D(15, -50, -30),
+                        new Point3D(15, -50, 30),
+                        new Point3D(15, -25, 30),
+                        new Point3D(15, -25, -30))
+                        .setEmission(new Color(0, 75, 100))
+                        .setMaterial(new Material()
+                                .setKd(0.6).setKs(0.4)
+                                .setShininess(50)),
+                new Polygon(new Point3D(-25, -50, 30),
+                        new Point3D(15, -50, 30),
+                        new Point3D(15, -25, 30),
+                        new Point3D(-25, -25, 30))
+                        .setEmission(new Color(0, 75, 100))
+                        .setMaterial(new Material()
+                                .setKd(0.6).setKs(0.4)
+                                .setShininess(50)),
+                new Polygon(new Point3D(-25, -50, -30),
+                        new Point3D(15, -50, -30),
+                        new Point3D(15, -25, -30),
+                        new Point3D(-25, -25, -30))
+                        .setEmission(new Color(0, 75, 100))
+                        .setMaterial(new Material()
+                                .setKd(0.6).setKs(0.4)
+                                .setShininess(50)),
+                //2
+                new Polygon(new Point3D(-15, -25, -20),
+                        new Point3D(-15, -25, 20),
+                        new Point3D(5, -25, 20),
+                        new Point3D(5, -25, -20))
+                        .setEmission(new Color(0, 90, 100))
+                        .setMaterial(new Material()
+                                .setKr(0.1).setKd(0.5).setKs(0.5).setKt(0.2)
+                                .setShininess(60)),
+                new Polygon(new Point3D(-15, -15, -20),
+                        new Point3D(-15, -15, 20),
+                        new Point3D(5, -15, 20),
+                        new Point3D(5, -15, -20))
+                        .setEmission(new Color(0, 90, 100))
+                        .setMaterial(new Material()
+                                .setKr(0.1).setKd(0.5).setKs(0.5).setKt(0.2)
+                                .setShininess(60)),
+                new Polygon(new Point3D(-15, -25, -20),
+                        new Point3D(-15, -25, 20),
+                        new Point3D(-15, -15, 20),
+                        new Point3D(-15, -15, -20))
+                        .setEmission(new Color(0, 90, 100))
+                        .setMaterial(new Material()
+                                .setKr(0.1).setKd(0.5).setKs(0.5).setKt(0.2)
+                                .setShininess(60)),
+                new Polygon(new Point3D(5, -25, -20),
+                        new Point3D(5, -25, 20),
+                        new Point3D(5, -15, 20),
+                        new Point3D(5, -15, -20))
+                        .setEmission(new Color(0, 90, 100))
+                        .setMaterial(new Material()
+                                .setKr(0.1).setKd(0.5).setKs(0.5).setKt(0.2)
+                                .setShininess(60)),
+                new Polygon(new Point3D(-15, -25, 20),
+                        new Point3D(5, -25, 20),
+                        new Point3D(5, -15, 20),
+                        new Point3D(-15, -15, 20))
+                        .setEmission(new Color(0, 90, 100))
+                        .setMaterial(new Material()
+                                .setKr(0.1).setKd(0.5).setKs(0.5).setKt(0.2)
+                                .setShininess(30)),
+                new Polygon(new Point3D(-15, -25, -20),
+                        new Point3D(5, -25, -20),
+                        new Point3D(5, -15, -20),
+                        new Point3D(-15, -15, -20))
+                        .setEmission(new Color(0, 90, 100))
+                        .setMaterial(new Material()
+                                .setKr(0.1).setKd(0.5).setKs(0.5).setKt(0.2)
+                                .setShininess(60)),
+
+
+                // surface
+                new Polygon(
+                        new Point3D(-100, -50, -150),
+                        new Point3D(-100, -50, 200),
+                        new Point3D(100, -50, 200),
+                        new Point3D(100, -50, -150))
+                        .setEmission(new Color(102, 153, 153))
+                        .setMaterial(new Material()
+                                .setKd(0.6).setKs(0.4).setKt(0.2)
+                                .setShininess(50)),
+                //front block
+                new Polygon(
+                        new Point3D(0, -50, 75),
+                        new Point3D(0, 30, 75),
+                        new Point3D(38, 30, 75),
+                        new Point3D(38, -50, 75))
+                        .setEmission(new Color(40, 40, 40))
+                        .setMaterial(new Material()
+                                .setKt(1.0).setKg(0.8)),
+                new Polygon(
+                        new Point3D(42, -50, 75),
+                        new Point3D(42, 30, 75),
+                        new Point3D(80, 30, 75),
+                        new Point3D(80, -50, 75))
+                        .setEmission(new Color(40, 40, 40))
+                        .setMaterial(new Material()
+                                .setKt(1.0).setKg(0.8))
+
+
+        );
+    }
+
+    @Test
     public void teapot() {
         Scene scene = Scene.Builder.create("Test Scene")
                 .setLights(
                         new PointLight(
                                 new Color(500, 500, 500),
-                                new Point3D(100, 0, -100))
+                                new Point3D(100, 0, -150))
                                 .setKq(0.000001))
                 .setGeometries(
                         getTeapotModel(
@@ -232,6 +484,15 @@ public class BVHTests {
                                 new Material().setKr(1.0).setKg(0.8)
                         ))
                 .addGeometries(
+                        new Cylinder(new Ray(
+                                new Point3D(-50, 0, -100),
+                                new Vector(60, 85, 0)),
+                                15, 100)
+                                .setEmission(new Color(100, 75, 0))
+                                .setMaterial(new Material()
+                                        .setKd(0.6).setKs(0.4)
+                                        .setShininess(80)),
+                        // Floor
                         new Polygon(
                                 new Point3D(-100, -50, -150),
                                 new Point3D(-100, -50, 150),
@@ -241,11 +502,12 @@ public class BVHTests {
                                 .setMaterial(new Material()
                                         .setKd(0.6).setKs(0.4)
                                         .setShininess(50)),
+                        // Wall
                         new Polygon(
-                                new Point3D(-100, -50, -150),
-                                new Point3D(-100, 75, -150),
-                                new Point3D(100, 75, -150),
-                                new Point3D(100, -50, -150))
+                                new Point3D(-100, -50, 150),
+                                new Point3D(-100, 75, 150),
+                                new Point3D(100, 75, 150),
+                                new Point3D(100, -50, 150))
                                 .setEmission(new Color(40, 40, 40))
                                 .setMaterial(new Material()
                                         .setKd(0.6).setKs(0.4)
@@ -259,20 +521,23 @@ public class BVHTests {
                 new Vector(0, 1, 0)) //
                 .setDistance(1000)
                 .setViewPlaneSize(200, 200)
-                .setNumOfRays(50);
+                .setNumOfRays(10);
         ImageWriter imageWriter = new ImageWriter("bvh/teapot", 800, 800);
         Render render = new Render() //
                 .setCamera(camera) //
                 .setImageWriter(imageWriter) //
                 .setMultithreading(3)
-                .setPrintPercent(true)
-                .setRayTracer(new BasicRayTracer(scene).useBoundingBoxes(true));
+                .setAntiAliasing(true)
+//                .setPrintPercent(true)
+                .setRayTracer(new BasicRayTracer(scene)
+                        .useBoundingBoxes(true)
+                        .setMaxCalcColorLevel(3));
         render.renderImage();
         render.writeToImage();
     }
 
     private static Geometries getTeapotModel(Color color, Material mat) {
-        return new Geometries( //
+        return new Geometries(new BVH( //
                 new Triangle(pnts[7], pnts[6], pnts[1]).setEmission(color).setMaterial(mat), //
                 new Triangle(pnts[1], pnts[2], pnts[7]).setEmission(color).setMaterial(mat), //
                 new Triangle(pnts[8], pnts[7], pnts[2]).setEmission(color).setMaterial(mat), //
@@ -1265,7 +1530,7 @@ public class BVHTests {
                 new Triangle(pnts[528], pnts[529], pnts[469]).setEmission(color).setMaterial(mat), //
                 new Triangle(pnts[470], pnts[469], pnts[529]).setEmission(color).setMaterial(mat), //
                 new Triangle(pnts[529], pnts[530], pnts[470]).setEmission(color).setMaterial(mat) //
-        );
+        ));
     }
 
 

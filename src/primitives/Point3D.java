@@ -165,8 +165,13 @@ public class Point3D {
                 .get();
     }
 
+    public static Point3D getCenter(Point3D a, Point3D b) {
+        double x = (a.getX() + b.getX()) / 2;
+        double y = (a.getY() + b.getY()) / 2;
+        double z = (a.getZ() + b.getZ()) / 2;
+        return new Point3D(x, y, z);
+    }
 
-    /*************** Admin *****************/
     @Override
     public String toString() {
         return "(" + _x + ", " + _y + ", " + _z + ')';

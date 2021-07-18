@@ -1,9 +1,11 @@
 package geometries;
 
+import primitives.Axis;
 import primitives.BoundingBox;
 import primitives.Point3D;
 import primitives.Ray;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -85,4 +87,14 @@ public interface Intersectable {
      * @return The bounding box
      */
     BoundingBox getBoundingBox();
+
+    static Comparator<Intersectable> getComparatorByAxis(Axis axis) {
+        return (bb1, bb2) -> {
+            double center1 = bb1.getBoundingBox()
+                    .getCenter().get(axis);
+            double center2 = bb2.getBoundingBox()
+                    .getCenter().get(axis);
+            return Double.compare(center1, center2);
+        };
+    }
 }
