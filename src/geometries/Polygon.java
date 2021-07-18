@@ -1,6 +1,8 @@
 package geometries;
 
 import java.util.List;
+import java.util.function.Function;
+
 import primitives.*;
 import static primitives.Util.*;
 
@@ -124,5 +126,22 @@ public class Polygon extends Geometry {
 		}
 
 		return List.of(new GeoPoint(this, result.get(0).point));
+	}
+
+	@Override
+	public BoundingBox getBoundingBox() {
+		Point3D[] verticesArray = _vertices.toArray(Point3D[]::new);
+		return new BoundingBox(
+				new Point3D(
+						Point3D.getMinByAxis(Point3D::getX, verticesArray),
+						Point3D.getMinByAxis(Point3D::getY, verticesArray),
+						Point3D.getMinByAxis(Point3D::getZ, verticesArray)
+				),
+				new Point3D(
+						Point3D.getMaxByAxis(Point3D::getX, verticesArray),
+						Point3D.getMaxByAxis(Point3D::getY, verticesArray),
+						Point3D.getMaxByAxis(Point3D::getZ, verticesArray)
+				)
+		);
 	}
 }

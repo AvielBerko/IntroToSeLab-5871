@@ -1,5 +1,6 @@
 package geometries;
 
+import primitives.BoundingBox;
 import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
@@ -94,6 +95,14 @@ public class Sphere extends Geometry {
         }
 
         return null;
+    }
+
+    @Override
+    public BoundingBox getBoundingBox() {
+        return new BoundingBox(
+                new Point3D(_center.getX() - _radius, _center.getY() - _radius, _center.getZ() - _radius),
+                new Point3D(_center.getX() + _radius, _center.getY() + _radius, _center.getZ() + _radius)
+        );
     }
 
     @Override

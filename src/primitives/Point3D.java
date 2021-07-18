@@ -1,5 +1,8 @@
 package primitives;
 
+import java.util.Arrays;
+import java.util.function.Function;
+
 /**
  * A 3D point in space. The represented point is using 3 coordinate.
  */
@@ -130,6 +133,28 @@ public class Point3D {
      */
     public double distance(Point3D point) {
         return Math.sqrt(distanceSquared(point));
+    }
+
+    public static double getMinByAxis(Function<Point3D, Double> mapToAxis, Point3D... points) {
+        if (points.length == 0) {
+            return Double.NaN;
+        }
+
+        return Arrays.stream(points)
+                .map(mapToAxis)
+                .min(Double::compare)
+                .get();
+    }
+
+    public static double getMaxByAxis(Function<Point3D, Double> mapToAxis, Point3D... points) {
+        if (points.length == 0) {
+            return Double.NaN;
+        }
+
+        return Arrays.stream(points)
+                .map(mapToAxis)
+                .max(Double::compare)
+                .get();
     }
 
     @Override

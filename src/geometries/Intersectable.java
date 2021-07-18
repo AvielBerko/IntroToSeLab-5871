@@ -56,6 +56,10 @@ public interface Intersectable {
         return findGeoIntersections(ray, Double.POSITIVE_INFINITY);
     }
 
+    default List<GeoPoint> findGeoIntersections(Ray ray, boolean useBB) {
+        return findGeoIntersections(ray, Double.POSITIVE_INFINITY, useBB);
+    }
+
     /**
      * Gives all the geo points where the given ray is intersecting with the object within the given distance.
      * @param ray A ray to check if is intersecting with the object.
@@ -65,8 +69,18 @@ public interface Intersectable {
      */
     List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance);
 
+    default List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance, boolean useBB) {
+        if (useBB) {
+            BoundingBox bb = getBoundingBox();
+            if (bb != null && !bb.isIntersecting(ray, maxDistance)) {
+                return null;
+            }
+        }
+
+        return findGeoIntersections(ray, maxDistance);
+    }
+
     default BoundingBox getBoundingBox() {
-        // TODO: implement this on every geometry
         return null;
     }
 }

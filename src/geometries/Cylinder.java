@@ -1,5 +1,6 @@
 package geometries;
 
+import primitives.BoundingBox;
 import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
@@ -135,6 +136,30 @@ public class Cylinder extends Tube {
         }
 
         return result;
+    }
+
+    @Override
+    public BoundingBox getBoundingBox() {
+        // source: https://gdalgorithms-list.narkive.com/s2wbl3Cd/axis-aligned-bounding-box-of-cylinder#post8
+        Vector dir = _axisRay.getDir();
+        double sX = (dir.getX() * _height + 2 * _radius * Math.sqrt(1 - dir.getX() * dir.getX())) / 2;
+        double sY = (dir.getY() * _height + 2 * _radius * Math.sqrt(1 - dir.getY() * dir.getY())) / 2;
+        double sZ = (dir.getZ() * _height + 2 * _radius * Math.sqrt(1 - dir.getZ() * dir.getZ())) / 2;
+
+        Point3D center = _axisRay.getPoint(_height / 2);
+
+        return new BoundingBox(
+                new Point3D(
+                        center.getX() - sX,
+                        center.getY() - sY,
+                        center.getZ() - sZ
+                ),
+                new Point3D(
+                        center.getX() + sX,
+                        center.getY() + sY,
+                        center.getZ() + sZ
+                )
+        );
     }
 
     /**
