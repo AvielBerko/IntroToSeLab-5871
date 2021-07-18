@@ -163,14 +163,18 @@ public class Render {
     private void castRay(int nX, int nY, int col, int row) {
         Color pixelColor;
 
+        // If we're using AA
         if (_antiAliasing) {
             List<Ray> rays = _camera.constructRayPixelWithAA(nX, nY, col, row);
             pixelColor = _rayTracer.averageColor(rays);
-        } else {
+        }
+        // If we're not using AA
+        else {
             Ray ray = _camera.constructRayThroughPixel(nX, nY, col, row);
             pixelColor = _rayTracer.traceRay(ray);
         }
 
+        // Writes the final pixel to the image
         _imageWriter.writePixel(col, row, pixelColor);
     }
 

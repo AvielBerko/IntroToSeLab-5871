@@ -38,6 +38,7 @@ public abstract class RayTracerBase {
      */
     public Color averageColor(List<Ray> rays) {
         Color color = Color.BLACK;
+        // Sums the colors in the list of rays
         for (Ray ray : rays) {
             color = color.add(traceRay(ray));
         }

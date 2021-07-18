@@ -75,13 +75,6 @@ public class Tube extends Geometry {
         return p.subtract(o).normalize();
     }
 
-    @Override
-    public String toString() {
-        return "Tube{" +
-                "axisRay=" + _axisRay +
-                ", radius=" + _radius +
-                '}';
-    }
 
     @Override
     public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
@@ -148,5 +141,15 @@ public class Tube extends Geometry {
         }
 
         return null;
+    }
+
+
+    /*************** Admin *****************/
+    @Override
+    public String toString() {
+        return "Tube{" +
+                "axisRay=" + _axisRay +
+                ", radius=" + _radius +
+                '}';
     }
 }

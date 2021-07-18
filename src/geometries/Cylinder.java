@@ -16,16 +16,17 @@ public class Cylinder extends Tube {
     protected final Plane bottomCap, topCap;
 
     /**
-     * Creates a new cylinder by a given axis ray, radius and height.
+     * Creates a new cylinder by a given axis ray, radius and height
      *
-     * @param axisRay The cylinder's axis ray.
-     * @param radius  The cylinder's radius.
-     * @param height  The cylinder's height.
-     * @throws IllegalArgumentException When the radius or the height are equals or less than 0.
+     * @param axisRay The cylinder's axis ray
+     * @param radius  The cylinder's radius
+     * @param height  The cylinder's height
+     * @throws IllegalArgumentException When the radius or the height are equals or less than 0
      */
     public Cylinder(Ray axisRay, double radius, double height) {
         super(axisRay, radius);
 
+        // checks if height is negative
         if (height <= 0) {
             throw new IllegalArgumentException("The height should be greater then 0");
         }
@@ -39,9 +40,9 @@ public class Cylinder extends Tube {
     }
 
     /**
-     * Returns the cylinder's height.
+     * Returns the cylinder's height
      *
-     * @return The height.
+     * @return The height
      */
     public double getHeight() {
         return _height;
@@ -181,6 +182,8 @@ public class Cylinder extends Tube {
                 v0.dotProduct(p.subtract(p1)) < 0;
     }
 
+
+    /*************** Admin *****************/
     @Override
     public String toString() {
         return "Cylinder{" +
