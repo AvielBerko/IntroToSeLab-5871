@@ -12,208 +12,9 @@ import renderer.Render;
 import scene.Scene;
 
 public class BVHTests {
-    @Test
-    public void noAccelerations() {
-        Camera camera = new Camera(
-                new Point3D(0, 0, 1000),
-                new Vector(0, 0, -1),
-                new Vector(0, 1, 0))
-                .setViewPlaneSize(225, 150)
-                .setDistance(800)
-                .setNumOfRays(20);
-
-        Scene scene = Scene.Builder.create("Test Scene")
-                .setLights(
-                        new SpotLight(
-                                new Color(500, 500, 500),
-                                new Point3D(-100, 100, 100),
-                                new Vector(-0.5, -1, -0.5))
-                                .setKl(0.004)
-                                .setKq(0.000006))
-                .addGeometries(
-                        new Sphere(50, new Point3D(0, 0, 0))
-                                .setEmission(new Color(5, 50, 120))
-                                .setMaterial(new Material()
-                                        .setKd(0.6).setKs(0.4)
-                                        .setShininess(100)),
-                        new Polygon(
-                                new Point3D(0, -50, 75),
-                                new Point3D(0, 50, 75),
-                                new Point3D(75, 50, 75),
-                                new Point3D(75, -50, 75))
-                                .setEmission(new Color(40, 40, 40))
-                                .setMaterial(new Material()
-                                        .setKt(1.0).setKg(0.8)),
-                        new Polygon(
-                                new Point3D(-75, -50, -75),
-                                new Point3D(-75, -50, 75),
-                                new Point3D(75, -50, 75),
-                                new Point3D(75, -50, -75))
-                                .setEmission(new Color(40, 40, 40))
-                                .setMaterial(new Material()
-                                        .setKd(0.6).setKs(0.4)
-                                        .setShininess(50)),
-                        new Polygon(
-                                new Point3D(-75, -50, -75),
-                                new Point3D(-75, 75, -75),
-                                new Point3D(75, 75, -75),
-                                new Point3D(75, -50, -75))
-                                .setEmission(new Color(40, 40, 40))
-                                .setMaterial(new Material()
-                                        .setKd(0.6).setKs(0.4)
-                                        .setShininess(50))
-                ).build();
-
-        Render render = new Render()
-                .setImageWriter(
-                        new ImageWriter("bvh/noAccelerations", 750, 500))
-                .setCamera(camera)
-                .setMultithreading(3)
-                .setPrintPercent(true)
-                .setAntiAliasing(true)
-                .setRayTracer(new BasicRayTracer(scene)
-                        .setGlossinessRays(20)
-                        .useBoundingBoxes(false));
-        render.renderImage();
-        render.writeToImage();
-    }
 
     @Test
-    public void boundingBoxAcceleration() {
-        Camera camera = new Camera(
-                new Point3D(0, 0, 1000),
-                new Vector(0, 0, -1),
-                new Vector(0, 1, 0))
-                .setViewPlaneSize(225, 150)
-                .setDistance(800)
-                .setNumOfRays(20);
-
-        Scene scene = Scene.Builder.create("Test Scene")
-                .setLights(
-                        new SpotLight(
-                                new Color(500, 500, 500),
-                                new Point3D(-100, 100, 100),
-                                new Vector(-0.5, -1, -0.5))
-                                .setKl(0.004)
-                                .setKq(0.000006))
-                .addGeometries(
-                        new Sphere(50, new Point3D(0, 0, 0))
-                                .setEmission(new Color(5, 50, 120))
-                                .setMaterial(new Material()
-                                        .setKd(0.6).setKs(0.4)
-                                        .setShininess(100)),
-                        new Polygon(
-                                new Point3D(0, -50, 75),
-                                new Point3D(0, 50, 75),
-                                new Point3D(75, 50, 75),
-                                new Point3D(75, -50, 75))
-                                .setEmission(new Color(40, 40, 40))
-                                .setMaterial(new Material()
-                                        .setKt(1.0).setKg(0.8)),
-                        new Polygon(
-                                new Point3D(-75, -50, -75),
-                                new Point3D(-75, -50, 75),
-                                new Point3D(75, -50, 75),
-                                new Point3D(75, -50, -75))
-                                .setEmission(new Color(40, 40, 40))
-                                .setMaterial(new Material()
-                                        .setKd(0.6).setKs(0.4)
-                                        .setShininess(50)),
-                        new Polygon(
-                                new Point3D(-75, -50, -75),
-                                new Point3D(-75, 75, -75),
-                                new Point3D(75, 75, -75),
-                                new Point3D(75, -50, -75))
-                                .setEmission(new Color(40, 40, 40))
-                                .setMaterial(new Material()
-                                        .setKd(0.6).setKs(0.4)
-                                        .setShininess(50))
-                ).build();
-
-        Render render = new Render()
-                .setImageWriter(
-                        new ImageWriter("bvh/boundingBoxes", 750, 500))
-                .setCamera(camera)
-                .setMultithreading(3)
-                .setPrintPercent(true)
-                .setAntiAliasing(true)
-                .setRayTracer(new BasicRayTracer(scene)
-                        .setGlossinessRays(20)
-                        .useBoundingBoxes(true));
-        render.renderImage();
-        render.writeToImage();
-    }
-
-    @Test
-    public void manualBVHAcceleration() {
-        Camera camera = new Camera(
-                new Point3D(0, 0, 1000),
-                new Vector(0, 0, -1),
-                new Vector(0, 1, 0))
-                .setViewPlaneSize(225, 150)
-                .setDistance(800)
-                .setNumOfRays(20);
-
-        Scene scene = Scene.Builder.create("Test Scene")
-                .setLights(
-                        new SpotLight(
-                                new Color(500, 500, 500),
-                                new Point3D(-100, 100, 100),
-                                new Vector(-0.5, -1, -0.5))
-                                .setKl(0.004)
-                                .setKq(0.000006))
-                .addGeometries(
-                        new Geometries(
-                        new Sphere(50, new Point3D(0, 0, 0))
-                                .setEmission(new Color(5, 50, 120))
-                                .setMaterial(new Material()
-                                        .setKd(0.6).setKs(0.4)
-                                        .setShininess(100)),
-                        new Polygon(
-                                new Point3D(0, -50, 75),
-                                new Point3D(0, 50, 75),
-                                new Point3D(75, 50, 75),
-                                new Point3D(75, -50, 75))
-                                .setEmission(new Color(40, 40, 40))
-                                .setMaterial(new Material()
-                                        .setKt(1.0).setKg(0.8)),
-                        new Polygon(
-                                new Point3D(-75, -50, -75),
-                                new Point3D(-75, 75, -75),
-                                new Point3D(75, 75, -75),
-                                new Point3D(75, -50, -75))
-                                .setEmission(new Color(40, 40, 40))
-                                .setMaterial(new Material()
-                                        .setKd(0.6).setKs(0.4)
-                                        .setShininess(50))
-                        ),
-                        new Polygon(
-                                new Point3D(-75, -50, -75),
-                                new Point3D(-75, -50, 75),
-                                new Point3D(75, -50, 75),
-                                new Point3D(75, -50, -75))
-                                .setEmission(new Color(40, 40, 40))
-                                .setMaterial(new Material()
-                                        .setKd(0.6).setKs(0.4)
-                                        .setShininess(50))
-                ).build();
-
-        Render render = new Render()
-                .setImageWriter(
-                        new ImageWriter("bvh/manualBVH", 750, 500))
-                .setCamera(camera)
-                .setMultithreading(3)
-                .setPrintPercent(true)
-                .setAntiAliasing(true)
-                .setRayTracer(new BasicRayTracer(scene)
-                        .setGlossinessRays(20)
-                        .useBoundingBoxes(true));
-        render.renderImage();
-        render.writeToImage();
-    }
-
-    @Test
-    public void project() {
+    public void manyObjects() {
         Camera camera = new Camera(
                 new Point3D(0, 0, 1000),
                 new Vector(0, 0, -1),
@@ -235,7 +36,7 @@ public class BVHTests {
                         .setGlossinessRays(20)
                         .useBoundingBoxes(true));
 
-        ImageWriter imageWriter = new ImageWriter("project", 600, 450);
+        ImageWriter imageWriter = new ImageWriter("bvh/manyObjects", 600, 450);
         render.setImageWriter(imageWriter);
         render.renderImage();
         render.writeToImage();
@@ -471,17 +272,19 @@ public class BVHTests {
     }
 
     @Test
-    public void teapot() {
+    public void teapotWithSphereAndCylinder() {
         Scene scene = Scene.Builder.create("Test Scene")
                 .setLights(
                         new PointLight(
                                 new Color(500, 500, 500),
-                                new Point3D(100, 0, -150))
+                                new Point3D(95, 10, -170))
                                 .setKq(0.000001))
                 .setGeometries(
                         getTeapotModel(
-                                new Color(10, 10, 10),
-                                new Material().setKr(1.0).setKg(0.9)
+                                new Color(5, 50, 120),
+                                new Material()
+                                        .setKd(0.6).setKs(0.4)
+                                        .setShininess(50)
                         ))
                 .addGeometries(
                         // Teapot Stand
@@ -491,8 +294,14 @@ public class BVHTests {
                                 50, 50)
                                 .setEmission(new Color(100, 75, 0))
                                 .setMaterial(new Material()
-                                        .setKd(0.6).setKs(0.4)
+                                        .setKd(0.5).setKs(0.3).setKr(0.2)
                                         .setShininess(80)),
+                        new Sphere(
+                                50,
+                                new Point3D(-150, -40, 15))
+                                .setEmission(new Color(5, 5, 5))
+                                .setMaterial(new Material()
+                                        .setKr(1.0).setKg(0.9)),
                         // Floor
                         new Polygon(
                                 new Point3D(-300, -90, -150),
@@ -503,12 +312,32 @@ public class BVHTests {
                                 .setMaterial(new Material()
                                         .setKd(0.6).setKs(0.4)
                                         .setShininess(50)),
-                        // Wall
+                        // Wall back
                         new Polygon(
                                 new Point3D(-300, -90, 150),
                                 new Point3D(-300, 75, 150),
                                 new Point3D(100, 75, 150),
                                 new Point3D(100, -90, 150))
+                                .setEmission(new Color(40, 40, 40))
+                                .setMaterial(new Material()
+                                        .setKd(0.6).setKs(0.4)
+                                        .setShininess(50)),
+                        // Wall left
+                        new Polygon(
+                                new Point3D(100, -90, -150),
+                                new Point3D(100, 75, -150),
+                                new Point3D(100, 75, 150),
+                                new Point3D(100, -90, 150))
+                                .setEmission(new Color(40, 40, 40))
+                                .setMaterial(new Material()
+                                        .setKd(0.6).setKs(0.4)
+                                        .setShininess(50)),
+                        // Wall right
+                        new Polygon(
+                                new Point3D(-300, -90, -150),
+                                new Point3D(-300, 75, -150),
+                                new Point3D(-300, 75, 150),
+                                new Point3D(-300, -90, 150))
                                 .setEmission(new Color(40, 40, 40))
                                 .setMaterial(new Material()
                                         .setKd(0.6).setKs(0.4)
@@ -521,14 +350,14 @@ public class BVHTests {
                 new Vector(0, 0, 1),
                 new Vector(0, 1, 0)) //
                 .setDistance(1000)
-                .setViewPlaneSize(400, 400)
+                .setViewPlaneSize(450, 450)
                 .setNumOfRays(20);
         ImageWriter imageWriter = new ImageWriter("bvh/teapot", 800, 800);
         Render render = new Render() //
                 .setCamera(camera) //
                 .setImageWriter(imageWriter) //
                 .setMultithreading(3)
-//                .setAntiAliasing(true)
+                .setAntiAliasing(true)
                 .setPrintPercent(true)
                 .setRayTracer(new BasicRayTracer(scene)
                         .useBoundingBoxes(true)
