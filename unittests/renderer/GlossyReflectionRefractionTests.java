@@ -2,6 +2,7 @@ package renderer;
 
 import elements.Camera;
 import elements.SpotLight;
+import geometries.BVH;
 import geometries.Cylinder;
 import geometries.Polygon;
 import geometries.Sphere;
@@ -29,7 +30,7 @@ public class GlossyReflectionRefractionTests {
                                 new Vector(-0.5, -1, -0.5))
                                 .setKl(0.004)
                                 .setKq(0.000006))
-                .addGeometries(
+                .addGeometries(new BVH(
                         new Sphere(50, new Point3D(50, 0, 0))
                                 .setEmission(new Color(5, 5, 5))
                                 .setMaterial(new Material()
@@ -60,7 +61,7 @@ public class GlossyReflectionRefractionTests {
                                 .setMaterial(new Material()
                                         .setKd(0.6).setKs(0.4)
                                         .setShininess(50))
-                ).build();
+                )).build();
 
         Render render = new Render()
                 .setImageWriter(
@@ -94,7 +95,7 @@ public class GlossyReflectionRefractionTests {
                                     new Vector(-0.5, -1, -0.5))
                                     .setKl(0.004)
                                     .setKq(0.000006))
-                    .addGeometries(
+                    .addGeometries(new BVH(
                             new Sphere(50, new Point3D(50, 0, 0))
                                     .setEmission(new Color(5, 5, 5))
                                     .setMaterial(new Material()
@@ -125,7 +126,7 @@ public class GlossyReflectionRefractionTests {
                                     .setMaterial(new Material()
                                             .setKd(0.6).setKs(0.4)
                                             .setShininess(50))
-                    ).build();
+                    )).build();
 
             Render render = new Render()
                     .setImageWriter(
@@ -158,7 +159,7 @@ public class GlossyReflectionRefractionTests {
                                 new Vector(-0.5, -1, -0.5))
                                 .setKl(0.004)
                                 .setKq(0.000006))
-                .addGeometries(
+                .addGeometries(new BVH(
                         new Sphere(50, new Point3D(0, 0, 0))
                                 .setEmission(new Color(5, 50, 120))
                                 .setMaterial(new Material()
@@ -190,7 +191,7 @@ public class GlossyReflectionRefractionTests {
                                 .setMaterial(new Material()
                                         .setKd(0.6).setKs(0.4)
                                         .setShininess(50))
-                ).build();
+                )).build();
 
         Render render = new Render()
                 .setImageWriter(
@@ -224,7 +225,7 @@ public class GlossyReflectionRefractionTests {
                                     new Vector(-0.5, -1, -0.5))
                                     .setKl(0.004)
                                     .setKq(0.000006))
-                    .addGeometries(
+                    .addGeometries(new BVH(
                             new Sphere(50, new Point3D(0, 0, 0))
                                     .setEmission(new Color(5, 50, 120))
                                     .setMaterial(new Material()
@@ -256,11 +257,11 @@ public class GlossyReflectionRefractionTests {
                                     .setMaterial(new Material()
                                             .setKd(0.6).setKs(0.4)
                                             .setShininess(50))
-                    ).build();
+                    ) ).build();
 
             Render render = new Render()
                     .setImageWriter(
-                            new ImageWriter("refractionGlossiness/glossienss" + glossiness, 750, 500))
+                            new ImageWriter("refractionGlossiness/glossiness" + glossiness, 750, 500))
                     .setCamera(camera)
                     .setMultithreading(3)
                     .setPrintPercent(true)

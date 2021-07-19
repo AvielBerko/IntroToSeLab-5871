@@ -21,7 +21,7 @@ public class BVHTests {
                 new Vector(0, 1, 0))
                 .setViewPlaneSize(200, 125)
                 .setDistance(800)
-                .setNumOfRays(50);
+                .setNumOfRays(81);
 
         Scene scene = new Scene("Test Scene");
         setLights(scene);
@@ -36,12 +36,28 @@ public class BVHTests {
                         .setGlossinessRays(20)
                         .useBoundingBoxes(true));
 
-        ImageWriter imageWriter = new ImageWriter("bvh/manyObjects", 600, 450);
-        render.setImageWriter(imageWriter);
-        render.renderImage();
-        render.writeToImage();
-    }
+        int frames = 10;
+        double angle = 360d / frames;
+        double angleRadians = 2 * Math.PI / frames;
 
+        double radius = camera.getP0().subtract(Point3D.ZERO).length();
+
+        for (int i = 0; i < frames; i++) {
+            System.out.println("Start frame " + (i + 1));
+
+            camera.rotate(0, angle, 0);
+            camera.setP0(
+                    Math.sin(angleRadians * (i + 1)) * radius,
+                    0,
+                    Math.cos(angleRadians * (i + 1)) * radius
+            );
+
+            ImageWriter imageWriter = new ImageWriter("bvh/manyObjects/frame" + i, 600, 450);
+            render.setImageWriter(imageWriter);
+            render.renderImage();
+            render.writeToImage();
+        }
+    }
 
     private void setLights(Scene scene){
         scene.lights.add(
@@ -278,7 +294,7 @@ public class BVHTests {
                         new PointLight(
                                 new Color(500, 500, 500),
                                 new Point3D(95, 10, -170))
-                                .setKq(0.000001))
+                                .setKq(0.00003))
                 .setGeometries(
                         getTeapotModel(
                                 new Color(5, 50, 120),
@@ -351,7 +367,7 @@ public class BVHTests {
                 new Vector(0, 1, 0)) //
                 .setDistance(1000)
                 .setViewPlaneSize(450, 450)
-                .setNumOfRays(20);
+                .setNumOfRays(81);
         ImageWriter imageWriter = new ImageWriter("bvh/teapot", 800, 800);
         Render render = new Render() //
                 .setCamera(camera) //

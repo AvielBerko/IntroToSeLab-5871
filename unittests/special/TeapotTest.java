@@ -595,12 +595,14 @@ public class TeapotTest {
                 new Point3D(0, 0, -1000),
                 new Vector(0, 0, -1),
                 new Vector(0, 1, 0)) //
+                .setNumOfRays(81)
                 .setDistance(1000).setViewPlaneSize(200, 200);
 
         Render render = new Render() //
                 .setCamera(camera) //
                 .setMultithreading(3)
                 .setPrintPercent(true)
+                .setAntiAliasing(true)
                 .setRayTracer(new BasicRayTracer(scene));
 
         int frames = 10;
