@@ -1,1 +1,6 @@
-# IntroToSeLab-5871
+# ISE Project
+As part of the course "Introduction to Software Engineering",
+Designing and modelling a virtual 3-dimensional graphical scene.   
+a complete system that includes all the elements and physics involved: 
+color, rays, geometries, light source, occlusions, shadows, reflections, transparency, camera, etc.    
+Improving performance by using multi-threads and adaptive grid, applying development principles like  TDD, Refactoring, agile methodologies, and more.
